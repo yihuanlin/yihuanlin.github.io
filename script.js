@@ -1098,30 +1098,30 @@ function ipLookUp() {
 }
 
 function getWeather(lon, lat) {
-    /*var xhr = new XMLHttpRequest();
-    xhr.open('get', 'weather.php?lon=' + lon + '&lat=' + lat);
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://api.openweathermap.org/data/2.5/weather?lon=' + lon + '&lat=' + lat + '&appid=81687cda5c5bdb04678a2547f9a43d6d&units=metric');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             var json = JSON.parse(xhr.responseText);
             handleJson(json);
         }
     };
-    xhr.send();*/
-    $.ajax({
-        url: "weather.php",
-        type: "GET",
-        dataType: "json",
-        data: {
-            "lon": lon,
-            "lat": lat
-        },
-        success: function(json) {
-            handleJson(json);
-        },
-        error: function(xhr) {
+    xhr.send();
+    /*$.ajax({
+          url:"weather.php",
+          type:"GET",
+          dataType:"json",
+          data:{
+            "lon":lon,
+            "lat":lat
+          },
+          success: function (json) {
+              handleJson(json);
+          },
+          error: function (xhr) {
             return;
-        }
-    });
+          }
+        });*/
 }
 // <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 ! function(e) {
