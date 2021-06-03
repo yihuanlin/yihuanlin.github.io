@@ -157,29 +157,19 @@ function clickEffect(e) {
 }
 document.addEventListener("click", clickEffect);
 // Baidu search suggestions
+var bid = document.getElementById("search_baidu");
 $("#search_baidu").click(function() {
     var textb = $("#search_baidu");
     textb.keyup(function(event) {
-        if (textb.val() === "" || textb.val() === " ") {
+        if (!bid.value) {
             return;
         }
         if (event.which != 39 && event.which != 40 && event.which != 37 && event.which != 38 && event.which != 13)
-            $.ajax({
-                url: "https://suggestion.baidu.com/su",
-                type: "GET",
-                dataType: "jsonp",
-                jsonp: "jsoncallback",
-                async: false,
-                timeout: 5000,
-                data: {
-                    wd: textb.val(),
-                    cb: "baidu",
-                },
-                success: function(json) {},
-                error: function(xhr) {
-                    return;
-                },
-            });
+            var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = 'https://suggestion.baidu.com/su?wd=' + bid.value + '&cb=baidu';
+        var h = document.getElementsByTagName('script')[0];
+        h.parentNode.insertBefore(s, h);
     });
 });
 
@@ -250,30 +240,19 @@ function baidu(keys) {
     });
 }
 // Google search suggestions
+var gid = document.getElementById("search_google");
 $("#search_google").click(function() {
     var textb = $("#search_google");
     textb.keyup(function(event) {
-        if (textb.val() === "" || textb.val() === " ") {
+        if (!gid.value) {
             return;
         }
         if (event.which != 39 && event.which != 40 && event.which != 37 && event.which != 38 && event.which != 13)
-            $.ajax({
-                url: "https://suggestqueries.google.com/complete/search",
-                type: "GET",
-                dataType: "jsonp",
-                jsonp: "jsoncallback",
-                async: false,
-                timeout: 5000,
-                data: {
-                    q: textb.val(),
-                    output: "firefox",
-                    callback: "google",
-                },
-                success: function(json) {},
-                error: function(xhr) {
-                    return;
-                },
-            });
+            var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=google';
+        var h = document.getElementsByTagName('script')[0];
+        h.parentNode.insertBefore(s, h);
     });
 });
 
@@ -345,11 +324,11 @@ function google(keys) {
 }
 // go to search results
 function tobaidu() {
-    return "" !== document.getElementById("search_baidu").value && ((window.location.href = "https://www.baidu.com/s?wd=" + document.getElementById("search_baidu").value), (document.getElementById("search_baidu").value = "")), !1;
+    return "" !== bid.value && ((window.location.href = "https://www.baidu.com/s?wd=" + bid.value), (bid.value = "")), !1;
 }
 
 function togoogle() {
-    return "" !== document.getElementById("search_google").value && ((window.location.href = "https://www.google.com/search?q=" + document.getElementById("search_google").value), (document.getElementById("search_google").value = "")), !1;
+    return "" !== gid.value && ((window.location.href = "https://www.google.com/search?q=" + gid.value), (gid.value = "")), !1;
 }
 // start of weather set up
 gsap.registerPlugin(MotionPathPlugin);
