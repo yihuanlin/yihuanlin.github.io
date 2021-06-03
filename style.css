@@ -67,7 +67,7 @@ input:focus {
 }
 
 .search {
-    font-family: "Comfortaa", "Noto Sans SC", "FontAwesome";
+    font-family: "Comfortaa";
     background-color: transparent;
     width: 80%;
     height: 25px;
@@ -76,16 +76,36 @@ input:focus {
     font-size: 18px;
 }
 
+label {
+    position: relative;
+}
+
+#google:before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: -1px;
+    bottom: 0;
+    width: 20px;
+    background: url("icon/google.svg") center / contain no-repeat;
+}
+
+#baidu:before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: -3px;
+    bottom: 0;
+    width: 20px;
+    background: url("icon/baidu.svg") center / contain no-repeat;
+}
+
 #search_google::placeholder {
-    color: #2d85f0;
+    color: #518ef8;
 }
 
 #search_baidu::placeholder {
-    color: #f4433c;
-}
-
-#search_translate::placeholder {
-    color: #0aa858;
+    color: #2c34e4;
 }
 
 .keyword {
@@ -111,15 +131,6 @@ input:focus {
 
 #keywordd span {
     line-height: normal;
-}
-
-#keywordd .clickable {
-    font-weight: bold;
-}
-
-.keyword span:not(.unclickable):hover {
-    cursor: pointer;
-    background: rgba(45, 133, 240, 0.5);
 }
 
 .box {
@@ -190,7 +201,7 @@ input:focus {
 
 #card .details #city,
 #detail {
-    font-family: "Comfortaa", "FontAwesome";
+    font-family: "Comfortaa";
     font-size: 20px;
     text-transform: capitalize;
     margin: 4px 0;
@@ -220,7 +231,7 @@ input:focus {
 }
 
 #card .details #temprange p {
-    font-family: "Comfortaa", "FontAwesome";
+    font-family: "Comfortaa";
     margin: 0;
 }
 
