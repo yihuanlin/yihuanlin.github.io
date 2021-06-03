@@ -76,36 +76,12 @@ input:focus {
     font-size: 18px;
 }
 
-label {
-    position: relative;
-}
-
-#google:before {
-    content: "";
-    position: absolute;
-    left: -20px;
-    top: -1px;
-    bottom: 0;
-    width: 20px;
-    background: url("icon/google.svg") center / contain no-repeat;
-}
-
-#baidu:before {
-    content: "";
-    position: absolute;
-    left: -20px;
-    top: -3px;
-    bottom: 0;
-    width: 20px;
-    background: url("icon/baidu.svg") center / contain no-repeat;
-}
-
 #search_google::placeholder {
-    color: #518ef8;
+    color: #2d85f0;
 }
 
 #search_baidu::placeholder {
-    color: #2c34e4;
+    color: #f4433c;
 }
 
 .keyword {
@@ -127,10 +103,6 @@ label {
     clear: both;
     width: calc(100%-70px);
     line-height: 30px;
-}
-
-#keywordd span {
-    line-height: normal;
 }
 
 .box {
