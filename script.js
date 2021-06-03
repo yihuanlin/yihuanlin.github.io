@@ -158,7 +158,17 @@ function clickEffect(e) {
 document.addEventListener("click", clickEffect);
 // Baidu search suggestions
 var bid = document.getElementById("search_baidu");
-$("#search_baidu").click(function() {
+bid.addEventListener("keyup", function() {
+    if (!bid.value) {
+        return;
+    }
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = 'https://suggestion.baidu.com/su?wd=' + bid.value + '&cb=baidu';
+    var h = document.getElementsByTagName('script')[0];
+    h.parentNode.insertBefore(s, h);
+}, false);
+/*$("#search_baidu").click(function() {
     var textb = $("#search_baidu");
     textb.keyup(function(event) {
         if (!bid.value) {
@@ -171,7 +181,7 @@ $("#search_baidu").click(function() {
         var h = document.getElementsByTagName('script')[0];
         h.parentNode.insertBefore(s, h);
     });
-});
+});*/
 
 function baidu(keys) {
     var len = keys.s.length;
@@ -241,7 +251,17 @@ function baidu(keys) {
 }
 // Google search suggestions
 var gid = document.getElementById("search_google");
-$("#search_google").click(function() {
+gid.addEventListener("keyup", function() {
+    if (!gid.value) {
+        return;
+    }
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=google';
+    var h = document.getElementsByTagName('script')[0];
+    h.parentNode.insertBefore(s, h);
+}, false);
+/*$("#search_google").click(function() {
     var textb = $("#search_google");
     textb.keyup(function(event) {
         if (!gid.value) {
@@ -254,7 +274,7 @@ $("#search_google").click(function() {
         var h = document.getElementsByTagName('script')[0];
         h.parentNode.insertBefore(s, h);
     });
-});
+});*/
 
 function google(keys) {
     var len = keys[1].length;
