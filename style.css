@@ -480,6 +480,11 @@ svg {
     #weathercontainer {
         display: none;
     }
+    .title {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 3.5em;
+    }
 }
 
 
