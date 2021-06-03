@@ -1095,10 +1095,10 @@ function handleJson(json) {
     var realweather = json.weather[0].main;
     var weatherid = json.weather[0].id;
     document.getElementById("summary").innerHTML = realweather;
-    document.getElementById("city").innerHTML = json.name + " &#xF041";
+    document.getElementById("city").innerHTML = json.name + " &#xe901";
     document.getElementById("detail").innerHTML = json.weather[0].description;
     document.getElementById("temp").innerHTML = Math.round(json.main.temp * 10) / 10 + "<span>℃</span>";
-    document.getElementById("temprange").innerHTML = "<p>" + Math.round(json.main.temp_min * 10) / 10 + "℃ to " + Math.round(json.main.temp_max * 10) / 10 + "℃</p><p> &#xF043 " + json.main.humidity + "%</p>";
+    document.getElementById("temprange").innerHTML = "<p>" + Math.round(json.main.temp_min * 10) / 10 + "℃ to " + Math.round(json.main.temp_max * 10) / 10 + "℃</p><p> &#xe90b " + json.main.humidity + "%</p>";
     let i;
     if (realweather == "Snow") {
         i = 0;
@@ -1222,6 +1222,6 @@ function setBackground(sunrise, sunset) {
 function getSysSun(rise, set, timezone) {
     sunrise = new Date((rise + timezone) * 1000);
     sunset = new Date((set + timezone) * 1000);
-    document.getElementById("temprange").insertAdjacentHTML("beforeend", "<p>&#xF185 " + sunrise.getUTCHours() + ":" + checkTime(sunrise.getUTCMinutes()) + " to " + sunset.getUTCHours() + ":" + checkTime(sunset.getUTCMinutes()) + "</p>");
+    document.getElementById("temprange").insertAdjacentHTML("beforeend", "<p>&#xe9d6 " + sunrise.getUTCHours() + ":" + checkTime(sunrise.getUTCMinutes()) + " to " + sunset.getUTCHours() + ":" + checkTime(sunset.getUTCMinutes()) + "</p>");
     setBackground(sunrise, sunset);
 }
