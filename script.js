@@ -168,86 +168,40 @@ bid.addEventListener("keyup", function() {
     var h = document.getElementsByTagName('script')[0];
     h.parentNode.insertBefore(s, h);
 }, false);
-/*$("#search_baidu").click(function() {
-    var textb = $("#search_baidu");
-    textb.keyup(function(event) {
-        if (!bid.value) {
-            return;
-        }
-        if (event.which != 39 && event.which != 40 && event.which != 37 && event.which != 38 && event.which != 13)
-            var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = 'https://suggestion.baidu.com/su?wd=' + bid.value + '&cb=baidu';
-        var h = document.getElementsByTagName('script')[0];
-        h.parentNode.insertBefore(s, h);
-    });
-});*/
 
 function baidu(keys) {
     var len = keys.s.length;
-    var keywordbox = $("#keywordb");
-    var textb = $("#search_baidu");
-    var hidebar = $("#googlebar");
+    var boxid = document.getElementById("keywordb");
+    var hid = document.getElementById("googlebar");
     if (len === 0) {
-        keywordbox.css({
-            display: "none",
-        });
-        hidebar.css({
-            display: "block",
-        });
+        boxid.style.display = "none";
+        hid.style.display = "block";
     } else {
-        keywordbox.css({
-            display: "block",
-        });
-        hidebar.css({
-            display: "none",
-        });
+        boxid.style.transform = "scaleY(1)";
+        boxid.style.display = "block";
+        hid.style.display = "none";
     }
     var spans = "";
     for (var i = 0; i < len; i++) {
         spans += "<span>" + keys.s[i] + "</span>";
     }
-    keywordbox.html(spans);
-    keywordbox.children().click(function() {
-        textb.val($(this).html());
-
-        keywordbox.animate({
-                height: 0,
-            },
-            10,
-            function() {
-                keywordbox.css({
-                    display: "none",
-                    height: "auto",
-                });
-                hidebar.css({
-                    display: "block",
-                });
-                keywordbox.empty();
-            }
-        );
-        textb.focus();
-        $("#baidubar").submit();
-    });
-    $(document).click(function() {
-        if (!$(event.target).closest("#baidubar,#search_baidu,#keywordb,.night-mode").length) {
-            keywordbox.animate({
-                    height: 0,
-                },
-                100,
-                function() {
-                    keywordbox.css({
-                        display: "none",
-                        height: "auto",
-                    });
-                    hidebar.css({
-                        display: "block",
-                    });
-                    keywordbox.empty();
-                }
-            );
+    boxid.innerHTML = spans;
+    for (var i = 0; i < boxid.children.length; i++) {
+        var ele = boxid.children[i];
+        ele.onclick = function() {
+            bid.value = this.innerHTML;
+            bid.focus();
+            tobaidu();
+        };
+    }
+    document.body.addEventListener('click', function(evt) {
+        var target = evt.target;
+        if ((target.id !== "keywordb") && (target.id !== "baidubar") && (target.id !== "search_baidu")) {
+            boxid.style.transform = "scaleY(0)";
+            hid.style.display = "block";
+            boxid.style.display = "none";
         }
-    });
+    }, false);
 }
 // Google search suggestions
 var gid = document.getElementById("search_google");
@@ -261,86 +215,40 @@ gid.addEventListener("keyup", function() {
     var h = document.getElementsByTagName('script')[0];
     h.parentNode.insertBefore(s, h);
 }, false);
-/*$("#search_google").click(function() {
-    var textb = $("#search_google");
-    textb.keyup(function(event) {
-        if (!gid.value) {
-            return;
-        }
-        if (event.which != 39 && event.which != 40 && event.which != 37 && event.which != 38 && event.which != 13)
-            var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=google';
-        var h = document.getElementsByTagName('script')[0];
-        h.parentNode.insertBefore(s, h);
-    });
-});*/
 
 function google(keys) {
     var len = keys[1].length;
-    var keywordbox = $("#keywordg");
-    var textb = $("#search_google");
-    var hidebar = $("#baidubar");
+    var boxid = document.getElementById("keywordg");
+    var hid = document.getElementById("baidubar");
     if (len === 0) {
-        keywordbox.css({
-            display: "none",
-        });
-        hidebar.css({
-            display: "block",
-        });
+        boxid.style.display = "none";
+        hid.style.display = "block";
     } else {
-        keywordbox.css({
-            display: "block",
-        });
-        hidebar.css({
-            display: "none",
-        });
+        boxid.style.transform = "scaleY(1)";
+        boxid.style.display = "block";
+        hid.style.display = "none";
     }
     var spans = "";
     for (var i = 0; i < len; i++) {
         spans += "<span>" + keys[1][i] + "</span>";
     }
-    keywordbox.html(spans);
-    keywordbox.children().click(function() {
-        textb.val($(this).html());
-
-        keywordbox.animate({
-                height: 0,
-            },
-            10,
-            function() {
-                keywordbox.css({
-                    display: "none",
-                    height: "auto",
-                });
-                hidebar.css({
-                    display: "block",
-                });
-                keywordbox.empty();
-            }
-        );
-        textb.focus();
-        $("#googlebar").submit();
-    });
-    $(document).click(function() {
-        if (!$(event.target).closest("#googlebar,#search_google,#keywordg,.night-mode").length) {
-            keywordbox.animate({
-                    height: 0,
-                },
-                100,
-                function() {
-                    keywordbox.css({
-                        display: "none",
-                        height: "auto",
-                    });
-                    hidebar.css({
-                        display: "block",
-                    });
-                    keywordbox.empty();
-                }
-            );
+    boxid.innerHTML = spans;
+    for (var i = 0; i < boxid.children.length; i++) {
+        var ele = boxid.children[i];
+        ele.onclick = function() {
+            gid.value = this.innerHTML;
+            gid.focus();
+            togoogle();
+        };
+    }
+    document.body.addEventListener('click', function(evt) {
+        var target = evt.target;
+        if ((target.id !== "keywordb") && (target.id !== "googlebar") && (target.id !== "search_google")) {
+            boxid.style.transform = "scaleY(0)";
+            hid.style.display = "block";
+            boxid.style.display = "none";
         }
-    });
+    }, false);
 }
 // go to search results
 function tobaidu() {
