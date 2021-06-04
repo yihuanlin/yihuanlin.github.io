@@ -951,7 +951,7 @@ function getWeather(lon, lat) {
     xhr.send();
 }
 
-!(function(e) {
+/*!(function(e) {
     var n,
         t = {},
         o = "jinrishici-token";
@@ -996,7 +996,19 @@ function getWeather(lon, lat) {
             document.attachEvent("onreadystatechange", function() {
                 "complete" == document.readyState && n();
             }));
-})(window);
+})(window);*/
+
+function hitokoto() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", "https://international.v1.hitokoto.cn/?c=i");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            var response = JSON.parse(xhr.responseText);
+            printH(response.hitokoto, response.from_who, response.from);
+        }
+    };
+    xhr.send();
+};
 
 function handleJson(json) {
     var realweather = json.weather[0].main;
@@ -1034,9 +1046,14 @@ function handleJson(json) {
     document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
     // realtime=setTimeout('getTime()', 20000)
     getSysSun(json.sys.sunrise, json.sys.sunset, json.timezone);
-    jinrishici.load(function(result) {
-        document.getElementById("hitokoto").innerHTML = result.data.content + "<p>──【" + result.data.origin.dynasty + "】" + result.data.origin.author + "《" + result.data.origin.title + "》</p>";
-    });
+    hitokoto();
+}
+
+function printH(content, author, origin) {
+    if (author == null) {
+        document.getElementById("hitokoto").innerHTML = content + "<p>──" + "《" + origin + "》</p>";
+    } else
+        document.getElementById("hitokoto").innerHTML = content + "<p>──" + author + "《" + origin + "》</p>";
 }
 
 function widgetResize() {
