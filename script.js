@@ -1,146 +1,3 @@
-// Day & Night animations
-let duration = 0.4;
-let isDay = true;
-let scale = 30;
-let toNightAnimation = gsap.timeline();
-if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-    toNightAnimation.pause();
-}
-toNightAnimation
-    .to(
-        "#circle", {
-            duration: duration,
-            ease: "power4.in",
-            scaleX: scale,
-            scaleY: scale,
-            x: 1,
-            transformOrigin: "100% 50%",
-        },
-        0
-    )
-    .set(
-        "#circle", {
-            scaleX: -scale,
-        },
-        duration
-    )
-    .to(
-        "#circle", {
-            duration: duration,
-            ease: "power4.out",
-            scaleX: -1,
-            scaleY: 1,
-            x: 2,
-        },
-        duration
-    )
-    .fromTo(
-        ".filter", {
-            filter: "brightness(100%)",
-        }, {
-            filter: "brightness(50%)",
-            duration: duration,
-        },
-        0
-    )
-    .to(
-        ".nmtext,.nmbar", {
-            color: "white",
-            duration: duration * 2,
-        },
-        0
-    )
-    .to(
-        ".nmbar", {
-            background: "rgba(0,0,0,.3)",
-            duration: duration * 2,
-        },
-        0
-    )
-    .fromTo(
-        ".nmbar", {
-            boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
-        }, {
-            boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
-            duration: duration,
-        },
-        0
-    )
-    .to(
-        "#cloud1", {
-            fill: "#101010",
-            duration: duration * 2,
-        },
-        0
-    )
-    .to(
-        "#cloud2", {
-            fill: "#191919",
-            duration: duration * 2,
-        },
-        0
-    )
-    .to(
-        "#cloud3", {
-            fill: "#2a2a2a",
-            duration: duration * 2,
-        },
-        0
-    )
-    .to(
-        "#sun", {
-            fill: "#3e3f57",
-            duration: duration * 2,
-        },
-        0
-    )
-    .to(
-        "#sunburst", {
-            display: "none",
-            duration: duration * 2,
-        },
-        0
-    );
-
-let stars = Array.from(document.getElementsByClassName("star"));
-stars.map((star) =>
-    gsap.to(star, {
-        duration: "random(0.4, 1.5)",
-        repeat: -1,
-        yoyo: true,
-        opacity: "random(0.2, 0.5)",
-    })
-);
-gsap.to(".clouds-big", {
-    duration: 15,
-    repeat: -1,
-    x: -74,
-    ease: "linear",
-});
-gsap.to(".clouds-medium", {
-    duration: 20,
-    repeat: -1,
-    x: -65,
-    ease: "linear",
-});
-gsap.to(".clouds-small", {
-    duration: 25,
-    repeat: -1,
-    x: -71,
-    ease: "linear",
-});
-
-let switchToggle = document.getElementById("input");
-switchToggle.addEventListener("change", () => toggle());
-
-let toggle = () => {
-    isDay = switchToggle.checked === true;
-    if (isDay) {
-        toNightAnimation.reverse();
-    } else {
-        toNightAnimation.play();
-    }
-};
 // Clickeffects
 function clickEffect(e) {
     var i = document.createElement("div");
@@ -988,14 +845,14 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
         t = "Rain";
     }
     document.getElementById("summary").innerHTML = t;
-    init(i);
-    window.addEventListener("resize", widgetResize);
-    // start animations
-    requestAnimationFrame(tick);
     document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
     risemin = rise[0] * 60 + rmin;
     setmin = set[0] * 60 + smin;
     setBackground(risemin, setmin);
+    init(i);
+    window.addEventListener("resize", widgetResize);
+    // start animations
+    requestAnimationFrame(tick);
 }
 
 function printH(content, author, origin) {
@@ -1023,7 +880,6 @@ function checkTime(m) {
 
 function loadStyleString(cssText) {
     var style = document.createElement("style");
-    style.type = "text/css";
     try {
         style.appendChild(document.createTextNode(cssText));
     } catch (ex) {
@@ -1089,3 +945,146 @@ function setBackground(risemin, setmin) {
     metaThemeColor.setAttribute("content", color);
     loadStyleString(css);
 }
+// Day & Night animations
+let duration = 0.4;
+let isDay = true;
+let scale = 30;
+let toNightAnimation = gsap.timeline();
+if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    toNightAnimation.pause();
+}
+toNightAnimation
+    .to(
+        "#circle", {
+            duration: duration,
+            ease: "power4.in",
+            scaleX: scale,
+            scaleY: scale,
+            x: 1,
+            transformOrigin: "100% 50%",
+        },
+        0
+    )
+    .set(
+        "#circle", {
+            scaleX: -scale,
+        },
+        duration
+    )
+    .to(
+        "#circle", {
+            duration: duration,
+            ease: "power4.out",
+            scaleX: -1,
+            scaleY: 1,
+            x: 2,
+        },
+        duration
+    )
+    .fromTo(
+        ".filter", {
+            filter: "brightness(100%)",
+        }, {
+            filter: "brightness(50%)",
+            duration: duration,
+        },
+        0
+    )
+    .to(
+        ".nmtext,.nmbar", {
+            color: "white",
+            duration: duration * 2,
+        },
+        0
+    )
+    .to(
+        ".nmbar", {
+            background: "rgba(0,0,0,.3)",
+            duration: duration * 2,
+        },
+        0
+    )
+    .fromTo(
+        ".nmbar", {
+            boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
+        }, {
+            boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
+            duration: duration,
+        },
+        0
+    )
+    .to(
+        "#cloud1", {
+            fill: "#101010",
+            duration: duration * 2,
+        },
+        0
+    )
+    .to(
+        "#cloud2", {
+            fill: "#191919",
+            duration: duration * 2,
+        },
+        0
+    )
+    .to(
+        "#cloud3", {
+            fill: "#2a2a2a",
+            duration: duration * 2,
+        },
+        0
+    )
+    .to(
+        "#sun", {
+            fill: "#3e3f57",
+            duration: duration * 2,
+        },
+        0
+    )
+    .to(
+        "#sunburst", {
+            display: "none",
+            duration: duration * 2,
+        },
+        0
+    );
+
+let stars = Array.from(document.getElementsByClassName("star"));
+stars.map((star) =>
+    gsap.to(star, {
+        duration: "random(0.4, 1.5)",
+        repeat: -1,
+        yoyo: true,
+        opacity: "random(0.2, 0.5)",
+    })
+);
+gsap.to(".clouds-big", {
+    duration: 15,
+    repeat: -1,
+    x: -74,
+    ease: "linear",
+});
+gsap.to(".clouds-medium", {
+    duration: 20,
+    repeat: -1,
+    x: -65,
+    ease: "linear",
+});
+gsap.to(".clouds-small", {
+    duration: 25,
+    repeat: -1,
+    x: -71,
+    ease: "linear",
+});
+
+let switchToggle = document.getElementById("input");
+switchToggle.addEventListener("change", () => toggle());
+
+let toggle = () => {
+    isDay = switchToggle.checked === true;
+    if (isDay) {
+        toNightAnimation.reverse();
+    } else {
+        toNightAnimation.play();
+    }
+};
