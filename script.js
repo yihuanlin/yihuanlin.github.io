@@ -929,11 +929,11 @@ function changeWeather(weather) {
 // end of weather set up
 function ipLookUp() {
     var xhr = new XMLHttpRequest();
-    xhr.open("get", "http://ip-api.com/json");
+    xhr.open("get", "https://ip.seeip.org/geoip");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
-            getWeather(response.lon, response.lat);
+            getWeather(response.longitude, response.latitude);
         }
     };
     xhr.send();
