@@ -351,7 +351,7 @@ var tickCount = 0;
 var rain = [];
 var leafs = [];
 var snow = [];
-ipLookUp();
+getWeather();
 
 function init(index) {
     onResize();
@@ -927,126 +927,75 @@ function changeWeather(weather) {
     startLightningTimer();
 }
 // end of weather set up
-function ipLookUp() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", "https://ip.seeip.org/geoip");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            var response = JSON.parse(xhr.responseText);
-            getWeather(response.longitude, response.latitude);
-        }
-    };
-    xhr.send();
-}
-
-function getWeather(lon, lat) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", "https://api.openweathermap.org/data/2.5/weather?lon=" + lon + "&lat=" + lat + "&appid=81687cda5c5bdb04678a2547f9a43d6d&units=metric");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            var json = JSON.parse(xhr.responseText);
-            handleJson(json);
-        }
-    };
-    xhr.send();
-}
-
-/*!(function(e) {
-    var n,
-        t = {},
-        o = "jinrishici-token";
-
-    function i() {
-        return 0;
+var xhr = new XMLHttpRequest();
+xhr.open("get", "https://international.v1.hitokoto.cn/?c=i");
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+        var response = JSON.parse(xhr.responseText);
+        printH(response.hitokoto, response.from_who, response.from);
     }
-
-    function r(e, n) {
-        var t = new XMLHttpRequest();
-        t.open("get", n),
-            (t.withCredentials = !0),
-            t.send(),
-            (t.onreadystatechange = function(n) {
-                if (4 === t.readyState) {
-                    var o = JSON.parse(t.responseText);
-                    "success" === o.status ? e(o) : console.error("Hitokoto API failed to load, error message: " + o.errMessage);
-                }
-            });
-    }
-    (t.load = function(n) {
-        return e.localStorage && e.localStorage.getItem(o) ?
-            (function(e, n) {
-                return r(e, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token=" + encodeURIComponent(n));
-            })(n, e.localStorage.getItem(o)) :
-            (function(n) {
-                return r(function(t) {
-                    e.localStorage.setItem(o, t.token), n(t);
-                }, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2");
-            })(n);
-    }),
-    (e.jinrishici = t),
-    i() ?
-        c() :
-        ((n = function() {
-                i() && c();
-            }),
-            "loading" != document.readyState ?
-            n() :
-            document.addEventListener ?
-            document.addEventListener("DOMContentLoaded", n) :
-            document.attachEvent("onreadystatechange", function() {
-                "complete" == document.readyState && n();
-            }));
-})(window);*/
-
-function hitokoto() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", "https://international.v1.hitokoto.cn/?c=i");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            var response = JSON.parse(xhr.responseText);
-            printH(response.hitokoto, response.from_who, response.from);
-        }
-    };
-    xhr.send();
 };
+xhr.send();
 
-function handleJson(json) {
-    var realweather = json.weather[0].main;
-    var weatherid = json.weather[0].id;
-    document.getElementById("summary").innerHTML = realweather;
-    document.getElementById("city").innerHTML = json.name + " &#xe901";
-    document.getElementById("detail").innerHTML = json.weather[0].description;
-    document.getElementById("temp").innerHTML = Math.round(json.main.temp * 10) / 10 + "<span>℃</span>";
-    document.getElementById("temprange").innerHTML = "<p>" + Math.round(json.main.temp_min * 10) / 10 + "℃ to " + Math.round(json.main.temp_max * 10) / 10 + "℃</p><p> &#xe90b " + json.main.humidity + "%</p>";
+function getWeather() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", "https://api.weatherapi.com/v1/forecast.json?key=d52e8a56753149df85e83459210406&q=auto:ip&days=1");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            var response = JSON.parse(xhr.responseText);
+            handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0]);
+        }
+    };
+    xhr.send();
+}
+
+function handleJson(city, temp, weather, code, wind, humidity, arr) {
+    document.getElementById("city").innerHTML = city + " &#xe901";
+    document.getElementById("detail").innerHTML = weather;
+    document.getElementById("temp").innerHTML = temp + "<span>℃</span>";
+    let rise = arr.astro.sunrise.split(':');
+    let rmin = rise[1].split(' ')[0]
+    let set = arr.astro.sunset.split(':');
+    let smin = set[1].split(' ')[0]
+    document.getElementById("temprange").innerHTML = "<p>" + arr.day.mintemp_c + "℃ to " + arr.day.maxtemp_c + "℃</p><p> &#xe90b " + humidity + "%</p>" + "<p>&#xe9d6 " + rise[0] + ":" + rmin + " to " + set[0] + ":" + smin + "</p>";
     let i;
-    if (realweather == "Snow") {
+    let t;
+    if (code == 1066 || code == 1069 || code == 1114 || code == 1204 || code == 1207 || code == 1210 || code == 1213 || code == 1216 || code == 1219 || code == 1222 || code == 1225 || code == 1237 || code == 1249 || code == 1252 || code == 1255 || code == 1258 || code == 1261 || code == 1264 || code == 1279 || code == 1282) {
         i = 0;
-    } else if (realweather == "Rain") {
-        i = 2;
-    } else if (realweather == "Thunderstorm") {
+        t = "Snow";
+    } else if (code > 1272 && code < 1283) {
         i = 3;
-    } else if (realweather == "Clear" && json.wind.speed < 6.7) {
+        t = "Drizzle";
+    } else if (code == 1000 && wind < 29) {
         i = 4;
-    } else if (realweather == "Clear") {
+        t = "Clear";
+    } else if (code == 1000) {
         i = 8;
-    } else if (realweather == "Clouds" && json.wind.speed < 6.7) {
+        t = "Wind";
+    } else if (code > 1002 && code < 1010 && wind < 29) {
         i = 5;
-    } else if (weatherid > 700 && weatherid < 800) {
+        t = "Cloud";
+    } else if (code > 1002 && code < 1010) {
+        i = 1;
+        t = "Wind";
+    } else if (code == 1030 || code == 1135 || code == 1147) {
         i = 6;
-    } else if (realweather == "Drizzle") {
+        t = "Fog";
+    } else if (code == 1072 || (code > 1149 && code < 1172)) {
         i = 7;
     } else {
-        i = 1;
+        i = 2;
+        t = "Rain";
     }
+    document.getElementById("summary").innerHTML = t;
     init(i);
-
     window.addEventListener("resize", widgetResize);
     // start animations
     requestAnimationFrame(tick);
     document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
-    // realtime=setTimeout('getTime()', 20000)
-    getSysSun(json.sys.sunrise, json.sys.sunset, json.timezone);
-    hitokoto();
+    risemin = rise[0] * 60 + rmin;
+    setmin = set[0] * 60 + smin;
+    setBackground(risemin, setmin);
 }
 
 function printH(content, author, origin) {
@@ -1083,9 +1032,7 @@ function loadStyleString(cssText) {
     document.getElementsByTagName("head")[0].appendChild(style);
 }
 
-function setBackground(sunrise, sunset) {
-    risemin = sunrise.getUTCHours() * 60 + sunrise.getUTCMinutes();
-    setmin = sunset.getUTCHours() * 60 + sunset.getUTCMinutes();
+function setBackground(risemin, setmin) {
     int = (setmin - risemin) / 8;
     realmin = new Date().getHours() * 60 + new Date().getMinutes();
     if (realmin <= risemin - int * 1.5) {
@@ -1141,11 +1088,4 @@ function setBackground(sunrise, sunset) {
     metaThemeColor = document.querySelector("meta[name=theme-color]");
     metaThemeColor.setAttribute("content", color);
     loadStyleString(css);
-}
-
-function getSysSun(rise, set, timezone) {
-    sunrise = new Date((rise + timezone) * 1000);
-    sunset = new Date((set + timezone) * 1000);
-    document.getElementById("temprange").insertAdjacentHTML("beforeend", "<p>&#xe9d6 " + sunrise.getUTCHours() + ":" + checkTime(sunrise.getUTCMinutes()) + " to " + sunset.getUTCHours() + ":" + checkTime(sunset.getUTCMinutes()) + "</p>");
-    setBackground(sunrise, sunset);
 }
