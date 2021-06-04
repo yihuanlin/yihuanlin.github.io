@@ -196,7 +196,7 @@ function baidu(keys) {
     }
     document.body.addEventListener('click', function(evt) {
         var target = evt.target;
-        if ((target.id !== "keywordb") && (target.id !== "baidubar") && (target.id !== "search_baidu")) {
+        if (target.id !== "keywordb" && target.id !== "baidubar" && target.id !== "search_baidu") {
             boxid.style.transform = "scaleY(0)";
             hid.style.display = "block";
             boxid.style.display = "none";
@@ -1086,51 +1086,51 @@ function loadStyleString(cssText) {
 function setBackground(sunrise, sunset) {
     risemin = sunrise.getUTCHours() * 60 + sunrise.getUTCMinutes();
     setmin = sunset.getUTCHours() * 60 + sunset.getUTCMinutes();
-    noonmin = (risemin + setmin) / 2;
+    int = (setmin - risemin) / 8;
     realmin = new Date().getHours() * 60 + new Date().getMinutes();
-    if (realmin <= risemin - 60) {
+    if (realmin <= risemin - int * 1.5) {
         i = "n5.webp";
         color = "#755be3";
-    } else if (realmin > risemin - 60 && realmin <= risemin - 30) {
+    } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
         i = "n6.webp";
         color = "#2a6a9e";
-    } else if (realmin > risemin - 30 && realmin <= risemin) {
+    } else if (realmin > risemin - int / 2 && realmin <= risemin) {
         i = "d0.webp";
         color = "#ed95d1";
-    } else if (realmin > risemin && realmin <= risemin + 30) {
+    } else if (realmin > risemin && realmin <= risemin + int / 2) {
         i = "d1.webp";
         color = "#de9cd7";
-    } else if (realmin > risemin + 30 && realmin <= risemin + 90) {
+    } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
         i = "d2.webp";
         color = "#3c82cc";
-    } else if (realmin > risemin + 90 && realmin <= risemin + 150) {
+    } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
         i = "d3.webp";
         color = "#95bdcc";
-    } else if (realmin > risemin + 150 && realmin <= risemin + 210) {
+    } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
         i = "d4.webp";
         color = "#68c9f1";
-    } else if (realmin > risemin + 210 && realmin <= noonmin + 60) {
+    } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
         i = "d5.webp";
         color = "#2fa0e6";
-    } else if (realmin > noonmin + 60 && realmin <= noonmin + 120) {
+    } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
         i = "d6.webp";
         color = "#6b8b4c";
-    } else if (realmin > noonmin + 120 && realmin <= setmin - 60) {
+    } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
         i = "d7.webp";
         color = "#af5c18";
-    } else if (realmin > setmin - 60 && realmin <= setmin) {
+    } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
         i = "d8.webp";
         color = "#da644f";
-    } else if (realmin > setmin && realmin <= setmin + 30) {
+    } else if (realmin > setmin && realmin <= setmin + int / 2) {
         i = "n0.webp";
         color = "#b6bbf5";
-    } else if (realmin > setmin + 30 && realmin <= setmin + 60) {
+    } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
         i = "n1.webp";
         color = "#897ddc";
-    } else if (realmin > setmin + 60 && realmin <= setmin + 120) {
+    } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
         i = "n2.webp";
         color = "#3e7ee3";
-    } else if (realmin > setmin + 60 && realmin <= 1320) {
+    } else if (realmin > setmin + int * 3 && realmin <= 1320) {
         i = "n3.webp";
         color = "#36315a";
     } else if (realmin > 1320) {
