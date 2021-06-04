@@ -811,10 +811,14 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     document.getElementById("detail").innerHTML = weather;
     document.getElementById("temp").innerHTML = temp + "<span>℃</span>";
     let rise = arr.astro.sunrise.split(':');
-    let rmin = rise[1].split(' ')[0]
+    let rmin = parseFloat(rise[1].split(' ')[0]);
     let set = arr.astro.sunset.split(':');
-    let smin = set[1].split(' ')[0]
-    document.getElementById("temprange").innerHTML = "<p>" + arr.day.mintemp_c + "℃ to " + arr.day.maxtemp_c + "℃</p><p> &#xe90b " + humidity + "%</p>" + "<p>&#xe9d6 " + rise[0] + ":" + rmin + " to " + set[0] + ":" + smin + "</p>";
+    let shr = parseFloat(set[0]);
+    if (set[1].indexOf("PM") == 3) {
+        shr = shr + 12;
+    }
+    let smin = parseFloat(set[1].split(' ')[0]);
+    document.getElementById("temprange").innerHTML = "<p>" + arr.day.mintemp_c + "℃ to " + arr.day.maxtemp_c + "℃</p><p> &#xe90b " + humidity + "%</p>" + "<p>&#xe9d6 " + rise[0] + ":" + rmin + " to " + shr + ":" + smin + "</p>";
     let i;
     let t;
     if (code == 1066 || code == 1069 || code == 1114 || code == 1204 || code == 1207 || code == 1210 || code == 1213 || code == 1216 || code == 1219 || code == 1222 || code == 1225 || code == 1237 || code == 1249 || code == 1252 || code == 1255 || code == 1258 || code == 1261 || code == 1264 || code == 1279 || code == 1282) {
@@ -846,8 +850,8 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     }
     document.getElementById("summary").innerHTML = t;
     document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
-    risemin = rise[0] * 60 + rmin;
-    setmin = set[0] * 60 + smin;
+    risemin = parseFloat(rise[0]) * 60 + rmin;
+    setmin = shr * 60 + smin;
     setBackground(risemin, setmin);
     init(i);
     window.addEventListener("resize", widgetResize);
