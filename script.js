@@ -260,11 +260,11 @@ function togoogle() {
 }
 // start of weather set up
 gsap.registerPlugin(MotionPathPlugin);
+var container = document.getElementById("weathercontainer");
+var card = document.getElementById("card");
 if (window.innerWidth <= 717) {
-    document.getElementById("card").classList.remove("nmbar");
+    card.classList.remove("nmbar");
 }
-var container = $("#weathercontainer");
-var card = $("#card");
 var innerSVG = Snap("#inner");
 var outerSVG = Snap("#outer");
 var backSVG = Snap("#back");
@@ -366,10 +366,10 @@ function init(index) {
 }
 
 function onResize() {
-    sizes.container.width = container.width();
-    sizes.container.height = container.height();
-    sizes.card.width = card.width();
-    sizes.card.height = card.height();
+    sizes.container.width = container.offsetWidth;
+    sizes.container.height = container.offsetHeight;
+    sizes.card.width = card.offsetWidth;
+    sizes.card.height = card.offsetHeight;
     innerSVG.attr({
         width: sizes.card.width,
         height: sizes.card.height,
@@ -712,7 +712,7 @@ function tick() {
 
 function reset() {
     for (var i = 0; i < weather.length; i++) {
-        container.removeClass(weather[i].type);
+        container.classList.remove(weather[i].type);
     }
 }
 
@@ -768,7 +768,7 @@ function changeWeather(weather) {
 
     currentWeather = weather;
 
-    container.addClass(weather.type);
+    container.classList.add(weather.type);
 
     // windSpeed
 
