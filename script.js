@@ -796,7 +796,7 @@ xhr.send();
 
 function getWeather() {
     var xhr = new XMLHttpRequest();
-    xhr.open("get", "https://api.weatherapi.com/v1/forecast.json?key=d52e8a56753149df85e83459210406&q=auto:ip&days=1");
+    xhr.open("get", "https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
