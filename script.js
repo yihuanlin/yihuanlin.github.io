@@ -810,6 +810,8 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     document.getElementById("city").innerHTML = city + " &#xe901";
     document.getElementById("detail").innerHTML = weather;
     document.getElementById("temp").innerHTML = temp + "<span>℃</span>";
+    document.getElementById("summary").innerHTML = t;
+    document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
     let rise = arr.astro.sunrise.split(':');
     let rmin = parseFloat(rise[1].split(' ')[0]);
     let set = arr.astro.sunset.split(':');
@@ -848,8 +850,6 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
         i = 2;
         t = "Rain";
     }
-    document.getElementById("summary").innerHTML = t;
-    document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
     risemin = parseFloat(rise[0]) * 60 + rmin;
     setmin = shr * 60 + smin;
     setBackground(risemin, setmin);
