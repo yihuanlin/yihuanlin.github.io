@@ -948,7 +948,7 @@ function setBackground(risemin, setmin) {
         i = "n4.webp";
         color = "#3d3d88";
     }
-    css = "#fill_screen{background:url('https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/background/" + i + "') no-repeat local center center/cover;}";
+    css = "#fill_screen{background:url('/background/" + i + "') no-repeat local center center/cover;}";
     metaThemeColor = document.querySelector("meta[name=theme-color]");
     metaThemeColor.setAttribute("content", color);
     loadStyleString(css);
