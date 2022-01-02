@@ -5,35 +5,34 @@
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fff",
-    "description": "An HTML homepage",
     "icons": [
         {
-            "src": "https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-32x32.png",
+            "src": "/icon/cropped-search-32x32.png",
             "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-150x150.png",
+            "src": "/icon/cropped-search-150x150.png",
             "sizes": "150x150",
             "type": "image/png"
         },
         {
-            "src": "https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-180x180.png",
+            "src": "/icon/cropped-search-180x180.png",
             "sizes": "180x180",
             "type": "image/png"
         },
         {
-            "src": "ihttps://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-192x192.png",
+            "src": "/icon/cropped-search-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-270x270.png",
+            "src": "/icon/cropped-search-270x270.png",
             "sizes": "270x270",
             "type": "image/png"
         },
         {
-            "src": "https://cdn.jsdelivr.net/gh/yihuanlin/yihuanlin.github.io/icon/cropped-search-300x300.png",
+            "src": "/icon/cropped-search-300x300.png",
             "sizes": "300x300",
             "type": "image/png"
         }
