@@ -1,13 +1,17 @@
+// register service worker
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
 // Clickeffects
 function clickEffect(e) {
     var i = document.createElement("div");
     (i.className = "clickEffect"),
-    (i.style.top = e.clientY + "px"),
-    (i.style.left = e.clientX + "px"),
-    document.body.appendChild(i),
+        (i.style.top = e.clientY + "px"),
+        (i.style.left = e.clientX + "px"),
+        document.body.appendChild(i),
         i.addEventListener(
             "animationend",
-            function() {
+            function () {
                 i.parentElement.removeChild(i);
             }.bind(this)
         );
@@ -15,7 +19,7 @@ function clickEffect(e) {
 document.addEventListener("click", clickEffect);
 // Baidu search suggestions
 var bid = document.getElementById("search_baidu");
-bid.addEventListener("keyup", function() {
+bid.addEventListener("keyup", function () {
     if (!bid.value) {
         return;
     }
@@ -45,13 +49,13 @@ function baidu(keys) {
     boxid.innerHTML = spans;
     for (var i = 0; i < boxid.children.length; i++) {
         var ele = boxid.children[i];
-        ele.onclick = function() {
+        ele.onclick = function () {
             bid.value = this.innerHTML;
             bid.focus();
             tobaidu();
         };
     }
-    document.body.addEventListener('click', function(evt) {
+    document.body.addEventListener('click', function (evt) {
         var target = evt.target;
         if (target.id !== "keywordb" && target.id !== "baidubar" && target.id !== "search_baidu") {
             boxid.style.transform = "scaleY(0)";
@@ -62,7 +66,7 @@ function baidu(keys) {
 }
 // Google search suggestions
 var gid = document.getElementById("search_google");
-gid.addEventListener("keyup", function() {
+gid.addEventListener("keyup", function () {
     if (!gid.value) {
         return;
     }
@@ -92,13 +96,13 @@ function google(keys) {
     boxid.innerHTML = spans;
     for (var i = 0; i < boxid.children.length; i++) {
         var ele = boxid.children[i];
-        ele.onclick = function() {
+        ele.onclick = function () {
             gid.value = this.innerHTML;
             gid.focus();
             togoogle();
         };
     }
-    document.body.addEventListener('click', function(evt) {
+    document.body.addEventListener('click', function (evt) {
         var target = evt.target;
         if ((target.id !== "keywordb") && (target.id !== "googlebar") && (target.id !== "search_google")) {
             boxid.style.transform = "scaleY(0)";
@@ -156,42 +160,42 @@ var sizes = {
     },
 };
 var clouds = [{
-        group: Snap.select("#cloud1"),
-    },
-    {
-        group: Snap.select("#cloud2"),
-    },
-    {
-        group: Snap.select("#cloud3"),
-    },
+    group: Snap.select("#cloud1"),
+},
+{
+    group: Snap.select("#cloud2"),
+},
+{
+    group: Snap.select("#cloud3"),
+},
 ];
 var weather = [{
-        type: "snow",
-    },
-    {
-        type: "wind",
-    },
-    {
-        type: "rain",
-    },
-    {
-        type: "thunder",
-    },
-    {
-        type: "sun",
-    },
-    {
-        type: "cloud",
-    },
-    {
-        type: "haze",
-    },
-    {
-        type: "drizzle",
-    },
-    {
-        type: "clearwind",
-    },
+    type: "snow",
+},
+{
+    type: "wind",
+},
+{
+    type: "rain",
+},
+{
+    type: "thunder",
+},
+{
+    type: "sun",
+},
+{
+    type: "cloud",
+},
+{
+    type: "haze",
+},
+{
+    type: "drizzle",
+},
+{
+    type: "clearwind",
+},
 ];
 var settings = {
     windSpeed: 2,
@@ -247,12 +251,12 @@ function onResize() {
     gsap.fromTo(
         sunburst.node,
         20, {
-            rotation: 0,
-        }, {
-            rotation: 360,
-            repeat: -1,
-            ease: "power0.inOut",
-        }
+        rotation: 0,
+    }, {
+        rotation: 360,
+        repeat: -1,
+        ease: "power0.inOut",
+    }
     );
     leafMask.attr({
         x: 0,
@@ -282,8 +286,8 @@ function drawCloud(cloud, i) {
     var path = points.join(" ");
     if (!cloud.path) cloud.path = cloud.group.path();
     cloud.path.animate({
-            d: path,
-        },
+        d: path,
+    },
         0
     );
 }
@@ -300,16 +304,16 @@ function makeRain() {
     rain.push(line);
     gsap.fromTo(
         line.node, {
-            x: x,
-            y: 0 - lineLength,
-        }, {
-            duration: 1,
-            delay: Math.random(),
-            y: sizes.card.height,
-            ease: "power2.in",
-            onComplete: onRainEnd,
-            onCompleteParams: [line, lineWidth, x, currentWeather.type],
-        }
+        x: x,
+        y: 0 - lineLength,
+    }, {
+        duration: 1,
+        delay: Math.random(),
+        y: sizes.card.height,
+        ease: "power2.in",
+        onComplete: onRainEnd,
+        onCompleteParams: [line, lineWidth, x, currentWeather.type],
+    }
     );
 }
 
@@ -347,20 +351,20 @@ function makeSplash(x, type) {
     splash.node.style.strokeDasharray = splashLength + " " + pathLength;
     gsap.fromTo(
         splash.node, {
-            strokeWidth: 2,
-            y: yOffset,
-            x: xOffset + 20 + x,
-            opacity: 1,
-            strokeDashoffset: splashLength,
-        }, {
-            duration: speed,
-            strokeWidth: 0,
-            strokeDashoffset: -pathLength,
-            opacity: 1,
-            onComplete: onSplashComplete,
-            onCompleteParams: [splash],
-            ease: "slow(0.4, 0.1, false)",
-        }
+        strokeWidth: 2,
+        y: yOffset,
+        x: xOffset + 20 + x,
+        opacity: 1,
+        strokeDashoffset: splashLength,
+    }, {
+        duration: speed,
+        strokeWidth: 0,
+        strokeDashoffset: -pathLength,
+        opacity: 1,
+        onComplete: onSplashComplete,
+        onCompleteParams: [splash],
+        ease: "slow(0.4, 0.1, false)",
+    }
     );
 }
 
@@ -393,32 +397,32 @@ function makeLeaf() {
         endX = sizes.container.width + 50;
         leafs.push(outerLeaf);
         var motionPath = [{
-                x: x,
-                y: y,
-            },
-            {
-                x: xBezier,
-                y: Math.random() * endY + endY / 3,
-            },
-            {
-                x: endX,
-                y: endY,
-            },
+            x: x,
+            y: y,
+        },
+        {
+            x: xBezier,
+            y: Math.random() * endY + endY / 3,
+        },
+        {
+            x: endX,
+            y: endY,
+        },
         ];
         gsap.fromTo(
             outerLeaf.node, {
-                rotation: Math.random() * 180,
-                x: x,
-                y: areaY + Math.random() * areaY + 10,
-                scale: scale,
-            }, {
-                duration: 2,
-                rotation: Math.random() * 360,
-                motionPath: motionPath,
-                onComplete: onLeafEnd,
-                onCompleteParams: [outerLeaf],
-                ease: "power0.in",
-            }
+            rotation: Math.random() * 180,
+            x: x,
+            y: areaY + Math.random() * areaY + 10,
+            scale: scale,
+        }, {
+            duration: 2,
+            rotation: Math.random() * 360,
+            motionPath: motionPath,
+            onComplete: onLeafEnd,
+            onCompleteParams: [outerLeaf],
+            ease: "power0.in",
+        }
         );
     } else {
         newLeaf = leaf.clone().appendTo(innerLeafHolder).attr({
@@ -429,32 +433,32 @@ function makeLeaf() {
         endX = sizes.card.width + 50;
         leafs.push(newLeaf);
         var motionPath = [{
-                x: x,
-                y: y,
-            },
-            {
-                x: xBezier,
-                y: Math.random() * endY + endY / 3,
-            },
-            {
-                x: endX,
-                y: endY,
-            },
+            x: x,
+            y: y,
+        },
+        {
+            x: xBezier,
+            y: Math.random() * endY + endY / 3,
+        },
+        {
+            x: endX,
+            y: endY,
+        },
         ];
         gsap.fromTo(
             newLeaf.node, {
-                rotation: Math.random() * 180,
-                x: x,
-                y: areaY + Math.random() * areaY,
-                scale: scale,
-            }, {
-                duration: 2,
-                rotation: Math.random() * 360,
-                motionPath: motionPath,
-                onComplete: onLeafEnd,
-                onCompleteParams: [newLeaf],
-                ease: "power0.in",
-            }
+            rotation: Math.random() * 180,
+            x: x,
+            y: areaY + Math.random() * areaY,
+            scale: scale,
+        }, {
+            duration: 2,
+            rotation: Math.random() * 360,
+            motionPath: motionPath,
+            onComplete: onLeafEnd,
+            onCompleteParams: [newLeaf],
+            ease: "power0.in",
+        }
         );
     }
     //	var motionPath = [{x:60, y:60}, {x:Math.random()*200+60, y:Math.random()*150+60}, {x:Math.random()*250+260, y:Math.random()*150+260}];
@@ -501,24 +505,24 @@ function makeSnow() {
 
     gsap.fromTo(
         newSnow.node, {
-            x: x,
-            y: y,
-        }, {
-            duration: 3 + Math.random() * 5,
-            y: endY,
-            onComplete: onSnowEnd,
-            onCompleteParams: [newSnow],
-            ease: "power0.in",
-        }
+        x: x,
+        y: y,
+    }, {
+        duration: 3 + Math.random() * 5,
+        y: endY,
+        onComplete: onSnowEnd,
+        onCompleteParams: [newSnow],
+        ease: "power0.in",
+    }
     );
     gsap.fromTo(
         newSnow.node, {
-            scale: 0,
-        }, {
-            duration: 1,
-            scale: scale,
-            ease: "power1.inOut",
-        }
+        scale: 0,
+    }, {
+        duration: 1,
+        scale: scale,
+        ease: "power1.inOut",
+    }
     );
     gsap.to(newSnow.node, {
         duration: 2,
@@ -584,12 +588,12 @@ function lightning() {
     startLightningTimer();
     gsap.fromTo(
         card, {
-            y: -30,
-        }, {
-            duration: 0.75,
-            y: 0,
-            ease: "elastic",
-        }
+        y: -30,
+    }, {
+        duration: 0.75,
+        y: 0,
+        ease: "elastic",
+    }
     );
 
     var pathX = 30 + Math.random() * (sizes.card.width - 60);
@@ -612,7 +616,7 @@ function lightning() {
         duration: 1,
         opacity: 0,
         ease: "power4.out",
-        onComplete: function() {
+        onComplete: function () {
             strike.remove();
             strike = null;
         },
@@ -786,7 +790,7 @@ function changeWeather(weather) {
 // end of weather set up
 var xhr = new XMLHttpRequest();
 xhr.open("get", "https://v1.hitokoto.cn/?c=i");
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         var response = JSON.parse(xhr.responseText);
         printH(response.hitokoto, response.from_who, response.from);
@@ -797,7 +801,7 @@ xhr.send();
 function getWeather() {
     var xhr = new XMLHttpRequest();
     xhr.open("get", "https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
             handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0]);
@@ -960,96 +964,96 @@ if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").mat
 toNightAnimation
     .to(
         "#circle", {
-            duration: duration,
-            ease: "power4.in",
-            scaleX: scale,
-            scaleY: scale,
-            x: 1,
-            transformOrigin: "100% 50%",
-        },
+        duration: duration,
+        ease: "power4.in",
+        scaleX: scale,
+        scaleY: scale,
+        x: 1,
+        transformOrigin: "100% 50%",
+    },
         0
     )
     .set(
         "#circle", {
-            scaleX: -scale,
-        },
+        scaleX: -scale,
+    },
         duration
     )
     .to(
         "#circle", {
-            duration: duration,
-            ease: "power4.out",
-            scaleX: -1,
-            scaleY: 1,
-            x: 2,
-        },
+        duration: duration,
+        ease: "power4.out",
+        scaleX: -1,
+        scaleY: 1,
+        x: 2,
+    },
         duration
     )
     .fromTo(
         ".filter", {
-            filter: "brightness(100%)",
-        }, {
-            filter: "brightness(50%)",
-            duration: duration,
-        },
+        filter: "brightness(100%)",
+    }, {
+        filter: "brightness(50%)",
+        duration: duration,
+    },
         0
     )
     .to(
         ".nmtext,.nmbar", {
-            color: "white",
-            duration: duration * 2,
-        },
+        color: "white",
+        duration: duration * 2,
+    },
         0
     )
     .to(
         ".nmbar", {
-            background: "rgba(0,0,0,.3)",
-            duration: duration * 2,
-        },
+        background: "rgba(0,0,0,.3)",
+        duration: duration * 2,
+    },
         0
     )
     .fromTo(
         ".nmbar", {
-            boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
-        }, {
-            boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
-            duration: duration,
-        },
+        boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
+    }, {
+        boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
+        duration: duration,
+    },
         0
     )
     .to(
         "#cloud1", {
-            fill: "#101010",
-            duration: duration * 2,
-        },
+        fill: "#101010",
+        duration: duration * 2,
+    },
         0
     )
     .to(
         "#cloud2", {
-            fill: "#191919",
-            duration: duration * 2,
-        },
+        fill: "#191919",
+        duration: duration * 2,
+    },
         0
     )
     .to(
         "#cloud3", {
-            fill: "#2a2a2a",
-            duration: duration * 2,
-        },
+        fill: "#2a2a2a",
+        duration: duration * 2,
+    },
         0
     )
     .to(
         "#sun", {
-            fill: "#3e3f57",
-            duration: duration * 2,
-        },
+        fill: "#3e3f57",
+        duration: duration * 2,
+    },
         0
     )
     .to(
         "#sunburst", {
-            display: "none",
-            duration: duration * 2,
-        },
+        display: "none",
+        duration: duration * 2,
+    },
         0
     );
 
