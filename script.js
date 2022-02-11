@@ -145,6 +145,7 @@ const sunburst = Snap.select('#sunburst')
 const outerSplashHolder = outerSVG.group()
 const outerLeafHolder = outerSVG.group()
 const outerSnowHolder = outerSVG.group()
+let currentWeather
 let lightningTimeout
 outerLeafHolder.attr({
   'clip-path': leafMask
@@ -294,11 +295,11 @@ function drawCloud (cloud, i) {
 
 function makeRain () {
   const lineWidth = Math.random() * 3
-  const lineLength = currentWeather.type == 'thunder' ? 35 : 14
+  const lineLength = currentWeather.type === 'thunder' ? 35 : 14
   const x = Math.random() * (sizes.card.width - 40) + 20
   const line = this['innerRainHolder' + (3 - Math.floor(lineWidth))].path('M0,0 0,' + lineLength).attr({
     fill: 'none',
-    stroke: currentWeather.type == 'thunder' ? '#777' : '#0000ff',
+    stroke: currentWeather.type === 'thunder' ? '#777' : '#0000ff',
     strokeWidth: lineWidth
   })
   rain.push(line)
@@ -330,10 +331,10 @@ function onRainEnd (line, width, x, type) {
 }
 
 function makeSplash (x, type) {
-  const splashLength = type == 'thunder' ? 30 : 20
-  const splashBounce = type == 'thunder' ? 120 : 100
+  const splashLength = type === 'thunder' ? 30 : 20
+  const splashBounce = type === 'thunder' ? 120 : 100
   const splashDistance = 80
-  const speed = type == 'thunder' ? 0.7 : 0.5
+  const speed = type === 'thunder' ? 0.7 : 0.5
   const splashUp = 0 - Math.random() * splashBounce
   const randomX = Math.random() * splashDistance - splashDistance / 2
   const points = []
@@ -342,7 +343,7 @@ function makeSplash (x, type) {
   points.push(randomX * 2 + ',' + splashDistance)
   const splash = outerSplashHolder.path(points.join(' ')).attr({
     fill: 'none',
-    stroke: type == 'thunder' ? '#777' : '#0000ff',
+    stroke: type === 'thunder' ? '#777' : '#0000ff',
     strokeWidth: 1
   })
   const pathLength = Snap.path.getTotalLength(splash)
@@ -381,7 +382,6 @@ function makeLeaf () {
   let y = areaY + Math.random() * areaY
   let endY = y - (Math.random() * (areaY * 2) - areaY)
   let x
-  let endX
   const colors = ['#76993E', '#4A5E23', '#6D632F']
   const color = colors[Math.floor(Math.random() * colors.length)]
   let xBezier
@@ -394,9 +394,8 @@ function makeLeaf () {
     y = y + 10
     endY = endY + 10
     xBezier = (sizes.container.width + x) / 2
-    endX = sizes.container.width + 50
     leafs.push(outerLeaf)
-    var motionPath = [{
+    const motionPath = [{
       x: x,
       y: y
     },
@@ -405,7 +404,7 @@ function makeLeaf () {
       y: Math.random() * endY + endY / 3
     },
     {
-      x: endX,
+      x: sizes.container.width + 50,
       y: endY
     }
     ]
@@ -430,9 +429,8 @@ function makeLeaf () {
     })
     x = -100
     xBezier = sizes.card.width / 2
-    endX = sizes.card.width + 50
     leafs.push(newLeaf)
-    var motionPath = [{
+    const motionPath = [{
       x: x,
       y: y
     },
@@ -441,7 +439,7 @@ function makeLeaf () {
       y: Math.random() * endY + endY / 3
     },
     {
-      x: endX,
+      x: sizes.card.width + 50,
       y: endY
     }
     ]
@@ -461,7 +459,7 @@ function makeLeaf () {
       }
     )
   }
-  //	var motionPath = [{x:60, y:60}, {x:Math.random()*200+60, y:Math.random()*150+60}, {x:Math.random()*250+260, y:Math.random()*150+260}];
+  // var motionPath = [{x:60, y:60}, {x:Math.random()*200+60, y:Math.random()*150+60}, {x:Math.random()*250+260, y:Math.random()*150+260}];
 }
 
 function onLeafEnd (leaf) {
@@ -479,7 +477,7 @@ function makeSnow () {
   const scale = 0.5 + Math.random() * 0.5
   let newSnow
   let x = 20 + Math.random() * (sizes.card.width - 40)
-  let endX // = x - ((Math.random() * (areaX * 2)) - areaX)
+  // let endX = x - ((Math.random() * (areaX * 2)) - areaX)
   let y = -10
   let endY
   if (scale > 0.8) {
@@ -557,7 +555,7 @@ function tick () {
   }
 
   for (let i = 0; i < clouds.length; i++) {
-    if (currentWeather.type == 'sun' || currentWeather.type == 'clearwind') {
+    if (currentWeather.type === 'sun' || currentWeather.type === 'clearwind') {
       if (clouds[i].offset > -(sizes.card.width * 1.5)) clouds[i].offset += settings.windSpeed / (i + 1)
       if (clouds[i].offset > sizes.card.width * 2.5) clouds[i].offset = -(sizes.card.width * 1.5)
       clouds[i].group.transform('t' + clouds[i].offset + ',' + 0)
@@ -579,7 +577,7 @@ function reset () {
 
 function startLightningTimer () {
   if (lightningTimeout) clearTimeout(lightningTimeout)
-  if (currentWeather.type == 'thunder') {
+  if (currentWeather.type === 'thunder') {
     lightningTimeout = setTimeout(lightning, Math.random() * 6000)
   }
 }
@@ -818,23 +816,23 @@ function handleJson (city, temp, weather, code, wind, humidity, arr) {
   const rmin = parseFloat(rise[1].split(' ')[0])
   const set = arr.astro.sunset.split(':')
   let shr = parseFloat(set[0])
-  if (set[1].indexOf('PM') == 3) {
+  if (set[1].indexOf('PM') === 3) {
     shr = shr + 12
   }
   const smin = parseFloat(set[1].split(' ')[0])
   document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '℃ to ' + arr.day.maxtemp_c + '℃</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>'
   let i
   let t
-  if (code == 1066 || code == 1069 || code == 1114 || code == 1204 || code == 1207 || code == 1210 || code == 1213 || code == 1216 || code == 1219 || code == 1222 || code == 1225 || code == 1237 || code == 1249 || code == 1252 || code == 1255 || code == 1258 || code == 1261 || code == 1264 || code == 1279 || code == 1282) {
+  if (code === 1066 || code === 1069 || code === 1114 || code === 1204 || code === 1207 || code === 1210 || code === 1213 || code === 1216 || code === 1219 || code === 1222 || code === 1225 || code === 1237 || code === 1249 || code === 1252 || code === 1255 || code === 1258 || code === 1261 || code === 1264 || code === 1279 || code === 1282) {
     i = 0
     t = 'Snow'
   } else if (code > 1272 && code < 1283) {
     i = 3
     t = 'Drizzle'
-  } else if (code == 1000 && wind < 29) {
+  } else if (code === 1000 && wind < 29) {
     i = 4
     t = 'Clear'
-  } else if (code == 1000) {
+  } else if (code === 1000) {
     i = 8
     t = 'Wind'
   } else if (code > 1002 && code < 1010 && wind < 29) {
@@ -843,10 +841,10 @@ function handleJson (city, temp, weather, code, wind, humidity, arr) {
   } else if (code > 1002 && code < 1010) {
     i = 1
     t = 'Wind'
-  } else if (code == 1030 || code == 1135 || code == 1147) {
+  } else if (code === 1030 || code === 1135 || code === 1147) {
     i = 6
     t = 'Fog'
-  } else if (code == 1072 || (code > 1149 && code < 1172)) {
+  } else if (code === 1072 || (code > 1149 && code < 1172)) {
     i = 7
   } else {
     i = 2
@@ -854,8 +852,8 @@ function handleJson (city, temp, weather, code, wind, humidity, arr) {
   }
   document.getElementById('summary').innerHTML = t
   document.getElementById('time').innerHTML = new Date().getHours() + ':' + checkTime(new Date().getMinutes())
-  risemin = parseFloat(rise[0]) * 60 + rmin
-  setmin = shr * 60 + smin
+  const risemin = parseFloat(rise[0]) * 60 + rmin
+  const setmin = shr * 60 + smin
   setBackground(risemin, setmin)
   init(i)
   window.addEventListener('resize', widgetResize)
@@ -898,6 +896,8 @@ function loadStyleString (cssText) {
 function setBackground (risemin, setmin) {
   const int = (setmin - risemin) / 8
   const realmin = new Date().getHours() * 60 + new Date().getMinutes()
+  let i
+  let color
   if (realmin <= risemin - int * 1.5) {
     i = 'n5.webp'
     color = '#755be3'
