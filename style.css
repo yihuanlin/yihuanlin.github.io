@@ -316,6 +316,10 @@ input:focus {
 
 /* Night Mode Button */
 
+.star {
+    fill: #fff5a6;
+}
+
 .night-mode {
     z-index: 9999;
     margin: 0;

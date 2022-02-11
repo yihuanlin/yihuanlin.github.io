@@ -960,7 +960,10 @@ let scale = 30;
 let toNightAnimation = gsap.timeline();
 if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
     toNightAnimation.pause();
+} else {
+    document.getElementById("sunburst").style.display = "none";
 }
+
 toNightAnimation
     .to(
         "#circle", {
@@ -1008,7 +1011,7 @@ toNightAnimation
     .to(
         ".nmbar", {
         background: "rgba(0,0,0,.3)",
-        duration: duration * 2,
+        duration: duration,
     },
         0
     )
@@ -1024,21 +1027,21 @@ toNightAnimation
     .to(
         "#cloud1", {
         fill: "#101010",
-        duration: duration * 2,
+        duration: duration,
     },
         0
     )
     .to(
         "#cloud2", {
         fill: "#191919",
-        duration: duration * 2,
+        duration: duration,
     },
         0
     )
     .to(
         "#cloud3", {
         fill: "#2a2a2a",
-        duration: duration * 2,
+        duration: duration,
     },
         0
     )
@@ -1051,7 +1054,7 @@ toNightAnimation
     )
     .to(
         "#sunburst", {
-        display: "none",
+        opacity: "0",
         duration: duration * 2,
     },
         0
@@ -1087,10 +1090,10 @@ gsap.to(".clouds-small", {
 
 let switchToggle = document.getElementById("input");
 switchToggle.addEventListener("change", () => toggle());
-
 let toggle = () => {
     isDay = switchToggle.checked === true;
     if (isDay) {
+        document.getElementById("sunburst").style.display = "block";
         toNightAnimation.reverse();
     } else {
         toNightAnimation.play();
