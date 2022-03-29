@@ -19,7 +19,7 @@ function clickEffect (e) {
 document.addEventListener('click', clickEffect)
 // Baidu search suggestions
 const bid = document.getElementById('search_baidu')
-bid.addEventListener('keyup', function () {
+bid.addEventListener('input', function () {
   if (!bid.value) {
     return
   }
@@ -66,7 +66,7 @@ function baidu (keys) {
 }
 // Google search suggestions
 const gid = document.getElementById('search_google')
-gid.addEventListener('keyup', function () {
+gid.addEventListener('input', function () {
   if (!gid.value) {
     return
   }
