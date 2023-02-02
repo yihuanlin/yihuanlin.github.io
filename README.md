@@ -1,5 +1,5 @@
 # [An HTML Homepage](https://yhl.ac.cn)
-# Credits
+## Credits
 - Night & Day animations are from [Steve Gardner](https://codepen.io/ste-vg/pen/oNgrYOb).
 - Weather animations are from [Steve Gardner](https://codepen.io/ste-vg/pen/Gqakbo).
 - Favicon and some other vector icons are from [freepik](https://www.freepik.com).
