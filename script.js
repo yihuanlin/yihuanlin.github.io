@@ -899,64 +899,56 @@ function setBackground(risemin, setmin) {
   let i
   let color
   if (realmin <= risemin - int * 1.5) {
-    i = 'n5'
+    i = 'n5.webp'
     color = '#755be3'
   } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
-    i = 'n6'
+    i = 'n6.webp'
     color = '#2a6a9e'
   } else if (realmin > risemin - int / 2 && realmin <= risemin) {
-    i = 'd0'
+    i = 'd0.webp'
     color = '#ed95d1'
   } else if (realmin > risemin && realmin <= risemin + int / 2) {
-    i = 'd1'
+    i = 'd1.webp'
     color = '#de9cd7'
   } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
-    i = 'd2'
+    i = 'd2.webp'
     color = '#3c82cc'
   } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
-    i = 'd3'
+    i = 'd3.webp'
     color = '#95bdcc'
   } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
-    i = 'd4'
+    i = 'd4.webp'
     color = '#68c9f1'
   } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
-    i = 'd5'
+    i = 'd5.webp'
     color = '#2fa0e6'
   } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
-    i = 'd6'
+    i = 'd6.webp'
     color = '#6b8b4c'
   } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
-    i = 'd7'
+    i = 'd7.webp'
     color = '#af5c18'
   } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
-    i = 'd8'
+    i = 'd8.webp'
     color = '#da644f'
   } else if (realmin > setmin && realmin <= setmin + int / 2) {
-    i = 'n0'
+    i = 'n0.webp'
     color = '#b6bbf5'
   } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
-    i = 'n1'
+    i = 'n1.webp'
     color = '#897ddc'
   } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
-    i = 'n2'
+    i = 'n2.webp'
     color = '#3e7ee3'
   } else if (realmin > setmin + int * 3 && realmin <= 1320) {
-    i = 'n3'
+    i = 'n3.webp'
     color = '#36315a'
   } else if (realmin > 1320) {
-    i = 'n4'
+    i = 'n4.webp'
     color = '#3d3d88'
   }
-  let hres = "0"
-  const urlParams = new URLSearchParams(window.location.search)
-  hres = urlParams.get("hres")
-  if (hres == 1) {
-    j = "-4x-AnimeSharp.webp"
-  } else {
-    j = ".webp"
-  }
   document.querySelector('meta[name=theme-color]').setAttribute('content', color)
-  loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}")
+  loadStyleString("#fill_screen{background:url('/background/" + i + "') no-repeat local center center/cover;}")
 }
 // Day & Night animations
 const duration = 0.4
