@@ -3,18 +3,18 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
 }
 // Clickeffects
-function clickEffect (e) {
+function clickEffect(e) {
   const i = document.createElement('div');
   (i.className = 'clickEffect'),
-  (i.style.top = e.clientY + 'px'),
-  (i.style.left = e.clientX + 'px'),
-  document.body.appendChild(i),
-  i.addEventListener(
-    'animationend',
-    function () {
-      i.parentElement.removeChild(i)
-    }
-  )
+    (i.style.top = e.clientY + 'px'),
+    (i.style.left = e.clientX + 'px'),
+    document.body.appendChild(i),
+    i.addEventListener(
+      'animationend',
+      function () {
+        i.parentElement.removeChild(i)
+      }
+    )
 }
 document.addEventListener('click', clickEffect)
 // Baidu search suggestions
@@ -30,7 +30,7 @@ bid.addEventListener('input', function () {
   h.parentNode.insertBefore(s, h)
 }, false)
 
-function baidu (keys) {
+function baidu(keys) {
   const len = keys.s.length
   const boxid = document.getElementById('keywordb')
   const hid = document.getElementById('googlebar')
@@ -77,7 +77,7 @@ gid.addEventListener('input', function () {
   h.parentNode.insertBefore(s, h)
 }, false)
 
-function google (keys) {
+function google(keys) {
   const len = keys[1].length
   const boxid = document.getElementById('keywordg')
   const hid = document.getElementById('baidubar')
@@ -112,11 +112,11 @@ function google (keys) {
   }, false)
 }
 // go to search results
-function tobaidu () {
+function tobaidu() {
   return bid.value !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + bid.value), (bid.value = '')), !1
 }
 
-function togoogle () {
+function togoogle() {
   return gid.value !== '' && ((window.location.href = 'https://www.google.com/search?q=' + gid.value), (gid.value = '')), !1
 }
 // start of weather set up
@@ -215,7 +215,7 @@ const leafs = []
 const snow = []
 getWeather()
 
-function init (index) {
+function init(index) {
   onResize()
   for (let i = 0; i < clouds.length; i++) {
     clouds[i].offset = Math.random() * sizes.card.width
@@ -227,7 +227,7 @@ function init (index) {
   changeWeather(weather[index])
 }
 
-function onResize () {
+function onResize() {
   sizes.container.width = container.offsetWidth
   sizes.container.height = container.offsetHeight
   sizes.card.width = card.offsetWidth
@@ -252,12 +252,12 @@ function onResize () {
   gsap.fromTo(
     sunburst.node,
     20, {
-      rotation: 0
-    }, {
-      rotation: 360,
-      repeat: -1,
-      ease: 'power0.inOut'
-    }
+    rotation: 0
+  }, {
+    rotation: 360,
+    repeat: -1,
+    ease: 'power0.inOut'
+  }
   )
   leafMask.attr({
     x: 0,
@@ -267,7 +267,7 @@ function onResize () {
   })
 }
 
-function drawCloud (cloud, i) {
+function drawCloud(cloud, i) {
   const space = settings.cloudSpace * i
   const height = space + settings.cloudHeight
   const arch = height + settings.cloudArch + Math.random() * settings.cloudArch
@@ -289,11 +289,11 @@ function drawCloud (cloud, i) {
   cloud.path.animate({
     d: path
   },
-  0
+    0
   )
 }
 
-function makeRain () {
+function makeRain() {
   const lineWidth = Math.random() * 3
   const lineLength = currentWeather.type === 'thunder' ? 35 : 14
   const x = Math.random() * (sizes.card.width - 40) + 20
@@ -305,20 +305,20 @@ function makeRain () {
   rain.push(line)
   gsap.fromTo(
     line.node, {
-      x: x,
-      y: 0 - lineLength
-    }, {
-      duration: 1,
-      delay: Math.random(),
-      y: sizes.card.height,
-      ease: 'power2.in',
-      onComplete: onRainEnd,
-      onCompleteParams: [line, lineWidth, x, currentWeather.type]
-    }
+    x: x,
+    y: 0 - lineLength
+  }, {
+    duration: 1,
+    delay: Math.random(),
+    y: sizes.card.height,
+    ease: 'power2.in',
+    onComplete: onRainEnd,
+    onCompleteParams: [line, lineWidth, x, currentWeather.type]
+  }
   )
 }
 
-function onRainEnd (line, width, x, type) {
+function onRainEnd(line, width, x, type) {
   line.remove()
   line = null
   for (const i in rain) {
@@ -330,7 +330,7 @@ function onRainEnd (line, width, x, type) {
   }
 }
 
-function makeSplash (x, type) {
+function makeSplash(x, type) {
   const splashLength = type === 'thunder' ? 30 : 20
   const splashBounce = type === 'thunder' ? 120 : 100
   const splashDistance = 80
@@ -352,29 +352,29 @@ function makeSplash (x, type) {
   splash.node.style.strokeDasharray = splashLength + ' ' + pathLength
   gsap.fromTo(
     splash.node, {
-      strokeWidth: 2,
-      y: yOffset,
-      x: xOffset + 20 + x,
-      opacity: 1,
-      strokeDashoffset: splashLength
-    }, {
-      duration: speed,
-      strokeWidth: 0,
-      strokeDashoffset: -pathLength,
-      opacity: 1,
-      onComplete: onSplashComplete,
-      onCompleteParams: [splash],
-      ease: 'slow(0.4, 0.1, false)'
-    }
+    strokeWidth: 2,
+    y: yOffset,
+    x: xOffset + 20 + x,
+    opacity: 1,
+    strokeDashoffset: splashLength
+  }, {
+    duration: speed,
+    strokeWidth: 0,
+    strokeDashoffset: -pathLength,
+    opacity: 1,
+    onComplete: onSplashComplete,
+    onCompleteParams: [splash],
+    ease: 'slow(0.4, 0.1, false)'
+  }
   )
 }
 
-function onSplashComplete (splash) {
+function onSplashComplete(splash) {
   splash.remove()
   splash = null
 }
 
-function makeLeaf () {
+function makeLeaf() {
   const scale = 0.5 + Math.random() * 0.5
   let newLeaf
   let outerLeaf
@@ -410,18 +410,18 @@ function makeLeaf () {
     ]
     gsap.fromTo(
       outerLeaf.node, {
-        rotation: Math.random() * 180,
-        x: x,
-        y: areaY + Math.random() * areaY + 10,
-        scale: scale
-      }, {
-        duration: 2,
-        rotation: Math.random() * 360,
-        motionPath: motionPath,
-        onComplete: onLeafEnd,
-        onCompleteParams: [outerLeaf],
-        ease: 'power0.in'
-      }
+      rotation: Math.random() * 180,
+      x: x,
+      y: areaY + Math.random() * areaY + 10,
+      scale: scale
+    }, {
+      duration: 2,
+      rotation: Math.random() * 360,
+      motionPath: motionPath,
+      onComplete: onLeafEnd,
+      onCompleteParams: [outerLeaf],
+      ease: 'power0.in'
+    }
     )
   } else {
     newLeaf = leaf.clone().appendTo(innerLeafHolder).attr({
@@ -445,24 +445,24 @@ function makeLeaf () {
     ]
     gsap.fromTo(
       newLeaf.node, {
-        rotation: Math.random() * 180,
-        x: x,
-        y: areaY + Math.random() * areaY,
-        scale: scale
-      }, {
-        duration: 2,
-        rotation: Math.random() * 360,
-        motionPath: motionPath,
-        onComplete: onLeafEnd,
-        onCompleteParams: [newLeaf],
-        ease: 'power0.in'
-      }
+      rotation: Math.random() * 180,
+      x: x,
+      y: areaY + Math.random() * areaY,
+      scale: scale
+    }, {
+      duration: 2,
+      rotation: Math.random() * 360,
+      motionPath: motionPath,
+      onComplete: onLeafEnd,
+      onCompleteParams: [newLeaf],
+      ease: 'power0.in'
+    }
     )
   }
   // var motionPath = [{x:60, y:60}, {x:Math.random()*200+60, y:Math.random()*150+60}, {x:Math.random()*250+260, y:Math.random()*150+260}];
 }
 
-function onLeafEnd (leaf) {
+function onLeafEnd(leaf) {
   leaf.remove()
   leaf = null
   for (const i in leafs) {
@@ -473,7 +473,7 @@ function onLeafEnd (leaf) {
   }
 }
 
-function makeSnow () {
+function makeSnow() {
   const scale = 0.5 + Math.random() * 0.5
   let newSnow
   let x = 20 + Math.random() * (sizes.card.width - 40)
@@ -503,24 +503,24 @@ function makeSnow () {
 
   gsap.fromTo(
     newSnow.node, {
-      x: x,
-      y: y
-    }, {
-      duration: 3 + Math.random() * 5,
-      y: endY,
-      onComplete: onSnowEnd,
-      onCompleteParams: [newSnow],
-      ease: 'power0.in'
-    }
+    x: x,
+    y: y
+  }, {
+    duration: 3 + Math.random() * 5,
+    y: endY,
+    onComplete: onSnowEnd,
+    onCompleteParams: [newSnow],
+    ease: 'power0.in'
+  }
   )
   gsap.fromTo(
     newSnow.node, {
-      scale: 0
-    }, {
-      duration: 1,
-      scale: scale,
-      ease: 'power1.inOut'
-    }
+    scale: 0
+  }, {
+    duration: 1,
+    scale: scale,
+    ease: 'power1.inOut'
+  }
   )
   gsap.to(newSnow.node, {
     duration: 2,
@@ -531,7 +531,7 @@ function makeSnow () {
   })
 }
 
-function onSnowEnd (flake) {
+function onSnowEnd(flake) {
   flake.remove()
   flake = null
 
@@ -544,7 +544,7 @@ function onSnowEnd (flake) {
   }
 }
 
-function tick () {
+function tick() {
   tickCount++
   const check = tickCount % settings.renewCheck
 
@@ -569,29 +569,29 @@ function tick () {
   requestAnimationFrame(tick)
 }
 
-function reset () {
+function reset() {
   for (let i = 0; i < weather.length; i++) {
     container.classList.remove(weather[i].type)
   }
 }
 
-function startLightningTimer () {
+function startLightningTimer() {
   if (lightningTimeout) clearTimeout(lightningTimeout)
   if (currentWeather.type === 'thunder') {
     lightningTimeout = setTimeout(lightning, Math.random() * 6000)
   }
 }
 
-function lightning () {
+function lightning() {
   startLightningTimer()
   gsap.fromTo(
     card, {
-      y: -30
-    }, {
-      duration: 0.75,
-      y: 0,
-      ease: 'elastic'
-    }
+    y: -30
+  }, {
+    duration: 0.75,
+    y: 0,
+    ease: 'elastic'
+  }
   )
 
   const pathX = 30 + Math.random() * (sizes.card.width - 60)
@@ -621,7 +621,7 @@ function lightning () {
   })
 }
 
-function changeWeather (weather) {
+function changeWeather(weather) {
   if (weather.data) weather = weather.data
   reset()
 
@@ -796,7 +796,7 @@ xhr.onreadystatechange = function () {
 }
 xhr.send()
 
-function getWeather () {
+function getWeather() {
   const xhr = new XMLHttpRequest()
   xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1')
   xhr.onreadystatechange = function () {
@@ -808,7 +808,7 @@ function getWeather () {
   xhr.send()
 }
 
-function handleJson (city, temp, weather, code, wind, humidity, arr) {
+function handleJson(city, temp, weather, code, wind, humidity, arr) {
   document.getElementById('city').innerHTML = city + ' &#xe901'
   document.getElementById('detail').innerHTML = weather
   document.getElementById('temp').innerHTML = temp + '<span>℃</span>'
@@ -861,13 +861,13 @@ function handleJson (city, temp, weather, code, wind, humidity, arr) {
   requestAnimationFrame(tick)
 }
 
-function printH (content, author, origin) {
+function printH(content, author, origin) {
   if (author == null) {
     document.getElementById('hitokoto').innerHTML = content + '<p>──' + '《' + origin + '》</p>'
   } else { document.getElementById('hitokoto').innerHTML = content + '<p>──' + author + '《' + origin + '》</p>' }
 }
 
-function widgetResize () {
+function widgetResize() {
   onResize()
   for (let i = 0; i < clouds.length; i++) {
     clouds[i].offset = Math.random() * sizes.card.width
@@ -876,14 +876,14 @@ function widgetResize () {
   changeWeather(currentWeather)
 }
 
-function checkTime (m) {
+function checkTime(m) {
   if (m < 10) {
     m = '0' + m
   }
   return m
 }
 
-function loadStyleString (cssText) {
+function loadStyleString(cssText) {
   const style = document.createElement('style')
   try {
     style.appendChild(document.createTextNode(cssText))
@@ -893,7 +893,7 @@ function loadStyleString (cssText) {
   document.getElementsByTagName('head')[0].appendChild(style)
 }
 
-function setBackground (risemin, setmin) {
+function setBackground(risemin, setmin) {
   const int = (setmin - risemin) / 8
   const realmin = new Date().getHours() * 60 + new Date().getMinutes()
   let i
@@ -947,7 +947,7 @@ function setBackground (risemin, setmin) {
     i = 'n4'
     color = '#3d3d88'
   }
-  const hres = "0"
+  let hres = "0"
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get('hres')
@@ -974,96 +974,96 @@ if (!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').mat
 toNightAnimation
   .to(
     '#circle', {
-      duration: duration,
-      ease: 'power4.in',
-      scaleX: scale,
-      scaleY: scale,
-      x: 1,
-      transformOrigin: '100% 50%'
-    },
+    duration: duration,
+    ease: 'power4.in',
+    scaleX: scale,
+    scaleY: scale,
+    x: 1,
+    transformOrigin: '100% 50%'
+  },
     0
   )
   .set(
     '#circle', {
-      scaleX: -scale
-    },
+    scaleX: -scale
+  },
     duration
   )
   .to(
     '#circle', {
-      duration: duration,
-      ease: 'power4.out',
-      scaleX: -1,
-      scaleY: 1,
-      x: 2
-    },
+    duration: duration,
+    ease: 'power4.out',
+    scaleX: -1,
+    scaleY: 1,
+    x: 2
+  },
     duration
   )
   .fromTo(
     '.filter', {
-      filter: 'brightness(100%)'
-    }, {
-      filter: 'brightness(50%)',
-      duration: duration
-    },
+    filter: 'brightness(100%)'
+  }, {
+    filter: 'brightness(50%)',
+    duration: duration
+  },
     0
   )
   .to(
     '.nmtext,.nmbar', {
-      color: 'white',
-      duration: duration * 2
-    },
+    color: 'white',
+    duration: duration * 2
+  },
     0
   )
   .to(
     '.nmbar', {
-      background: 'rgba(0,0,0,.3)',
-      duration: duration
-    },
+    background: 'rgba(0,0,0,.3)',
+    duration: duration
+  },
     0
   )
   .fromTo(
     '.nmbar', {
-      boxShadow: '0 0 18px rgba(70, 70, 40, .255)'
-    }, {
-      boxShadow: '0 0 18px rgba(0, 0, 0, .255)',
-      duration: duration
-    },
+    boxShadow: '0 0 18px rgba(70, 70, 40, .255)'
+  }, {
+    boxShadow: '0 0 18px rgba(0, 0, 0, .255)',
+    duration: duration
+  },
     0
   )
   .to(
     '#cloud1', {
-      fill: '#101010',
-      duration: duration
-    },
+    fill: '#101010',
+    duration: duration
+  },
     0
   )
   .to(
     '#cloud2', {
-      fill: '#191919',
-      duration: duration
-    },
+    fill: '#191919',
+    duration: duration
+  },
     0
   )
   .to(
     '#cloud3', {
-      fill: '#2a2a2a',
-      duration: duration
-    },
+    fill: '#2a2a2a',
+    duration: duration
+  },
     0
   )
   .to(
     '#sun', {
-      fill: '#3e3f57',
-      duration: duration * 2
-    },
+    fill: '#3e3f57',
+    duration: duration * 2
+  },
     0
   )
   .to(
     '#sunburst', {
-      opacity: '0',
-      duration: duration * 2
-    },
+    opacity: '0',
+    duration: duration * 2
+  },
     0
   )
 
