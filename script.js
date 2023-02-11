@@ -948,9 +948,7 @@ function setBackground(risemin, setmin) {
     color = '#3d3d88'
   }
   let hres = "0"
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('hres')
+  const urlParams = new URLSearchParams(window.location.search)
   hres = urlParams.get("hres")
   if (hres == 1) {
     j = "-4x-AnimeSharp.webp"
