@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <meta name="robots" content="noindex,nofollow">
+  <script>
+  url = urlParams.get("url")
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      console.log(html);
+      const bigImgSrc = html.match(/bigimgsrc="(.*?)\?/)[1];
+      const imgElement = document.createElement("img");
+        imgElement.src = bigImgSrc;
+        document.body.appendChild(imgElement);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
