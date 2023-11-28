@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
   <meta name="robots" content="noindex,nofollow">
   <script>
-  url = urlParams.get("url")
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = urlParams.get("url");
   fetch(url)
     .then(response => response.text())
     .then(html => {
