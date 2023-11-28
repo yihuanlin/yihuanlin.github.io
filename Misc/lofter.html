@@ -8,32 +8,20 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const url = urlParams.get("url");
-  function httpGet(url) {
-    url = "https://cors-anywhere.herokuapp.com/" + url;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
-  }
-  /*
-  fetch(url)
-    .then(response => response.text())
-    .then(html => {
-      console.log(html);
-      const bigImgSrc = html.match(/bigimgsrc="(.*?)\?/)[1];
-      const imgElement = document.createElement("img");
-      imgElement.src = bigImgSrc;
-      document.body.appendChild(imgElement);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  */
+
+    function httpGet(url) {
+      url = 'https://corsproxy.io/?' + encodeURIComponent(url);
+      //url = "https://cors-anywhere.herokuapp.com/" + url;
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", url, false);
+      xmlHttp.send(null);
+      return xmlHttp.responseText;
+    }
+
     const html = httpGet(url);
     const bigImgSrc = html.match(/bigimgsrc="(.*?)\?/)[1];
-    const imgElement = document.createElement("img");
-    imgElement.src = bigImgSrc;
-    document.body.appendChild(imgElement);
+
+    window.location.href = bigImgSrc;
   </script>
 </head>
 
