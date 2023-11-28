@@ -955,8 +955,8 @@ function setBackground(risemin, setmin) {
   } else {
     j = ".webp"
   }
-  animebg = urlParams.get("anime")
-  if (hres == 1) {
+  anime = urlParams.get("anime")
+  if (anime == 1) {
     j = ".jpg"
     document.querySelectorAll('link[rel="icon"]')[0].href = "icon/favicon-32x32.png"
     document.querySelectorAll('link[rel="icon"]')[1].href = "icon/favicon-16x16.png"
