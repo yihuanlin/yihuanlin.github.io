@@ -3,7 +3,14 @@
 
 <head>
   <meta charset="utf-8">
+  <style>
+    img {
+      max-width: 50vh !important;
+      max-height: 50vh !important;
+    }
+  </style>
 </head>
+
 <body>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -20,6 +27,9 @@
     const bigImgSrc = bigImgSrcMatch ? bigImgSrcMatch.map(match => match.slice(11, -1)) : [];
     const keywordsMatch = html.match(/name="Keywords" content="(.*?)"/);
     const keywords = keywordsMatch ? keywordsMatch[1] : "";
+    const pElement = document.createElement("p");
+    pElement.textContent = "Tags: " + keywords;
+    document.body.appendChild(pElement);
     if (bigImgSrc) {
       bigImgSrc.forEach(src => {
         const imgElement = document.createElement("img");
@@ -28,7 +38,6 @@
         document.body.appendChild(imgElement);
       });
     }
-    document.body.appendChild(document.createTextNode(keywords));
   </script>
 </body>
 </html>
