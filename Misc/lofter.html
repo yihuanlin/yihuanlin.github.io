@@ -8,25 +8,20 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const url = urlParams.get("url");
-
     function httpGet(url) {
       url = 'https://corsproxy.io/?' + encodeURIComponent(url);
-      //url = "https://cors-anywhere.herokuapp.com/" + url;
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open("GET", url, false);
       xmlHttp.send(null);
       return xmlHttp.responseText;
     }
-
     const html = httpGet(url);
     const bigImgSrc = html.match(/bigimgsrc="(.*?)\?/)[1];
-
-    window.location.href = bigImgSrc;
+    const imgElement = document.createElement("img");
+    imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(bigImgSrc);
+    document.body.appendChild(imgElement);
   </script>
 </head>
-
 <body>
-
 </body>
-
 </html>
