@@ -16,17 +16,18 @@
       return xmlHttp.responseText;
     }
     const html = httpGet(url);
-    const bigImgSrc = html.match(/bigimgsrc="(.*?)\?/g);
+    const bigImgSrcMatch = html.match(/bigimgsrc="(.*?)\?/g);
+    bigImgSrcMatch ? bigImgSrcMatch.map(match => match.slice(11, -1)) : [];
+    const keywordsMatch = html.match(/name="Keywords" content="(.*?)"/);
+    const keywords = keywordsMatch ? keywordsMatch[1] : "";
     if (bigImgSrc) {
       bigImgSrc.forEach(src => {
         const imgElement = document.createElement("img");
-        imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src.slice(11));
+        imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src);
         document.body.appendChild(imgElement);
       });
     }
-    //const imgElement = document.createElement("img");
-    //imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(bigImgSrc);
-    //document.body.appendChild(imgElement);
+    document.body.appendChild(document.createTextNode(keywords));
   </script>
 </body>
 </html>
