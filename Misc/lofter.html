@@ -24,6 +24,7 @@
       bigImgSrc.forEach(src => {
         const imgElement = document.createElement("img");
         imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src);
+        imgElement.referrerpolicy = "no-referrer";
         document.body.appendChild(imgElement);
       });
     }
