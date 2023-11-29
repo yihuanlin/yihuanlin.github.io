@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <title>LoftProxy</title>
   <link rel="apple-touch-icon" sizes="180x180" href="../icon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../icon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../icon/favicon-16x16.png">
@@ -12,6 +13,7 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" content="../icon/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     img {
       max-width: 50vh !important;
@@ -24,28 +26,74 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const url = urlParams.get("url");
-    function httpGet(url) {
-      url = 'https://corsproxy.io/?' + encodeURIComponent(url);
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open("GET", url, false);
-      xmlHttp.send(null);
-      return xmlHttp.responseText;
-    }
-    const html = httpGet(url);
-    const bigImgSrcMatch = html.match(/bigimgsrc="(.*?)\?/g);
-    const bigImgSrc = bigImgSrcMatch ? bigImgSrcMatch.map(match => match.slice(11, -1)) : [];
-    const keywordsMatch = html.match(/name="Keywords" content="(.*?)"/);
-    const keywords = keywordsMatch ? keywordsMatch[1] : "";
-    const pElement = document.createElement("p");
-    pElement.textContent = "Tags: " + keywords;
-    document.body.appendChild(pElement);
-    if (bigImgSrc) {
-      bigImgSrc.forEach(src => {
-        const imgElement = document.createElement("img");
-        imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src);
-        imgElement.referrerpolicy = "no-referrer";
-        document.body.appendChild(imgElement);
-      });
+    if (url) {
+      function httpGet(url) {
+        url = 'https://corsproxy.io/?' + encodeURIComponent(url);
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false);
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+      }
+      const html = httpGet(url);
+      const bigImgSrcMatch = html.match(/bigimgsrc="(.*?)\?/g);
+      const bigImgSrc = bigImgSrcMatch ? bigImgSrcMatch.map(match => match.slice(11, -1)) : [];
+      const keywordsMatch = html.match(/name="Keywords" content="(.*?)"/);
+      const keywords = keywordsMatch ? keywordsMatch[1] : "";
+      const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/);
+      const title = titleMatch ? titleMatch[1] : "";
+      const pM = html.match(/<p id="(.*?)<\/p>/)[0];
+      const pMM = pM.match(/>(.*?)<\/p>/);
+      const p = pMM ? pMM[1] : "";
+      const nextsrcMatch = html.match(/<a href="(.*?)" id="__next_permalink__"/);
+      const nextsrc = nextsrcMatch ? nextsrcMatch[1] : "";
+      const prevsrcMatch = html.match(/<a href="(.*?)" id="__prev_permalink__"/);
+      const prevsrc = prevsrcMatch ? prevsrcMatch[1] : "";
+      const pTitle = document.createElement("p");
+      const pPrevNext = document.createElement("p");
+      const pDescription = document.createElement("p");
+      const aTitle = document.createElement("a");
+      pTitle.textContent = "Title: ";
+      aTitle.textContent = title;
+      aTitle.href = url;
+      aTitle.target = "_blank";
+      pTitle.appendChild(aTitle);
+      document.body.appendChild(pTitle);
+      if (keywords) {
+        const pKeywords = document.createElement("p");
+        pKeywords.textContent = "Tag(s): " + keywords;
+        document.body.appendChild(pKeywords);
+      }  
+      if (bigImgSrc) {
+        bigImgSrc.forEach(src => {
+          const imgElement = document.createElement("img");
+          imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src);
+          imgElement.referrerpolicy = "no-referrer";
+          imgElement.addEventListener("click", function() {
+            window.open(imgElement.src, "_blank");
+          });
+          document.body.appendChild(imgElement);
+        });
+      }
+      pDescription.textContent = "Description: " + p;
+      document.body.appendChild(pDescription);
+      if (prevsrc) {
+        const aPrev = document.createElement("a");
+        aPrev.textContent = "Previous";
+        aPrev.href = "lofter.html?url=" + prevsrc;
+        pPrevNext.appendChild(aPrev);
+      }
+      pPrevNext.appendChild(document.createTextNode(" "));
+      if (nextsrc) {
+        const aNext = document.createElement("a");
+        aNext.textContent = "Next";
+        aNext.href = "lofter.html?url=" + nextsrc;
+        pPrevNext.appendChild(aNext);
+      }
+      document.body.appendChild(pPrevNext);
+    } else {
+      const pElement = document.createElement("p");
+      pElement.textContent = "Please provide a valid URL, e.g. https://yhl.ac.cn/Misc/lofter.html?url=https://userid.lofter.com/post/...";
+      document.body.appendChild(pElement);
     }
   </script>
 </body>
