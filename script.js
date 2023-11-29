@@ -6,6 +6,7 @@ if ('serviceWorker' in navigator) {
 // Clickeffects
 
 function clickEffect(e) {
+  document.getElementById('search_bing').focus();
   const i = document.createElement('div');
   i.className = 'clickEffect';
   i.style.top = e.clientY + 'px';
@@ -23,6 +24,7 @@ const gid = document.getElementById('search_bing');
 const regex = /!(.*?)\s/;
 gid.addEventListener('input', function () {
   if (!gid.value) {
+    document.getElementById('keywordg').style.display = 'none';
     return;
   }
   if (regex.exec(gid.value)) {
@@ -75,7 +77,7 @@ function bing(keys) {
 function tobing() {
   switch (match) {
     case undefined:
-      return gid.value !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gid.value), (gid.value = '')), false;
+      return gidValue !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gidValue), (gidValue = '')), false;
     case 'zfin':
     case 'z':
       return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), false;
