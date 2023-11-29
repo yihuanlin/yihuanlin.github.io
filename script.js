@@ -34,7 +34,7 @@ gid.addEventListener('input', function () {
   }
   const s = document.createElement('script');
   s.type = 'text/javascript';
-  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=bing';
+  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gidValue + '&output=firefox&callback=bing';
   const h = document.getElementsByTagName('script')[0];
   h.parentNode.insertBefore(s, h);
 }, false);
@@ -56,14 +56,14 @@ function bing(keys) {
   for (let i = 0; i < boxid.children.length; i++) {
     const ele = boxid.children[i];
     ele.onclick = function () {
-      gid.value = this.innerHTML;
+      gidValue = this.innerHTML;
       gid.focus();
       tobing();
     };
   }
   document.body.addEventListener('click', function (evt) {
     const target = evt.target;
-    if ((target.id !== 'keywordb') && (target.id !== 'bingbar') && (target.id !== 'search_bing')) {
+    if ((target.id !== 'bingbar') && (target.id !== 'search_bing')) {
       boxid.style.transform = 'scaleY(0)';
       boxid.style.display = 'none';
     }
@@ -783,7 +783,7 @@ function changeWeather(weather) {
 // end of weather set up
 
 const xhr = new XMLHttpRequest()
-xhr.open('get', 'https://v1.hitokoto.cn/?c=i')
+xhr.open('get', 'https://international.v1.hitokoto.cn/?c=i')
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
     const response = JSON.parse(xhr.responseText)
