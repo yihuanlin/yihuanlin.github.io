@@ -1,150 +1,104 @@
 // register service worker
+
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
+  navigator.serviceWorker.register('service-worker.js');
 }
+
 // Clickeffects
 function clickEffect(e) {
   const i = document.createElement('div');
-  (i.className = 'clickEffect'),
-    (i.style.top = e.clientY + 'px'),
-    (i.style.left = e.clientX + 'px'),
-    document.body.appendChild(i),
-    i.addEventListener(
-      'animationend',
-      function () {
-        i.parentElement.removeChild(i)
-      }
-    )
+  i.className = 'clickEffect';
+  i.style.top = e.clientY + 'px';
+  i.style.left = e.clientX + 'px';
+  document.body.appendChild(i);
+  i.addEventListener('animationend', function () {
+    i.parentElement.removeChild(i);
+  });
 }
-document.addEventListener('click', clickEffect)
-// Baidu search suggestions
-const bid = document.getElementById('search_baidu')
-bid.addEventListener('input', function () {
-  if (!bid.value) {
-    return
-  }
-  const s = document.createElement('script')
-  s.type = 'text/javascript'
-  s.src = 'https://suggestion.baidu.com/su?wd=' + bid.value + '&cb=baidu'
-  const h = document.getElementsByTagName('script')[0]
-  h.parentNode.insertBefore(s, h)
-}, false)
+document.addEventListener('click', clickEffect);
 
-function baidu(keys) {
-  const len = keys.s.length
-  const boxid = document.getElementById('keywordb')
-  const hid = document.getElementById('bingbar')
-  if (len === 0) {
-    boxid.style.display = 'none'
-    hid.style.display = 'block'
-  } else {
-    boxid.style.transform = 'scaleY(1)'
-    boxid.style.display = 'block'
-    hid.style.display = 'none'
-  }
-  let spans = ''
-  for (let i = 0; i < len; i++) {
-    spans += '<span>' + keys.s[i] + '</span>'
-  }
-  boxid.innerHTML = spans
-  for (let i = 0; i < boxid.children.length; i++) {
-    const ele = boxid.children[i]
-    ele.onclick = function () {
-      bid.value = this.innerHTML
-      bid.focus()
-      tobaidu()
-    }
-  }
-  document.body.addEventListener('click', function (evt) {
-    const target = evt.target
-    if (target.id !== 'keywordb' && target.id !== 'baidubar' && target.id !== 'search_baidu') {
-      boxid.style.transform = 'scaleY(0)'
-      hid.style.display = 'block'
-      boxid.style.display = 'none'
-    }
-  }, false)
-}
 // Google search suggestions
-const gid = document.getElementById('search_bing')
+const gid = document.getElementById('search_bing');
+const regex = /!(.*?)\s/;
 gid.addEventListener('input', function () {
   if (!gid.value) {
-    return
+    return;
   }
-  const s = document.createElement('script')
-  s.type = 'text/javascript'
-  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=bing'
-  const h = document.getElementsByTagName('script')[0]
-  h.parentNode.insertBefore(s, h)
-}, false)
+  if (regex.exec(gid.value)) {
+    match = regex.exec(gid.value)[1];
+    gidValue = gid.value.replace(regex, '');
+  } else {
+    match = undefined;
+    gidValue = gid.value;
+  }
+  const s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=bing';
+  const h = document.getElementsByTagName('script')[0];
+  h.parentNode.insertBefore(s, h);
+}, false);
 
 function bing(keys) {
-  const len = keys[1].length
-  const boxid = document.getElementById('keywordg')
-  const hid = document.getElementById('baidubar')
+  const len = keys[1].length;
+  const boxid = document.getElementById('keywordg');
   if (len === 0) {
-    boxid.style.display = 'none'
-    hid.style.display = 'block'
+    boxid.style.display = 'none';
   } else {
-    boxid.style.transform = 'scaleY(1)'
-    boxid.style.display = 'block'
-    hid.style.display = 'none'
+    boxid.style.transform = 'scaleY(1)';
+    boxid.style.display = 'block';
   }
-  let spans = ''
+  let spans = '';
   for (let i = 0; i < len; i++) {
-    spans += '<span>' + keys[1][i] + '</span>'
+    spans += '<span>' + keys[1][i] + '</span>';
   }
-  boxid.innerHTML = spans
+  boxid.innerHTML = spans;
   for (let i = 0; i < boxid.children.length; i++) {
-    const ele = boxid.children[i]
+    const ele = boxid.children[i];
     ele.onclick = function () {
-      gid.value = this.innerHTML
-      gid.focus()
-      tobing()
-    }
+      gid.value = this.innerHTML;
+      gid.focus();
+      tobing();
+    };
   }
   document.body.addEventListener('click', function (evt) {
-    const target = evt.target
+    const target = evt.target;
     if ((target.id !== 'keywordb') && (target.id !== 'bingbar') && (target.id !== 'search_bing')) {
-      boxid.style.transform = 'scaleY(0)'
-      hid.style.display = 'block'
-      boxid.style.display = 'none'
+      boxid.style.transform = 'scaleY(0)';
+      boxid.style.display = 'none';
     }
-  }, false)
-}
-// go to search results
-function tobaidu() {
-  return bid.value !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + bid.value), (bid.value = '')), !1
+  }, false);
 }
 
+// go to search results
 function tobing() {
-  const regex = /!(.*?)\s/
-  const match = regex.exec(gid.value)[1]
-  const gidValue = gid.value.replace(regex, '')
   switch (match) {
     case undefined:
-      return gid.value !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gid.value), (gid.value = '')), !1
+      return gid.value !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gid.value), (gid.value = '')), false;
     case 'zfin':
     case 'z':
-      return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), false;
     case 'w':
-      return gidValue !== '' && ((window.location.href = 'https://en.wikipedia.org/wiki/Special:Search?search=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://en.wikipedia.org/wiki/Special:Search?search=' + gidValue), (gidValue = '')), false;
     case 'wt':
-      return gidValue !== '' && ((window.location.href = 'http://en.wiktionary.org/wiki/Special:Search?go=Define&search=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://en.wiktionary.org/wiki/Special:Search?go=Define&search=' + gidValue), (gidValue = '')), false;
     case 'gh':
-      return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), false;
     case 'g':
-      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?q=' + gidValue), (gidValue = '')), false;
     case 'l':
-      return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), false;
+    case 'bi':
+    case 'bili':
+      return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), false;
     case 'b':
-      return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + gidValue), (gidValue = '')), false;
     case 'y':
     case 'yt':
-      return gidValue !== '' && ((window.location.href = 'https://www.youtube.com/results?search_query=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.youtube.com/results?search_query=' + gidValue), (gidValue = '')), false;
     case 'r':
-      return gidValue !== '' && ((window.location.href = 'https://www.reddit.com/search?q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.reddit.com/search?q=' + gidValue), (gidValue = '')), false;
     case 'd':
-      return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), false;
     case 's':
       return gidValue !== '' && ((window.location.href = 'https://stackoverflow.com/search?q=' + gidValue), (gidValue = '')), !1
     case 'a':
@@ -707,39 +661,36 @@ function changeWeather(weather) {
   }
 
   // rainCount
-
   switch (weather.type) {
     case 'rain':
       gsap.to(settings, {
         duration: 3,
         rainCount: 20,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
     case 'drizzle':
       gsap.to(settings, {
         duration: 3,
         rainCount: 5,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
     case 'thunder':
       gsap.to(settings, {
         duration: 3,
         rainCount: 60,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
     default:
       gsap.to(settings, {
         duration: 1,
         rainCount: 0,
         ease: 'power2.out'
-      })
-      break
+      });
+      break;
   }
-
-  // leafCount
 
   switch (weather.type) {
     case 'wind':
@@ -748,18 +699,16 @@ function changeWeather(weather) {
         duration: 3,
         leafCount: 5,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
     default:
       gsap.to(settings, {
         duration: 1,
         leafCount: 0,
         ease: 'power2.out'
-      })
-      break
+      });
+      break;
   }
-
-  // snowCount
 
   switch (weather.type) {
     case 'snow':
@@ -767,18 +716,16 @@ function changeWeather(weather) {
         duration: 3,
         snowCount: 40,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
     default:
       gsap.to(settings, {
         duration: 1,
         snowCount: 0,
         ease: 'power2.out'
-      })
-      break
+      });
+      break;
   }
-
-  // sun position
 
   switch (weather.type) {
     case 'sun':
@@ -788,333 +735,280 @@ function changeWeather(weather) {
         x: sizes.card.width / 2,
         y: sizes.card.height / 2,
         ease: 'power2.inOut'
-      })
-      if (window.innerWidth <= 717) {
-        gsap.to(sunburst.node, {
-          duration: 4,
-          scale: 1,
-          opacity: 0.8,
-          y: sizes.container.height / 2 - 80,
-          ease: 'power2.inOut'
-        })
-      } else {
-        gsap.to(sunburst.node, {
-          duration: 4,
-          scale: 1,
-          opacity: 0.8,
-          y: sizes.container.height / 2,
-          ease: 'power2.inOut'
-        })
-      }
-      break
+      });
+      const sunburstY = window.innerWidth <= 717 ? sizes.container.height / 2 - 80 : sizes.container.height / 2;
+      gsap.to(sunburst.node, {
+        duration: 4,
+        scale: 1,
+        opacity: 0.8,
+        y: sunburstY,
+        ease: 'power2.inOut'
+      });
+      break;
     default:
       gsap.to(sun.node, {
         duration: 2,
         x: sizes.card.width / 2,
         y: -100,
         ease: 'power2.inOut'
-      })
+      });
       gsap.to(sunburst.node, {
         duration: 2,
         scale: 0.4,
         opacity: 0,
         y: sizes.container.height / 2 - 50,
         ease: 'power2.inOut'
-      })
-      break
+      });
+      break;
   }
-
-  // lightning
-
-  startLightningTimer()
 }
+
+startLightningTimer();
+
 // end of weather set up
-const xhr = new XMLHttpRequest()
-xhr.open('get', 'https://v1.hitokoto.cn/?c=i')
+
+const xhr = new XMLHttpRequest();
+xhr.open('get', 'https://v1.hitokoto.cn/?c=i');
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
-    const response = JSON.parse(xhr.responseText)
-    printH(response.hitokoto, response.from_who, response.from)
+    const response = JSON.parse(xhr.responseText);
+    printH(response.hitokoto, response.from_who, response.from);
   }
-}
-xhr.send()
+};
+xhr.send();
 
 function getWeather() {
-  const xhr = new XMLHttpRequest()
-  xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1')
+  const xhr = new XMLHttpRequest();
+  xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      const response = JSON.parse(xhr.responseText)
-      handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0])
+      const response = JSON.parse(xhr.responseText);
+      handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0]);
     }
-  }
-  xhr.send()
+  };
+  xhr.send();
 }
 
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
-  document.getElementById('city').innerHTML = city + ' &#xe901'
-  document.getElementById('detail').innerHTML = weather
-  document.getElementById('temp').innerHTML = temp + '<span>℃</span>'
-  const rise = arr.astro.sunrise.split(':')
-  const rmin = parseFloat(rise[1].split(' ')[0])
-  const set = arr.astro.sunset.split(':')
-  let shr = parseFloat(set[0])
+  document.getElementById('city').innerHTML = city + ' &#xe901';
+  document.getElementById('detail').innerHTML = weather;
+  document.getElementById('temp').innerHTML = temp + '<span>℃</span>';
+  const rise = arr.astro.sunrise.split(':');
+  const rmin = parseFloat(rise[1].split(' ')[0]);
+  const set = arr.astro.sunset.split(':');
+  let shr = parseFloat(set[0]);
   if (set[1].indexOf('PM') === 3) {
-    shr = shr + 12
+    shr = shr + 12;
   }
-  const smin = parseFloat(set[1].split(' ')[0])
-  document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '℃ to ' + arr.day.maxtemp_c + '℃</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>'
-  let i
-  let t
+  const smin = parseFloat(set[1].split(' ')[0]);
+  document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '℃ to ' + arr.day.maxtemp_c + '℃</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>';
+  let i;
+  let t;
   if (code === 1066 || code === 1069 || code === 1114 || code === 1204 || code === 1207 || code === 1210 || code === 1213 || code === 1216 || code === 1219 || code === 1222 || code === 1225 || code === 1237 || code === 1249 || code === 1252 || code === 1255 || code === 1258 || code === 1261 || code === 1264 || code === 1279 || code === 1282) {
-    i = 0
-    t = 'Snow'
+    i = 0;
+    t = 'Snow';
   } else if (code > 1272 && code < 1283) {
-    i = 3
-    t = 'Drizzle'
+    i = 3;
+    t = 'Drizzle';
   } else if (code === 1000 && wind < 29) {
-    i = 4
-    t = 'Clear'
+    i = 4;
+    t = 'Clear';
   } else if (code === 1000) {
-    i = 8
-    t = 'Wind'
+    i = 8;
+    t = 'Wind';
   } else if (code > 1002 && code < 1010 && wind < 29) {
-    i = 5
-    t = 'Cloud'
+    i = 5;
+    t = 'Cloud';
   } else if (code > 1002 && code < 1010) {
-    i = 1
-    t = 'Wind'
+    i = 1;
+    t = 'Wind';
   } else if (code === 1030 || code === 1135 || code === 1147) {
-    i = 6
-    t = 'Fog'
+    i = 6;
+    t = 'Fog';
   } else if (code === 1072 || (code > 1149 && code < 1172)) {
-    i = 7
+    i = 7;
   } else {
-    i = 2
-    t = 'Rain'
+    i = 2;
+    t = 'Rain';
   }
-  document.getElementById('summary').innerHTML = t
-  document.getElementById('time').innerHTML = new Date().getHours() + ':' + checkTime(new Date().getMinutes())
-  const risemin = parseFloat(rise[0]) * 60 + rmin
-  const setmin = shr * 60 + smin
-  setBackground(risemin, setmin)
-  init(i)
-  window.addEventListener('resize', widgetResize)
+  document.getElementById('summary').innerHTML = t;
+  document.getElementById('time').innerHTML = new Date().getHours() + ':' + checkTime(new Date().getMinutes());
+  const risemin = parseFloat(rise[0]) * 60 + rmin;
+  const setmin = shr * 60 + smin;
+  setBackground(risemin, setmin);
+  init(i);
+  window.addEventListener('resize', widgetResize);
   // start animations
-  requestAnimationFrame(tick)
+  requestAnimationFrame(tick);
 }
 
 function printH(content, author, origin) {
   if (author == null) {
-    document.getElementById('hitokoto').innerHTML = content + '<p>──' + '《' + origin + '》</p>'
-  } else { document.getElementById('hitokoto').innerHTML = content + '<p>──' + author + '《' + origin + '》</p>' }
+    document.getElementById('hitokoto').innerHTML = content + '<p>──' + '《' + origin + '》</p>';
+  } else {
+    document.getElementById('hitokoto').innerHTML = content + '<p>──' + author + '《' + origin + '》</p>';
+  }
 }
 
 function widgetResize() {
-  onResize()
+  onResize();
   for (let i = 0; i < clouds.length; i++) {
-    clouds[i].offset = Math.random() * sizes.card.width
-    drawCloud(clouds[i], i)
+    clouds[i].offset = Math.random() * sizes.card.width;
+    drawCloud(clouds[i], i);
   }
-  changeWeather(currentWeather)
+  changeWeather(currentWeather);
 }
 
 function checkTime(m) {
   if (m < 10) {
-    m = '0' + m
+    m = '0' + m;
   }
-  return m
+  return m;
 }
 
 function loadStyleString(cssText) {
-  const style = document.createElement('style')
+  const style = document.createElement('style');
   try {
-    style.appendChild(document.createTextNode(cssText))
+    style.appendChild(document.createTextNode(cssText));
   } catch (ex) {
-    style.styleSheet.cssText = cssText
+    style.styleSheet.cssText = cssText;
   }
-  document.getElementsByTagName('head')[0].appendChild(style)
+  document.getElementsByTagName('head')[0].appendChild(style);
 }
 
 function setBackground(risemin, setmin) {
-  const int = (setmin - risemin) / 8
-  const realmin = new Date().getHours() * 60 + new Date().getMinutes()
-  let i
-  let color
+  const int = (setmin - risemin) / 8;
+  const realmin = new Date().getHours() * 60 + new Date().getMinutes();
+  let i;
+  let color;
   if (realmin <= risemin - int * 1.5) {
-    i = 'n5'
-    color = '#755be3'
+    i = 'n5';
+    color = '#755be3';
   } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
-    i = 'n6'
-    color = '#2a6a9e'
+    i = 'n6';
+    color = '#2a6a9e';
   } else if (realmin > risemin - int / 2 && realmin <= risemin) {
-    i = 'd0'
-    color = '#ed95d1'
+    i = 'd0';
+    color = '#ed95d1';
   } else if (realmin > risemin && realmin <= risemin + int / 2) {
-    i = 'd1'
-    color = '#de9cd7'
+    i = 'd1';
+    color = '#de9cd7';
   } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
-    i = 'd2'
-    color = '#3c82cc'
+    i = 'd2';
+    color = '#3c82cc';
   } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
-    i = 'd3'
-    color = '#95bdcc'
+    i = 'd3';
+    color = '#95bdcc';
   } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
-    i = 'd4'
-    color = '#68c9f1'
+    i = 'd4';
+    color = '#68c9f1';
   } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
-    i = 'd5'
-    color = '#2fa0e6'
+    i = 'd5';
+    color = '#2fa0e6';
   } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
-    i = 'd6'
-    color = '#6b8b4c'
+    i = 'd6';
+    color = '#6b8b4c';
   } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
-    i = 'd7'
-    color = '#af5c18'
+    i = 'd7';
+    color = '#af5c18';
   } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
-    i = 'd8'
-    color = '#da644f'
+    i = 'd8';
+    color = '#da644f';
   } else if (realmin > setmin && realmin <= setmin + int / 2) {
-    i = 'n0'
-    color = '#b6bbf5'
+    i = 'n0';
+    color = '#b6bbf5';
   } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
-    i = 'n1'
-    color = '#897ddc'
+    i = 'n1';
+    color = '#897ddc';
   } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
-    i = 'n2'
-    color = '#3e7ee3'
+    i = 'n2';
+    color = '#3e7ee3';
   } else if (realmin > setmin + int * 3 && realmin <= 1320) {
-    i = 'n3'
-    color = '#36315a'
+    i = 'n3';
+    color = '#36315a';
   } else if (realmin > 1320) {
-    i = 'n4'
-    color = '#3d3d88'
+    i = 'n4';
+    color = '#3d3d88';
   }
-  let hres = "0"
-  const urlParams = new URLSearchParams(window.location.search)
-  hres = urlParams.get("hres")
-  if (hres == 1) {
-    j = "-4x-AnimeSharp.webp"
-  } else {
-    j = ".webp"
-  }
-  anime = urlParams.get("anime")
+  let hres = "0";
+  const urlParams = new URLSearchParams(window.location.search);
+  hres = urlParams.get("hres");
+  const j = hres == 1 ? "-4x-AnimeSharp.webp" : ".webp";
+  const anime = urlParams.get("anime");
   if (anime == 1) {
-    j = ".jpg"
-    document.querySelectorAll('link[rel="icon"]')[0].href = "icon/favicon-32x32.png"
-    document.querySelectorAll('link[rel="icon"]')[1].href = "icon/favicon-16x16.png"
+    document.querySelectorAll('link[rel="icon"]')[0].href = "icon/favicon-32x32.png";
+    document.querySelectorAll('link[rel="icon"]')[1].href = "icon/favicon-16x16.png";
   }
-  document.querySelector('meta[name=theme-color]').setAttribute('content', color)
-  loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}")
-}
-// Day & Night animations
-const duration = 0.4
-let isDay = true
-const scale = 30
-const toNightAnimation = gsap.timeline()
-if (!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  toNightAnimation.pause()
-} else {
-  document.getElementById('sunburst').style.display = 'none'
+  document.querySelector('meta[name=theme-color]').setAttribute('content', color);
+  loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}");
 }
 
+// Day & Night animations
+const duration = 0.4;
+let isDay = true;
+const scale = 30;
+const toNightAnimation = gsap.timeline({ paused: !(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) });
 toNightAnimation
-  .to(
-    '#circle', {
+  .to('#circle', {
     duration: duration,
     ease: 'power4.in',
     scaleX: scale,
     scaleY: scale,
     x: 1,
     transformOrigin: '100% 50%'
-  },
-    0
-  )
-  .set(
-    '#circle', {
+  }, 0)
+  .set('#circle', {
     scaleX: -scale
-  },
-    duration
-  )
-  .to(
-    '#circle', {
+  }, duration)
+  .to('#circle', {
     duration: duration,
     ease: 'power4.out',
     scaleX: -1,
     scaleY: 1,
     x: 2
-  },
-    duration
-  )
-  .fromTo(
-    '.filter', {
+  }, duration)
+  .fromTo('.filter', {
     filter: 'brightness(100%)'
   }, {
     filter: 'brightness(50%)',
     duration: duration
-  },
-    0
-  )
-  .to(
-    '.nmtext,.nmbar', {
+  }, 0)
+  .to('.nmtext,.nmbar', {
     color: 'white',
     duration: duration * 2
-  },
-    0
-  )
-  .to(
-    '.nmbar', {
+  }, 0)
+  .to('.nmbar', {
     background: 'rgba(0,0,0,.3)',
     duration: duration
-  },
-    0
-  )
-  .fromTo(
-    '.nmbar', {
+  }, 0)
+  .fromTo('.nmbar', {
     boxShadow: '0 0 18px rgba(70, 70, 40, .255)'
   }, {
     boxShadow: '0 0 18px rgba(0, 0, 0, .255)',
     duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud1', {
+  }, 0)
+  .to('#cloud1', {
     fill: '#101010',
     duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud2', {
+  }, 0)
+  .to('#cloud2', {
     fill: '#191919',
     duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud3', {
+  }, 0)
+  .to('#cloud3', {
     fill: '#2a2a2a',
     duration: duration
-  },
-    0
-  )
-  .to(
-    '#sun', {
+  }, 0)
+  .to('#sun', {
     fill: '#3e3f57',
     duration: duration * 2
-  },
-    0
-  )
-  .to(
-    '#sunburst', {
+  }, 0)
+  .to('#sunburst', {
     opacity: '0',
     duration: duration * 2
-  },
-    0
-  )
+  }, 0);
 
-const stars = Array.from(document.getElementsByClassName('star'))
+const stars = Array.from(document.getElementsByClassName('star'));
 stars.map((star) =>
   gsap.to(star, {
     duration: 'random(0.4, 1.5)',
@@ -1122,34 +1016,34 @@ stars.map((star) =>
     yoyo: true,
     opacity: 'random(0.2, 0.5)'
   })
-)
+);
 gsap.to('.clouds-big', {
   duration: 15,
   repeat: -1,
   x: -74,
   ease: 'linear'
-})
+});
 gsap.to('.clouds-medium', {
   duration: 20,
   repeat: -1,
   x: -65,
   ease: 'linear'
-})
+});
 gsap.to('.clouds-small', {
   duration: 25,
   repeat: -1,
   x: -71,
   ease: 'linear'
-})
+});
 
-const switchToggle = document.getElementById('input')
-switchToggle.addEventListener('change', () => toggle())
-const toggle = () => {
-  isDay = switchToggle.checked === true
+const switchToggle = document.getElementById('input');
+switchToggle.addEventListener('change', toggle);
+function toggle() {
+  isDay = switchToggle.checked === true;
   if (isDay) {
-    document.getElementById('sunburst').style.display = 'block'
-    toNightAnimation.reverse()
+    document.getElementById('sunburst').style.display = 'block';
+    toNightAnimation.reverse();
   } else {
-    toNightAnimation.play()
+    toNightAnimation.play();
   }
 }
