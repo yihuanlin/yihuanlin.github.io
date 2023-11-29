@@ -33,7 +33,7 @@ bid.addEventListener('input', function () {
 function baidu(keys) {
   const len = keys.s.length
   const boxid = document.getElementById('keywordb')
-  const hid = document.getElementById('googlebar')
+  const hid = document.getElementById('bingbar')
   if (len === 0) {
     boxid.style.display = 'none'
     hid.style.display = 'block'
@@ -65,19 +65,19 @@ function baidu(keys) {
   }, false)
 }
 // Google search suggestions
-const gid = document.getElementById('search_google')
+const gid = document.getElementById('search_bing')
 gid.addEventListener('input', function () {
   if (!gid.value) {
     return
   }
   const s = document.createElement('script')
   s.type = 'text/javascript'
-  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=google'
+  s.src = 'https://suggestqueries.google.com/complete/search?q=' + gid.value + '&output=firefox&callback=bing'
   const h = document.getElementsByTagName('script')[0]
   h.parentNode.insertBefore(s, h)
 }, false)
 
-function google(keys) {
+function bing(keys) {
   const len = keys[1].length
   const boxid = document.getElementById('keywordg')
   const hid = document.getElementById('baidubar')
@@ -99,12 +99,12 @@ function google(keys) {
     ele.onclick = function () {
       gid.value = this.innerHTML
       gid.focus()
-      togoogle()
+      tobing()
     }
   }
   document.body.addEventListener('click', function (evt) {
     const target = evt.target
-    if ((target.id !== 'keywordb') && (target.id !== 'googlebar') && (target.id !== 'search_google')) {
+    if ((target.id !== 'keywordb') && (target.id !== 'bingbar') && (target.id !== 'search_bing')) {
       boxid.style.transform = 'scaleY(0)'
       hid.style.display = 'block'
       boxid.style.display = 'none'
@@ -116,8 +116,51 @@ function tobaidu() {
   return bid.value !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + bid.value), (bid.value = '')), !1
 }
 
-function togoogle() {
-  return gid.value !== '' && ((window.location.href = 'https://www.google.com/search?q=' + gid.value), (gid.value = '')), !1
+function tobing() {
+  const regex = /!(.*?)\s/
+  const match = regex.exec(gid.value)[1]
+  const gidValue = gid.value.replace(regex, '')
+  switch (match) {
+    case undefined:
+      return gid.value !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gid.value), (gid.value = '')), !1
+    case 'zfin':
+    case 'z':
+      return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), !1
+    case 'w':
+      return gidValue !== '' && ((window.location.href = 'https://en.wikipedia.org/wiki/Special:Search?search=' + gidValue), (gidValue = '')), !1
+    case 'wt':
+      return gidValue !== '' && ((window.location.href = 'http://en.wiktionary.org/wiki/Special:Search?go=Define&search=' + gidValue), (gidValue = '')), !1
+    case 'gh':
+      return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), !1
+    case 'g':
+      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?q=' + gidValue), (gidValue = '')), !1
+    case 'l':
+      return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), !1
+    case 'b':
+      return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), !1
+    case 'y':
+    case 'yt':
+      return gidValue !== '' && ((window.location.href = 'https://www.youtube.com/results?search_query=' + gidValue), (gidValue = '')), !1
+    case 'r':
+      return gidValue !== '' && ((window.location.href = 'https://www.reddit.com/search?q=' + gidValue), (gidValue = '')), !1
+    case 'd':
+      return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), !1
+    case 's':
+      return gidValue !== '' && ((window.location.href = 'https://stackoverflow.com/search?q=' + gidValue), (gidValue = '')), !1
+    case 'a':
+      return gidValue !== '' && ((window.location.href = 'https://www.amazon.co.uk/s/?field-keywords=' + gidValue), (gidValue = '')), !1
+    case 'ebay':
+      return gidValue !== '' && ((window.location.href = 'https://www.ebay.co.uk/sch/i.html?_nkw=' + gidValue), (gidValue = '')), !1
+    case 'app':
+      return gidValue !== '' && ((window.location.href = 'https://appstorrent.ru/?do=search&subaction=search&story=' + gidValue), (gidValue = '')), !1
+    case 'e':
+    case 'ensembl':
+      return gidValue !== '' && ((window.location.href = 'https://www.ensembl.org/Zebrafish/Search/Results?q=' + gidValue + ';facet_feature_type=;site=ensembl;facet_species=Zebrafish'), (gidValue = '')), !1
+    case 'gi':
+      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), !1
+    case 'gt':
+      return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), !1
+  }
 }
 // start of weather set up
 gsap.registerPlugin(MotionPathPlugin)
