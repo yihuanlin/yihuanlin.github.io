@@ -896,56 +896,8 @@ function setBackground(risemin, setmin) {
   const realmin = new Date().getHours() * 60 + new Date().getMinutes()
   let i
   let color
-  if (realmin <= risemin - int * 1.5) {
-    i = 'n5'
-    color = '#755be3'
-  } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
-    i = 'n6'
-    color = '#2a6a9e'
-  } else if (realmin > risemin - int / 2 && realmin <= risemin) {
-    i = 'd0'
-    color = '#ed95d1'
-  } else if (realmin > risemin && realmin <= risemin + int / 2) {
-    i = 'd1'
-    color = '#de9cd7'
-  } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
-    i = 'd2'
-    color = '#3c82cc'
-  } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
-    i = 'd3'
-    color = '#95bdcc'
-  } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
-    i = 'd4'
-    color = '#68c9f1'
-  } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
-    i = 'd5'
-    color = '#2fa0e6'
-  } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
-    i = 'd6'
-    color = '#6b8b4c'
-  } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
-    i = 'd7'
-    color = '#af5c18'
-  } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
-    i = 'd8'
-    color = '#da644f'
-  } else if (realmin > setmin && realmin <= setmin + int / 2) {
-    i = 'n0'
-    color = '#b6bbf5'
-  } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
-    i = 'n1'
-    color = '#897ddc'
-  } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
-    i = 'n2'
-    color = '#3e7ee3'
-  } else if (realmin > setmin + int * 3 && realmin <= 1320) {
-    i = 'n3'
-    color = '#36315a'
-  } else if (realmin > 1320) {
-    i = 'n4'
-    color = '#3d3d88'
-  }
   let hres = "0"
+  let anime = "0"
   const urlParams = new URLSearchParams(window.location.search)
   hres = urlParams.get("hres")
   if (hres == 1) {
@@ -956,8 +908,108 @@ function setBackground(risemin, setmin) {
   anime = urlParams.get("anime")
   if (anime == 1) {
     j = ".jpg"
-    document.querySelectorAll('link[rel="icon"]')[0].href = "icon/favicon-32x32.png"
-    document.querySelectorAll('link[rel="icon"]')[1].href = "icon/favicon-16x16.png"
+    if (realmin <= risemin - int * 1.5) {
+      i = 'n5'
+      color = '#45495c'
+    } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
+      i = 'n6'
+      color = '#313846'
+    } else if (realmin > risemin - int / 2 && realmin <= risemin) {
+      i = 'd0'
+      color = '#5bb9a4'
+    } else if (realmin > risemin && realmin <= risemin + int / 2) {
+      i = 'd1'
+      color = '#4b6923'
+    } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
+      i = 'd2'
+      color = '#2780cf'
+    } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
+      i = 'd3'
+      color = '#6492cd'
+    } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
+      i = 'd4'
+      color = '#fcddc1'
+    } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
+      i = 'd5'
+      color = '#dbdeea'
+    } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
+      i = 'd6'
+      color = '#abcac5'
+    } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
+      i = 'd7'
+      color = '#a8a09f'
+    } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
+      i = 'd8'
+      color = '#e9cdb8'
+    } else if (realmin > setmin && realmin <= setmin + int / 2) {
+      i = 'n0'
+      color = '#dbc3b9'
+    } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
+      i = 'n1'
+      color = '#010101'
+    } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
+      i = 'n2'
+      color = '#0a2d43'
+    } else if (realmin > setmin + int * 3 && realmin <= 1320) {
+      i = 'n3'
+      color = '#ccb09d'
+    } else if (realmin > 1320) {
+      i = 'n4'
+      color = '#1e2128'
+    }
+  } else {
+    if (realmin <= risemin - int * 1.5) {
+      i = 'n5'
+      color = '#755be3'
+    } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
+      i = 'n6'
+      color = '#2a6a9e'
+    } else if (realmin > risemin - int / 2 && realmin <= risemin) {
+      i = 'd0'
+      color = '#ed95d1'
+    } else if (realmin > risemin && realmin <= risemin + int / 2) {
+      i = 'd1'
+      color = '#5e659b'
+    } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
+      i = 'd1a'
+      color = '#de9cd7'
+    } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 2.5) {
+      i = 'd2'
+      color = '#3c82cc'
+    } else if (realmin > risemin + int * 2.5 && realmin <= risemin + int * 3.5) {
+      i = 'd3'
+      color = '#95bdcc'
+    } else if (realmin > risemin + int * 3.5 && realmin <= risemin + int * 4.5) {
+      i = 'd4'
+      color = '#364e3d'
+    } else if (realmin > risemin + int * 4.5 && realmin <= risemin + int * 5.5) {
+      i = 'd5'
+      color = '#2fa0e6'
+    } else if (realmin > risemin + int * 5.5 && realmin <= risemin + int * 6.5) {
+      i = 'd6'
+      color = '#6b8b4c'
+    } else if (realmin > risemin + int * 6.5 && realmin <= risemin + int * 7.5) {
+      i = 'd7'
+      color = '#af5c18'
+    } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
+      i = 'd8'
+      color = '#da644f'
+    } else if (realmin > setmin && realmin <= setmin + int / 2) {
+      i = 'n0'
+      color = '#b6bbf5'
+    } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
+      i = 'n1'
+      color = '#897ddc'
+    } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
+      i = 'n2'
+      color = '#3e7ee3'
+    } else if (realmin > setmin + int * 3 && realmin <= 1320) {
+      i = 'n3'
+      color = '#36315a'
+    } else if (realmin > 1320) {
+      i = 'n4'
+      color = '#3d3d88'
+    }
   }
   document.querySelector('meta[name=theme-color]').setAttribute('content', color)
   loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}")
