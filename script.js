@@ -809,7 +809,7 @@ function getWeather() {
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
   document.getElementById('city').innerHTML = city + ' &#xe901'
   document.getElementById('detail').innerHTML = weather
-  document.getElementById('temp').innerHTML = temp + '<span>°C</span>'
+  document.getElementById('temp').innerHTML = temp + '°C'
   const rise = arr.astro.sunrise.split(':')
   const rmin = parseFloat(rise[1].split(' ')[0])
   const set = arr.astro.sunset.split(':')
