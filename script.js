@@ -76,11 +76,12 @@ function bing(keys) {
 function isValidURL(str) {
   var a  = document.createElement('a');
   a.href = str;
-  return (a.host && a.host != window.location.host || false);
+  var hostParts = a.host.split(".");
+  return (hostParts.length === 3 && (a.host != window.location.host) || false);
 }
 
 function tobing() {
-  if (isValidURL(gidValue)) {
+  if (gidValue.startsWith('https://') || gidValue.startsWith('http://')) {
     return gidValue !== '' && ((window.location.href = gidValue), (gidValue = '')), false;
   } else if (isValidURL("https://" + gidValue)) {
     return gidValue !== '' && ((window.location.href = "https://" + gidValue), (gidValue = '')), false;
