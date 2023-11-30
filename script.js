@@ -809,7 +809,7 @@ function getWeather() {
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
   document.getElementById('city').innerHTML = city + ' &#xe901'
   document.getElementById('detail').innerHTML = weather
-  document.getElementById('temp').innerHTML = temp + '<span>℃</span>'
+  document.getElementById('temp').innerHTML = temp + '<span>°C</span>'
   const rise = arr.astro.sunrise.split(':')
   const rmin = parseFloat(rise[1].split(' ')[0])
   const set = arr.astro.sunset.split(':')
@@ -818,7 +818,7 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     shr = shr + 12
   }
   const smin = parseFloat(set[1].split(' ')[0])
-  document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '℃ to ' + arr.day.maxtemp_c + '℃</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>'
+  document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '°C to ' + arr.day.maxtemp_c + '°C</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>'
   let i
   let t
   if (code === 1066 || code === 1069 || code === 1114 || code === 1204 || code === 1207 || code === 1210 || code === 1213 || code === 1216 || code === 1219 || code === 1222 || code === 1225 || code === 1237 || code === 1249 || code === 1252 || code === 1255 || code === 1258 || code === 1261 || code === 1264 || code === 1279 || code === 1282) {

@@ -26,7 +26,7 @@ input::placeholder {
 }
 
 body {
-    font-family: "Comfortaa", "Noto Sans SC";
+    font-family: "Comfortaa", sans-serif;
     margin-left: 0;
     margin-top: 0;
 }
@@ -78,7 +78,7 @@ input:focus {
 }
 
 .search {
-    font-family: "Comfortaa", "Icons";
+    font-family: -apple-system, Helvetica, "Comfortaa", sans-serif;
     background-color: transparent;
     width: 80%;
     height: 25px;
@@ -88,6 +88,7 @@ input:focus {
 }
 
 #search_bing::placeholder {
+    font-family: "Comfortaa", "Icons", sans-serif;
     color: #174ae3;
 }
 
@@ -105,6 +106,7 @@ input:focus {
 }
 
 .keyword span {
+    font-family: -apple-system, Helvetica, "Comfortaa", sans-serif;
     padding: 0 35px;
     display: block;
     clear: both;
@@ -185,7 +187,7 @@ input:focus {
 
 #card .details #city,
 #detail {
-    font-family: "Comfortaa", "Icons";
+    font-family: "Comfortaa", "Icons", sans-serif;
     font-size: 20px;
     text-transform: capitalize;
     margin: 4px 0;
@@ -215,8 +217,8 @@ input:focus {
 }
 
 #card .details #temprange p {
-    font-family: "Comfortaa", "Icons";
-    margin: 0;
+    font-family: "Comfortaa", "Icons", sans-serif;
+    margin: 4px 0 0 0;
 }
 
 #card .details #time {
