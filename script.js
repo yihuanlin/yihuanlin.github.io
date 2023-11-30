@@ -87,24 +87,52 @@ function tobing() {
       return gidValue !== '' && ((window.location.href = 'https://en.wiktionary.org/wiki/Special:Search?go=Define&search=' + gidValue), (gidValue = '')), false;
     case 'gh':
       return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), false;
+    case 'c':
+    case 'chem':
+    case 'pubchem':
+      return gidValue !== '' && ((window.location.href = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + gidValue), (gidValue = '')), false;
     case 'g':
       return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?q=' + gidValue), (gidValue = '')), false;
-    case 'l':
+    case 'lf':
+    case 'lofter':
       return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), false;
     case 'bi':
     case 'bili':
       return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), false;
     case 'b':
+    case 'd':
       return gidValue !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + gidValue), (gidValue = '')), false;
+    case 's':
+      return gidValue !== '' && ((window.location.href = 'https://scholar.google.co.uk/scholar?q=' + gidValue), (gidValue = '')), false;
+    case 'sougou':
+      return gidValue !== '' && ((window.location.href = 'https://www.sogou.com/web?query=' + gidValue), (gidValue = '')), false;
+    case '360':
+      return gidValue !== '' && ((window.location.href = 'https://www.so.com/s?q=' + gidValue), (gidValue = '')), false;
+    case 'l':
+      return gidValue !== '' && ((window.location.href = 'https://www.lofter.com/tag/' + gidValue), (gidValue = '')), false;
+    case 'hoyo':
+    case 'hoyolab':
+      return gidValue !== '' && ((window.location.href = 'https://www.hoyolab.com/search?keyword=' + gidValue), (gidValue = '')), false;
+    case 'gene':
+      return gidValue !== '' && ((window.location.href = 'https://www.alliancegenome.org/search?q=' + gidValue), (gidValue = '')), false;
+    case 'm':
+    case 'pubmed':
+      return gidValue !== '' && ((window.location.href = 'https://pubmed.ncbi.nlm.nih.gov/?term=' + gidValue), (gidValue = '')), false;
+    case 'mhy':
+    case 'ys':
+    case 'gsi':
+      return gidValue !== '' && ((window.location.href = 'https://www.miyoushe.com/ys/search?keyword=' + gidValue), (gidValue = '')), false;
+    case 'hsr':
+    case 'sr':
+      return gidValue !== '' && ((window.location.href = 'https://www.miyoushe.com/sr/search?keyword=' + gidValue), (gidValue = '')), false;
+    case 'anime':
+    case 'ani':
+      return gidValue !== '' && ((window.location.href = 'https://www.qkan8.com/index.php/vod/search.html?wd=' + gidValue), (gidValue = '')), false;
     case 'y':
     case 'yt':
       return gidValue !== '' && ((window.location.href = 'https://www.youtube.com/results?search_query=' + gidValue), (gidValue = '')), false;
-    case 'r':
-      return gidValue !== '' && ((window.location.href = 'https://www.reddit.com/search?q=' + gidValue), (gidValue = '')), false;
     case 'd':
       return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), false;
-    case 's':
-      return gidValue !== '' && ((window.location.href = 'https://stackoverflow.com/search?q=' + gidValue), (gidValue = '')), !1
     case 'a':
       return gidValue !== '' && ((window.location.href = 'https://www.amazon.co.uk/s/?field-keywords=' + gidValue), (gidValue = '')), !1
     case 'ebay':
@@ -114,9 +142,13 @@ function tobing() {
     case 'e':
     case 'ensembl':
       return gidValue !== '' && ((window.location.href = 'https://www.ensembl.org/Zebrafish/Search/Results?q=' + gidValue + ';facet_feature_type=;site=ensembl;facet_species=Zebrafish'), (gidValue = '')), !1
+    case 'protocols':
+    case 'p':
+      return gidValue !== '' && ((window.location.href = 'https://www.protocols.io/search?q=' + gidValue), (gidValue = '')), !1
     case 'gi':
       return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), !1
     case 'gt':
+    case 't':
       return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), !1
   }
 }
