@@ -1,39 +1,38 @@
-var appShellFiles = [
-    "/index.html",
-    "/script.min.js",
-    "/style.min.js",
-    "/font/icon.woff",
-    "/font/comfortaa.woff",
-    "/icon/server.svg",
-    "/icon/lab.svg",
-    "/icon/school.svg",
-    "/icon/panel.svg",
-    "/background/d0.jpg",
-    "/background/d1.jpg",
-    "/background/d1a.jpg",
-    "/background/d2.jpg",
-    "/background/d3.jpg",
-    "/background/d4.jpg",
-    "/background/d5.jpg",
-    "/background/d6.jpg",
-    "/background/d7.jpg",
-    "/background/d8.jpg",
-    "/background/n0.jpg",
-    "/background/n1.jpg",
-    "/background/n2.jpg",
-    "/background/n3.jpg",
-    "/background/n4.jpg",
-    "/background/n5.jpg",
-    "/background/n6.jpg",
-    "/gsap.min.js",
-    "/MotionPathPlugin.min.js",
-    "/snap.svg.min.js"
-];
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open('search')
             .then(function (cache) {
-                return cache.addAll(appShellFiles);
+                return Promise.all([
+                    cache.add("/index.html"),
+                    cache.add("/script.min.js"),
+                    cache.add("/style.min.css"),
+                    cache.add("/font/icon.woff"),
+                    cache.add("/font/comfortaa.woff"),
+                    cache.add("/icon/server.svg"),
+                    cache.add("/icon/lab.svg"),
+                    cache.add("/icon/school.svg"),
+                    cache.add("/icon/panel.svg"),
+                    cache.add("/background/d0.jpg"),
+                    cache.add("/background/d1.jpg"),
+                    cache.add("/background/d1a.jpg"),
+                    cache.add("/background/d2.jpg"),
+                    cache.add("/background/d3.jpg"),
+                    cache.add("/background/d4.jpg"),
+                    cache.add("/background/d5.jpg"),
+                    cache.add("/background/d6.jpg"),
+                    cache.add("/background/d7.jpg"),
+                    cache.add("/background/d8.jpg"),
+                    cache.add("/background/n0.jpg"),
+                    cache.add("/background/n1.jpg"),
+                    cache.add("/background/n2.jpg"),
+                    cache.add("/background/n3.jpg"),
+                    cache.add("/background/n4.jpg"),
+                    cache.add("/background/n5.jpg"),
+                    cache.add("/background/n6.jpg"),
+                    cache.add("/gsap.min.js"),
+                    cache.add("/MotionPathPlugin.min.js"),
+                    cache.add("/snap.svg.min.js")
+                ]);
             })
     );
 });
