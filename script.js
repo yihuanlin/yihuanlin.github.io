@@ -21,7 +21,7 @@ document.addEventListener('click', clickEffect);
 // Google search suggestions
 
 const gid = document.getElementById('search_bing');
-const regex = /!(.*?)\s/;
+const regex = /!(.*?)(?:\s|$)/;
 gid.addEventListener('input', function () {
   if (!gid.value) {
     document.getElementById('keywordg').style.display = 'none';
