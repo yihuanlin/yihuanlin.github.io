@@ -89,8 +89,6 @@ function tobing() {
     return gidValue !== '' && ((window.location.href = "https://" + gidValue), (gidValue = '')), false;
   }
   switch (match) {
-    case undefined:
-      return gidValue !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gidValue), (gidValue = '')), false;
     case 'zfin':
     case 'z':
       return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), false;
@@ -101,6 +99,7 @@ function tobing() {
     case 'gh':
       return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), false;
     case 'c':
+    case 'pc':
     case 'chem':
     case 'pubchem':
       return gidValue !== '' && ((window.location.href = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + gidValue), (gidValue = '')), false;
@@ -116,6 +115,7 @@ function tobing() {
     case 'd':
       return gidValue !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + gidValue), (gidValue = '')), false;
     case 's':
+    case 'gs':
       return gidValue !== '' && ((window.location.href = 'https://scholar.google.co.uk/scholar?q=' + gidValue), (gidValue = '')), false;
     case 'sougou':
       return gidValue !== '' && ((window.location.href = 'https://www.sogou.com/web?query=' + gidValue), (gidValue = '')), false;
@@ -129,6 +129,7 @@ function tobing() {
     case 'gene':
       return gidValue !== '' && ((window.location.href = 'https://www.alliancegenome.org/search?q=' + gidValue), (gidValue = '')), false;
     case 'm':
+    case 'pm':
     case 'pubmed':
       return gidValue !== '' && ((window.location.href = 'https://pubmed.ncbi.nlm.nih.gov/?term=' + gidValue), (gidValue = '')), false;
     case 'mhy':
@@ -147,22 +148,25 @@ function tobing() {
     case 'd':
       return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), false;
     case 'a':
-      return gidValue !== '' && ((window.location.href = 'https://www.amazon.co.uk/s/?field-keywords=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.amazon.co.uk/s/?field-keywords=' + gidValue), (gidValue = '')), false;
     case 'ebay':
-      return gidValue !== '' && ((window.location.href = 'https://www.ebay.co.uk/sch/i.html?_nkw=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.ebay.co.uk/sch/i.html?_nkw=' + gidValue), (gidValue = '')), false;
     case 'app':
-      return gidValue !== '' && ((window.location.href = 'https://appstorrent.ru/?do=search&subaction=search&story=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://appstorrent.ru/?do=search&subaction=search&story=' + gidValue), (gidValue = '')), false;
     case 'e':
     case 'ensembl':
-      return gidValue !== '' && ((window.location.href = 'https://www.ensembl.org/Zebrafish/Search/Results?q=' + gidValue + ';facet_feature_type=;site=ensembl;facet_species=Zebrafish'), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.ensembl.org/Zebrafish/Search/Results?q=' + gidValue + ';facet_feature_type=;site=ensembl;facet_species=Zebrafish'), (gidValue = '')), false;
     case 'protocols':
     case 'p':
-      return gidValue !== '' && ((window.location.href = 'https://www.protocols.io/search?q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.protocols.io/search?q=' + gidValue), (gidValue = '')), false;
     case 'gi':
-      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), false;
     case 'gt':
     case 't':
-      return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), !1
+      return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), false;
+    case undefined:
+    default:
+      return gidValue !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gidValue), (gidValue = '')), false;
   }
 }
 
