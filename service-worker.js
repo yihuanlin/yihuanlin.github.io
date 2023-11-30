@@ -31,7 +31,7 @@ var appShellFiles = [
 ];
 self.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open("Search")
+        caches.open('search')
             .then(function (cache) {
                 return cache.addAll(appShellFiles);
             })
