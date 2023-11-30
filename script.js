@@ -6,7 +6,9 @@ if ('serviceWorker' in navigator) {
 // Clickeffects
 
 function clickEffect(e) {
-  document.getElementById('search_bing').focus();
+  if (!('ontouchstart' in window)) {
+    document.getElementById('search_bing').focus();
+  }
   const i = document.createElement('div');
   i.className = 'clickEffect';
   i.style.top = e.clientY + 'px';
