@@ -73,8 +73,18 @@ function bing(keys) {
 }
 
 // go to search results
+function isValidURL(str) {
+  var a  = document.createElement('a');
+  a.href = str;
+  return (a.host && a.host != window.location.host || false);
+}
 
 function tobing() {
+  if (isValidURL(gidValue)) {
+    return gidValue !== '' && ((window.location.href = gidValue), (gidValue = '')), false;
+  } else if (isValidURL("https://" + gidValue)) {
+    return gidValue !== '' && ((window.location.href = "https://" + gidValue), (gidValue = '')), false;
+  }
   switch (match) {
     case undefined:
       return gidValue !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gidValue), (gidValue = '')), false;
