@@ -8,6 +8,7 @@ var appShellFiles = [
     "/icon/panel.svg",
     "/background/d0.jpg",
     "/background/d1.jpg",
+    "/background/d1a.jpg",
     "/background/d2.jpg",
     "/background/d3.jpg",
     "/background/d4.jpg",
@@ -28,7 +29,7 @@ var appShellFiles = [
 ];
 self.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open(search)
+        caches.open("Search")
             .then(function (cache) {
                 return cache.addAll(appShellFiles);
             })
