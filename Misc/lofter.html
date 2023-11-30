@@ -27,7 +27,7 @@
     const url = urlParams.get("url");
     if (url) {
       function httpGet(url) {
-        url = 'https://corsproxy.io/?' + encodeURIComponent(url);
+        url = 'https://corsproxy.io/?' + url;
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", url, false);
         xmlHttp.send(null);
@@ -65,10 +65,10 @@
       if (bigImgSrc) {
         bigImgSrc.forEach(src => {
           const imgElement = document.createElement("img");
-          imgElement.src = 'https://corsproxy.io/?' + encodeURIComponent(src);
+          imgElement.src = 'https://corsproxy.io/?' + src;
           imgElement.referrerpolicy = "no-referrer";
           imgElement.addEventListener("click", function() {
-            window.open(imgElement.src, "_blank");
+            window.open(src, "_blank");
           });
           document.body.appendChild(imgElement);
         });
