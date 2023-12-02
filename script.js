@@ -843,16 +843,34 @@ xhr.onreadystatechange = function () {
 }
 xhr.send()
 
+const retryCount = 0;
 function getWeather() {
-  const xhr = new XMLHttpRequest()
-  xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1')
+  const xhr = new XMLHttpRequest();
+  xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      const response = JSON.parse(xhr.responseText)
-      handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0])
+      const response = JSON.parse(xhr.responseText);
+      handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0]);
+    } else if (retryCount < 3) {
+      retryCount++;
+      getWeather();
+    } else {
+      const astro = {
+        sunrise: "07:00 AM",
+        sunset: "06:00 PM"
+      };
+      const day = {
+        maxtemp_c: "N/A",
+        mintemp_c: "N/A"
+      };
+      const arr = {
+        astro: astro,
+        day: day
+      };
+      handleJson("London", "N/A", "Offline", 1000, 10, "N/A", arr);
     }
-  }
-  xhr.send()
+  };
+  xhr.send();
 }
 
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
@@ -904,9 +922,6 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
   setBackground(risemin, setmin)
   init(i)
   window.addEventListener('resize', widgetResize)
-
-  // start animations
-
   requestAnimationFrame(tick)
 }
 
@@ -944,6 +959,7 @@ function loadStyleString(cssText) {
 
 function setBackground(risemin, setmin) {
   const int = (setmin - risemin) / 8
+  const setint = (1440 - setmin) / 8
   const realmin = new Date().getHours() * 60 + new Date().getMinutes()
   let i
   let color
@@ -959,71 +975,77 @@ function setBackground(risemin, setmin) {
   anime = urlParams.get("anime")
   if (anime == 1) {
     j = ".jpg"
-    if (realmin <= risemin - int * 1.5) {
+    if (realmin <= risemin / 3) {
       i = 'n5'
-      color = '#45495c'
-    } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
+      color = '#3c3c48'
+    } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 3) {
       i = 'n6'
-      color = '#313846'
-    } else if (realmin > risemin - int / 2 && realmin <= risemin) {
+      color = '#030713'
+    } else if (realmin > 2 * risemin / 3 && realmin <= risemin) {
       i = 'd0'
-      color = '#5bb9a4'
-    } else if (realmin > risemin && realmin <= risemin + int / 2) {
+      color = '#34a79f'
+    } else if (realmin > risemin && realmin <= risemin + int) {
       i = 'd1'
-      color = '#4b6923'
-    } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
+      color = '#43558d'
+    } else if (realmin > risemin + int && realmin <= risemin + int * 2) {
+      i = 'd1a'
+      color = '#274625'
+    } else if (realmin > risemin + int * 2 && realmin <= risemin + int * 3) {
       i = 'd2'
-      color = '#2780cf'
-    } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 3) {
-      i = 'd3'
-      color = '#6492cd'
+      color = '#39a3e2'
     } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
-      i = 'd4'
-      color = '#fcddc1'
+      i = 'd3'
+      color = '#225fcb'
     } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
-      i = 'd5'
-      color = '#dbdeea'
+      i = 'd4'
+      color = '#537656'
     } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
+      i = 'd5'
+      color = '#ffffff'
+    } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7) {
       i = 'd6'
-      color = '#abcac5'
-    } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7.5) {
+      color = '#a8c5c1'
+    } else if (realmin > risemin + int * 7 && realmin <= setmin) {
       i = 'd7'
-      color = '#a8a09f'
-    } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
+      color = '#a79d9c'
+    } else if (realmin > setmin && realmin <= setmin  + setint) {
       i = 'd8'
       color = '#e9cdb8'
-    } else if (realmin > setmin && realmin <= setmin + int / 2) {
+    } else if (realmin > setmin + setint && realmin <= setmin + setint * 2) {
       i = 'n0'
       color = '#dbc3b9'
-    } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
+    } else if (realmin > setmin + setint * 2 && realmin <= setmin + setint * 3) {
       i = 'n1'
       color = '#010101'
-    } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
+    } else if (realmin > setmin + setint * 3 && realmin <= setmin + setint * 4) {
       i = 'n2'
-      color = '#0a2d43'
-    } else if (realmin > setmin + int * 3 && realmin <= 1320) {
+      color = '#0f2d41'
+    } else if (realmin > setmin + setint * 4 && realmin + setint * 5) {
       i = 'n3'
-      color = '#ccb09d'
-    } else if (realmin > 1320) {
+      color = '#090818'
+    } else if (realmin > setmin + setint * 5 && realmin + setint * 6) {
+      i = 'n3a'
+      color = '#090818'
+    } else if (realmin > setmin + setint * 6 && realmin + setint * 7) {
       i = 'n4'
-      color = '#1e2128'
+      color = '#1f1f27'
+    } else {
+      i = 'n4a'
+      color = '#1f1f27'
     }
   } else {
-    if (realmin <= risemin - int * 1.5) {
+    if (realmin <= risemin / 3) {
       i = 'n5'
       color = '#755be3'
-    } else if (realmin > risemin - int * 1.5 && realmin <= risemin - int / 2) {
+    } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 2) {
       i = 'n6'
       color = '#2a6a9e'
-    } else if (realmin > risemin - int / 2 && realmin <= risemin) {
+    } else if (realmin > 2 * risemin / 2 && realmin <= risemin) {
       i = 'd0'
       color = '#ed95d1'
     } else if (realmin > risemin && realmin <= risemin + int / 2) {
       i = 'd1'
       color = '#5e659b'
-    } else if (realmin > risemin + int / 2 && realmin <= risemin + int * 1.5) {
-      i = 'd1a'
-      color = '#de9cd7'
     } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 2.5) {
       i = 'd2'
       color = '#3c82cc'
@@ -1042,22 +1064,22 @@ function setBackground(risemin, setmin) {
     } else if (realmin > risemin + int * 6.5 && realmin <= risemin + int * 7.5) {
       i = 'd7'
       color = '#af5c18'
-    } else if (realmin > risemin + int * 7.5 && realmin <= setmin) {
+    } else if (realmin > risemin + int * 7.5 && realmin <= setmin + setint / 2) {
       i = 'd8'
       color = '#da644f'
-    } else if (realmin > setmin && realmin <= setmin + int / 2) {
+    } else if (realmin > setmin + setint / 2 && realmin <= setmin + setint * 1.5) {
       i = 'n0'
       color = '#b6bbf5'
-    } else if (realmin > setmin + int / 2 && realmin <= setmin + int * 1.5) {
+    } else if (realmin > setmin + setint * 1.5 && realmin <= setmin + setint * 2.5) {
       i = 'n1'
       color = '#897ddc'
-    } else if (realmin > setmin + int * 1.5 && realmin <= setmin + int * 3) {
+    } else if (realmin > setmin + setint * 2.5 && realmin <= setmin + setint * 3.5) {
       i = 'n2'
       color = '#3e7ee3'
-    } else if (realmin > setmin + int * 3 && realmin <= 1320) {
+    } else if (realmin > setmin + setint * 3.5 && realmin + setint * 5) {
       i = 'n3'
       color = '#36315a'
-    } else if (realmin > 1320) {
+    } else {
       i = 'n4'
       color = '#3d3d88'
     }
