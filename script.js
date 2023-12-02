@@ -14,7 +14,7 @@ function clickEffect(e) {
   i.style.top = e.clientY + 'px';
   i.style.left = e.clientX + 'px';
   document.body.appendChild(i);
-  i.addEventListener('animationend', function () {
+  i.addEventListener('animationend', function() {
     i.parentElement.removeChild(i);
   });
 }
@@ -24,7 +24,7 @@ document.addEventListener('click', clickEffect);
 
 const gid = document.getElementById('search_bing');
 const regex = /!(.*?)(?:\s|$)/;
-gid.addEventListener('input', function () {
+gid.addEventListener('input', function() {
   if (!gid.value) {
     document.getElementById('keywordg').style.display = 'none';
     return;
@@ -59,13 +59,13 @@ function bing(keys) {
   boxid.innerHTML = spans;
   for (let i = 0; i < boxid.children.length; i++) {
     const ele = boxid.children[i];
-    ele.onclick = function () {
+    ele.onclick = function() {
       gidValue = this.innerHTML;
       gid.focus();
       tobing();
     };
   }
-  document.body.addEventListener('click', function (evt) {
+  document.body.addEventListener('click', function(evt) {
     const target = evt.target;
     if ((target.id !== 'bingbar') && (target.id !== 'search_bing')) {
       boxid.style.transform = 'scaleY(0)';
@@ -76,7 +76,7 @@ function bing(keys) {
 
 // go to search results
 function isValidURL(str) {
-  var a  = document.createElement('a');
+  var a = document.createElement('a');
   a.href = str;
   var hostParts = a.host.split(".");
   return (hostParts.length === 3 && (a.host != window.location.host) || false);
@@ -184,9 +184,9 @@ const backSVG = Snap('#back')
 const weatherContainer1 = Snap.select('#layer1')
 const weatherContainer2 = Snap.select('#layer2')
 const weatherContainer3 = Snap.select('#layer3')
-const innerRainHolder1 = weatherContainer1.group()
-const innerRainHolder2 = weatherContainer2.group()
-const innerRainHolder3 = weatherContainer3.group()
+var innerRainHolder1 = weatherContainer1.group()
+var innerRainHolder2 = weatherContainer2.group()
+var innerRainHolder3 = weatherContainer3.group()
 const innerLeafHolder = weatherContainer1.group()
 const innerSnowHolder = weatherContainer1.group()
 const innerLightningHolder = weatherContainer1.group()
@@ -213,42 +213,42 @@ const sizes = {
   }
 }
 const clouds = [{
-  group: Snap.select('#cloud1')
-},
-{
-  group: Snap.select('#cloud2')
-},
-{
-  group: Snap.select('#cloud3')
-}
+    group: Snap.select('#cloud1')
+  },
+  {
+    group: Snap.select('#cloud2')
+  },
+  {
+    group: Snap.select('#cloud3')
+  }
 ]
 const weather = [{
-  type: 'snow'
-},
-{
-  type: 'wind'
-},
-{
-  type: 'rain'
-},
-{
-  type: 'thunder'
-},
-{
-  type: 'sun'
-},
-{
-  type: 'cloud'
-},
-{
-  type: 'haze'
-},
-{
-  type: 'drizzle'
-},
-{
-  type: 'clearwind'
-}
+    type: 'snow'
+  },
+  {
+    type: 'wind'
+  },
+  {
+    type: 'rain'
+  },
+  {
+    type: 'thunder'
+  },
+  {
+    type: 'sun'
+  },
+  {
+    type: 'cloud'
+  },
+  {
+    type: 'haze'
+  },
+  {
+    type: 'drizzle'
+  },
+  {
+    type: 'clearwind'
+  }
 ]
 const settings = {
   windSpeed: 2,
@@ -304,12 +304,12 @@ function onResize() {
   gsap.fromTo(
     sunburst.node,
     20, {
-    rotation: 0
-  }, {
-    rotation: 360,
-    repeat: -1,
-    ease: 'power0.inOut'
-  }
+      rotation: 0
+    }, {
+      rotation: 360,
+      repeat: -1,
+      ease: 'power0.inOut'
+    }
   )
   leafMask.attr({
     x: 0,
@@ -339,8 +339,8 @@ function drawCloud(cloud, i) {
   const path = points.join(' ')
   if (!cloud.path) cloud.path = cloud.group.path()
   cloud.path.animate({
-    d: path
-  },
+      d: path
+    },
     0
   )
 }
@@ -357,16 +357,16 @@ function makeRain() {
   rain.push(line)
   gsap.fromTo(
     line.node, {
-    x: x,
-    y: 0 - lineLength
-  }, {
-    duration: 1,
-    delay: Math.random(),
-    y: sizes.card.height,
-    ease: 'power2.in',
-    onComplete: onRainEnd,
-    onCompleteParams: [line, lineWidth, x, currentWeather.type]
-  }
+      x: x,
+      y: 0 - lineLength
+    }, {
+      duration: 1,
+      delay: Math.random(),
+      y: sizes.card.height,
+      ease: 'power2.in',
+      onComplete: onRainEnd,
+      onCompleteParams: [line, lineWidth, x, currentWeather.type]
+    }
   )
 }
 
@@ -404,20 +404,20 @@ function makeSplash(x, type) {
   splash.node.style.strokeDasharray = splashLength + ' ' + pathLength
   gsap.fromTo(
     splash.node, {
-    strokeWidth: 2,
-    y: yOffset,
-    x: xOffset + 20 + x,
-    opacity: 1,
-    strokeDashoffset: splashLength
-  }, {
-    duration: speed,
-    strokeWidth: 0,
-    strokeDashoffset: -pathLength,
-    opacity: 1,
-    onComplete: onSplashComplete,
-    onCompleteParams: [splash],
-    ease: 'slow(0.4, 0.1, false)'
-  }
+      strokeWidth: 2,
+      y: yOffset,
+      x: xOffset + 20 + x,
+      opacity: 1,
+      strokeDashoffset: splashLength
+    }, {
+      duration: speed,
+      strokeWidth: 0,
+      strokeDashoffset: -pathLength,
+      opacity: 1,
+      onComplete: onSplashComplete,
+      onCompleteParams: [splash],
+      ease: 'slow(0.4, 0.1, false)'
+    }
   )
 }
 
@@ -448,32 +448,32 @@ function makeLeaf() {
     xBezier = (sizes.container.width + x) / 2
     leafs.push(outerLeaf)
     const motionPath = [{
-      x: x,
-      y: y
-    },
-    {
-      x: xBezier,
-      y: Math.random() * endY + endY / 3
-    },
-    {
-      x: sizes.container.width + 50,
-      y: endY
-    }
+        x: x,
+        y: y
+      },
+      {
+        x: xBezier,
+        y: Math.random() * endY + endY / 3
+      },
+      {
+        x: sizes.container.width + 50,
+        y: endY
+      }
     ]
     gsap.fromTo(
       outerLeaf.node, {
-      rotation: Math.random() * 180,
-      x: x,
-      y: areaY + Math.random() * areaY + 10,
-      scale: scale
-    }, {
-      duration: 2,
-      rotation: Math.random() * 360,
-      motionPath: motionPath,
-      onComplete: onLeafEnd,
-      onCompleteParams: [outerLeaf],
-      ease: 'power0.in'
-    }
+        rotation: Math.random() * 180,
+        x: x,
+        y: areaY + Math.random() * areaY + 10,
+        scale: scale
+      }, {
+        duration: 2,
+        rotation: Math.random() * 360,
+        motionPath: motionPath,
+        onComplete: onLeafEnd,
+        onCompleteParams: [outerLeaf],
+        ease: 'power0.in'
+      }
     )
   } else {
     newLeaf = leaf.clone().appendTo(innerLeafHolder).attr({
@@ -483,32 +483,32 @@ function makeLeaf() {
     xBezier = sizes.card.width / 2
     leafs.push(newLeaf)
     const motionPath = [{
-      x: x,
-      y: y
-    },
-    {
-      x: xBezier,
-      y: Math.random() * endY + endY / 3
-    },
-    {
-      x: sizes.card.width + 50,
-      y: endY
-    }
+        x: x,
+        y: y
+      },
+      {
+        x: xBezier,
+        y: Math.random() * endY + endY / 3
+      },
+      {
+        x: sizes.card.width + 50,
+        y: endY
+      }
     ]
     gsap.fromTo(
       newLeaf.node, {
-      rotation: Math.random() * 180,
-      x: x,
-      y: areaY + Math.random() * areaY,
-      scale: scale
-    }, {
-      duration: 2,
-      rotation: Math.random() * 360,
-      motionPath: motionPath,
-      onComplete: onLeafEnd,
-      onCompleteParams: [newLeaf],
-      ease: 'power0.in'
-    }
+        rotation: Math.random() * 180,
+        x: x,
+        y: areaY + Math.random() * areaY,
+        scale: scale
+      }, {
+        duration: 2,
+        rotation: Math.random() * 360,
+        motionPath: motionPath,
+        onComplete: onLeafEnd,
+        onCompleteParams: [newLeaf],
+        ease: 'power0.in'
+      }
     )
   }
 }
@@ -548,24 +548,24 @@ function makeSnow() {
 
   gsap.fromTo(
     newSnow.node, {
-    x: x,
-    y: y
-  }, {
-    duration: 3 + Math.random() * 5,
-    y: endY,
-    onComplete: onSnowEnd,
-    onCompleteParams: [newSnow],
-    ease: 'power0.in'
-  }
+      x: x,
+      y: y
+    }, {
+      duration: 3 + Math.random() * 5,
+      y: endY,
+      onComplete: onSnowEnd,
+      onCompleteParams: [newSnow],
+      ease: 'power0.in'
+    }
   )
   gsap.fromTo(
     newSnow.node, {
-    scale: 0
-  }, {
-    duration: 1,
-    scale: scale,
-    ease: 'power1.inOut'
-  }
+      scale: 0
+    }, {
+      duration: 1,
+      scale: scale,
+      ease: 'power1.inOut'
+    }
   )
   gsap.to(newSnow.node, {
     duration: 2,
@@ -631,12 +631,12 @@ function lightning() {
   startLightningTimer()
   gsap.fromTo(
     card, {
-    y: -30
-  }, {
-    duration: 0.75,
-    y: 0,
-    ease: 'elastic'
-  }
+      y: -30
+    }, {
+      duration: 0.75,
+      y: 0,
+      ease: 'elastic'
+    }
   )
 
   const pathX = 30 + Math.random() * (sizes.card.width - 60)
@@ -659,7 +659,7 @@ function lightning() {
     duration: 1,
     opacity: 0,
     ease: 'power4.out',
-    onComplete: function () {
+    onComplete: function() {
       strike.remove()
       strike = null
     }
@@ -835,7 +835,7 @@ function changeWeather(weather) {
 
 const xhr = new XMLHttpRequest()
 xhr.open('get', 'https://international.v1.hitokoto.cn/?c=i')
-xhr.onreadystatechange = function () {
+xhr.onreadystatechange = function() {
   if (xhr.readyState === 4) {
     const response = JSON.parse(xhr.responseText)
     printH(response.hitokoto, response.from_who, response.from)
@@ -843,404 +843,433 @@ xhr.onreadystatechange = function () {
 }
 xhr.send()
 
-const retryCount = 0;
+var retryCount = 0;
+
 function getWeather() {
   const xhr = new XMLHttpRequest();
   xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
-  xhr.onreadystatechange = function () {
+xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      const response = JSON.parse(xhr.responseText);
-      handleJson(response.location.name, response.current.temp_c, response.current.condition.text, response.current.condition.code, response.current.wind_kph, response.current.humidity, response.forecast.forecastday[0]);
+        const response = JSON.parse(xhr.responseText);
+        handleJson(
+            response.location.name,
+            response.current.temp_c,
+            response.current.condition.text,
+            response.current.condition.code,
+            response.current.wind_kph,
+            response.current.humidity,
+            response.forecast.forecastday[0]
+        );
     } else if (retryCount < 3) {
-      retryCount++;
-      getWeather();
+        retryCount++;
+        getWeather();
     } else {
-      const astro = {
-        sunrise: "07:00 AM",
-        sunset: "06:00 PM"
-      };
-      const day = {
-        maxtemp_c: "N/A",
-        mintemp_c: "N/A"
-      };
-      const arr = {
-        astro: astro,
-        day: day
-      };
-      handleJson("London", "N/A", "Offline", 1000, 10, "N/A", arr);
+        const astro = {
+            sunrise: "07:00 AM",
+            sunset: "06:00 PM",
+        };
+        const day = {
+            maxtemp_c: "N/A",
+            mintemp_c: "N/A",
+        };
+        const arr = {
+            astro: astro,
+            day: day,
+        };
+        handleJson("London", "N/A", "Offline", 1000, 10, "N/A", arr);
     }
-  };
-  xhr.send();
+};
+xhr.send();
 }
 
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
-  document.getElementById('city').innerHTML = city + ' &#xe901'
-  document.getElementById('detail').innerHTML = weather
-  document.getElementById('temp').innerHTML = temp + '°C'
-  const rise = arr.astro.sunrise.split(':')
-  const rmin = parseFloat(rise[1].split(' ')[0])
-  const set = arr.astro.sunset.split(':')
-  let shr = parseFloat(set[0])
-  if (set[1].indexOf('PM') === 3) {
-    shr = shr + 12
-  }
-  const smin = parseFloat(set[1].split(' ')[0])
-  document.getElementById('temprange').innerHTML = '<p>' + arr.day.mintemp_c + '°C to ' + arr.day.maxtemp_c + '°C</p><p> &#xe90b ' + humidity + '%</p>' + '<p>&#xe9d6 ' + rise[0] + ':' + rmin + ' to ' + shr + ':' + smin + '</p>'
-  let i
-  let t
-  if (code === 1066 || code === 1069 || code === 1114 || code === 1204 || code === 1207 || code === 1210 || code === 1213 || code === 1216 || code === 1219 || code === 1222 || code === 1225 || code === 1237 || code === 1249 || code === 1252 || code === 1255 || code === 1258 || code === 1261 || code === 1264 || code === 1279 || code === 1282) {
-    i = 0
-    t = 'Snow'
-  } else if (code > 1272 && code < 1283) {
-    i = 3
-    t = 'Drizzle'
-  } else if (code === 1000 && wind < 29) {
-    i = 4
-    t = 'Clear'
-  } else if (code === 1000) {
-    i = 8
-    t = 'Wind'
-  } else if (code > 1002 && code < 1010 && wind < 29) {
-    i = 5
-    t = 'Cloud'
-  } else if (code > 1002 && code < 1010) {
-    i = 1
-    t = 'Wind'
-  } else if (code === 1030 || code === 1135 || code === 1147) {
-    i = 6
-    t = 'Fog'
-  } else if (code === 1072 || (code > 1149 && code < 1172)) {
-    i = 7
-  } else {
-    i = 2
-    t = 'Rain'
-  }
-  document.getElementById('summary').innerHTML = t
-  document.getElementById('time').innerHTML = new Date().getHours() + ':' + checkTime(new Date().getMinutes())
-  const risemin = parseFloat(rise[0]) * 60 + rmin
-  const setmin = shr * 60 + smin
-  setBackground(risemin, setmin)
-  init(i)
-  window.addEventListener('resize', widgetResize)
-  requestAnimationFrame(tick)
-}
-
-function printH(content, author, origin) {
-  if (author == null) {
-    document.getElementById('hitokoto').innerHTML = content + '<p>──' + '《' + origin + '》</p>'
-  } else { document.getElementById('hitokoto').innerHTML = content + '<p>──' + author + '《' + origin + '》</p>' }
-}
-
-function widgetResize() {
-  onResize()
-  for (let i = 0; i < clouds.length; i++) {
-    clouds[i].offset = Math.random() * sizes.card.width
-    drawCloud(clouds[i], i)
-  }
-  changeWeather(currentWeather)
-}
-
-function checkTime(m) {
-  if (m < 10) {
-    m = '0' + m
-  }
-  return m
-}
-
-function loadStyleString(cssText) {
-  const style = document.createElement('style')
-  try {
-    style.appendChild(document.createTextNode(cssText))
-  } catch (ex) {
-    style.styleSheet.cssText = cssText
-  }
-  document.getElementsByTagName('head')[0].appendChild(style)
-}
-
-function setBackground(risemin, setmin) {
-  const int = (setmin - risemin) / 11
-  const setint = (1440 - setmin) / 8
-  const realmin = new Date().getHours() * 60 + new Date().getMinutes()
-  let i
-  let color
-  let hres = "0"
-  let anime = "0"
-  const urlParams = new URLSearchParams(window.location.search)
-  hres = urlParams.get("hres")
-  if (hres == 1) {
-    j = "-4x-AnimeSharp.webp"
-  } else {
-    j = ".webp"
-  }
-  anime = urlParams.get("anime")
-  if (anime == 1) {
-    j = ".jpg"
-    if (realmin <= risemin / 3) {
-      i = 'n5'
-      color = '#3c3c48'
-    } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 3) {
-      i = 'n6'
-      color = '#030713'
-    } else if (realmin > 2 * risemin / 3 && realmin <= risemin) {
-      i = 'd0'
-      color = '#34a79f'
-    } else if (realmin > risemin && realmin <= risemin + int) {
-      i = 'd1'
-      color = '#43558d'
-    } else if (realmin > risemin + int && realmin <= risemin + int * 2) {
-      i = 'd1a'
-      color = '#274625'
-    } else if (realmin > risemin + int * 2 && realmin <= risemin + int * 3) {
-      i = 'd2'
-      color = '#39a3e2'
-    } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
-      i = 'd3'
-      color = '#225fcb'
-    } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
-      i = 'd4'
-      color = '#537656'
-    } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
-      i = 'd5'
-      color = '#ffffff'
-    } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7) {
-      i = 'd5a'
-      color = '#f0eff4'
-    } else if (realmin > risemin + int * 7 && realmin <= risemin + int * 8) {
-      i = 'd5b'
-      color = '#ffffff'
-    } else if (realmin > risemin + int * 8 && realmin <= risemin + int * 9) {
-      i = 'd5c'
-      color = '#f2eeeb'
-    } else if (realmin > risemin + int * 9 && realmin <= risemin + int * 10) {
-      i = 'd6'
-      color = '#a8c5c1'
-    } else if (realmin > risemin + int * 10 && realmin <= setmin) {
-      i = 'd7'
-      color = '#a79d9c'
-    } else if (realmin > setmin && realmin <= setmin  + setint) {
-      i = 'd8'
-      color = '#e9cdb8'
-    } else if (realmin > setmin + setint && realmin <= setmin + setint * 2) {
-      i = 'n0'
-      color = '#dbc3b9'
-    } else if (realmin > setmin + setint * 2 && realmin <= setmin + setint * 3) {
-      i = 'n1'
-      color = '#010101'
-    } else if (realmin > setmin + setint * 3 && realmin <= setmin + setint * 4) {
-      i = 'n2'
-      color = '#0f2d41'
-    } else if (realmin > setmin + setint * 4 && realmin + setint * 5) {
-      i = 'n3'
-      color = '#090818'
-    } else if (realmin > setmin + setint * 5 && realmin + setint * 6) {
-      i = 'n3a'
-      color = '#090818'
-    } else if (realmin > setmin + setint * 6 && realmin + setint * 7) {
-      i = 'n4'
-      color = '#1f1f27'
-    } else {
-      i = 'n4a'
-      color = '#1f1f27'
+    document.getElementById("city").innerHTML = city + " &#xe901";
+    document.getElementById("detail").innerHTML = weather;
+    document.getElementById("temp").innerHTML = temp + "°C";
+    const rise = arr.astro.sunrise.split(":");
+    const rmin = parseFloat(rise[1].split(" ")[0]);
+    const set = arr.astro.sunset.split(":");
+    let shr = parseFloat(set[0]);
+    if (set[1].indexOf("PM") === 3) {
+        shr = shr + 12;
     }
-  } else {
-    if (realmin <= risemin / 3) {
-      i = 'n5'
-      color = '#755be3'
-    } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 2) {
-      i = 'n6'
-      color = '#2a6a9e'
-    } else if (realmin > 2 * risemin / 2 && realmin <= risemin) {
-      i = 'd0'
-      color = '#ed95d1'
-    } else if (realmin > risemin && realmin <= risemin + int / 2) {
-      i = 'd1'
-      color = '#5e659b'
-    } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 2.5) {
-      i = 'd2'
-      color = '#3c82cc'
-    } else if (realmin > risemin + int * 2.5 && realmin <= risemin + int * 3.5) {
-      i = 'd3'
-      color = '#95bdcc'
-    } else if (realmin > risemin + int * 3.5 && realmin <= risemin + int * 4.5) {
-      i = 'd4'
-      color = '#364e3d'
-    } else if (realmin > risemin + int * 4.5 && realmin <= risemin + int * 5.5) {
-      i = 'd5'
-      color = '#2fa0e6'
-    } else if (realmin > risemin + int * 5.5 && realmin <= risemin + int * 6.5) {
-      i = 'd6'
-      color = '#6b8b4c'
-    } else if (realmin > risemin + int * 6.5 && realmin <= risemin + int * 7.5) {
-      i = 'd7'
-      color = '#af5c18'
-    } else if (realmin > risemin + int * 7.5 && realmin <= setmin + setint / 2) {
-      i = 'd8'
-      color = '#da644f'
-    } else if (realmin > setmin + setint / 2 && realmin <= setmin + setint * 1.5) {
-      i = 'n0'
-      color = '#b6bbf5'
-    } else if (realmin > setmin + setint * 1.5 && realmin <= setmin + setint * 2.5) {
-      i = 'n1'
-      color = '#897ddc'
-    } else if (realmin > setmin + setint * 2.5 && realmin <= setmin + setint * 3.5) {
-      i = 'n2'
-      color = '#3e7ee3'
-    } else if (realmin > setmin + setint * 3.5 && realmin + setint * 5) {
-      i = 'n3'
-      color = '#36315a'
+    const smin = parseFloat(set[1].split(" ")[0]);
+    document.getElementById(
+        "temprange"
+    ).innerHTML = `<p>${arr.day.mintemp_c}°C to ${arr.day.maxtemp_c}°C</p><p> &#xe90b ${humidity}%</p><p>&#xe9d6 ${rise[0]}:${rmin} to ${shr}:${smin}</p>`;
+    let i;
+    let t;
+    if (code === 1066 || code === 1069 || code === 1114 || (code > 1203 && code < 1238)) {
+        i = 0;
+        t = "Snow";
+    } else if ((code > 1272 && code < 1283) || code === 1087) {
+        i = 3;
+        t = "Thunder";
+    } else if (code === 1000 && wind < 29) {
+        i = 4;
+        t = "Clear";
+    } else if (code === 1000) {
+        i = 8;
+        t = "Wind";
+    } else if (code > 1002 && code < 1010 && wind < 29) {
+        i = 5;
+        t = "Cloud";
+    } else if (code > 1002 && code < 1010) {
+        i = 1;
+        t = "Wind";
+    } else if (code === 1030 || code === 1135 || code === 1147) {
+        i = 6;
+        t = "Fog";
+    } else if (code === 1072 || (code > 1149 && code < 1172)) {
+        i = 7;
+        t = "Drizzle";
     } else {
-      i = 'n4'
-      color = '#3d3d88'
+        i = 2;
+        t = "Rain";
     }
-  }
-  document.querySelector('meta[name=theme-color]').setAttribute('content', color)
-  loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}")
-}
+    document.getElementById("summary").innerHTML = t;
+    document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
 
-// Day & Night animations
+    const risemin = parseFloat(rise[0]) * 60 + rmin;
+    const setmin = shr * 60 + smin;
+    setBackground(risemin, setmin);
+    init(i);
+    window.addEventListener("resize", widgetResize);
+    requestAnimationFrame(tick);
+    }
 
-const duration = 0.4
-let isDay = true
-const scale = 30
-const toNightAnimation = gsap.timeline()
-if (!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  toNightAnimation.pause()
-} else {
-  document.getElementById('sunburst').style.display = 'none'
-}
+    function printH(content, author, origin) {
+        if (author == null) {
+            document.getElementById("hitokoto").innerHTML = content + '<p>──' + "《" + origin + "》</p>";
+        } else {
+            document.getElementById("hitokoto").innerHTML = content + '<p>──' + author + "《" + origin + "》</p>";
+        }
+    }
 
-toNightAnimation
-  .to(
-    '#circle', {
-    duration: duration,
-    ease: 'power4.in',
-    scaleX: scale,
-    scaleY: scale,
-    x: 1,
-    transformOrigin: '100% 50%'
-  },
-    0
-  )
-  .set(
-    '#circle', {
-    scaleX: -scale
-  },
-    duration
-  )
-  .to(
-    '#circle', {
-    duration: duration,
-    ease: 'power4.out',
-    scaleX: -1,
-    scaleY: 1,
-    x: 2
-  },
-    duration
-  )
-  .fromTo(
-    '.filter', {
-    filter: 'brightness(100%)'
-  }, {
-    filter: 'brightness(50%)',
-    duration: duration
-  },
-    0
-  )
-  .to(
-    '.nmtext,.nmbar', {
-    color: 'white',
-    duration: duration * 2
-  },
-    0
-  )
-  .to(
-    '.nmbar', {
-    background: 'rgba(0,0,0,.3)',
-    duration: duration
-  },
-    0
-  )
-  .fromTo(
-    '.nmbar', {
-    boxShadow: '0 0 18px rgba(70, 70, 40, .255)'
-  }, {
-    boxShadow: '0 0 18px rgba(0, 0, 0, .255)',
-    duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud1', {
-    fill: '#101010',
-    duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud2', {
-    fill: '#191919',
-    duration: duration
-  },
-    0
-  )
-  .to(
-    '#cloud3', {
-    fill: '#2a2a2a',
-    duration: duration
-  },
-    0
-  )
-  .to(
-    '#sun', {
-    fill: '#3e3f57',
-    duration: duration * 2
-  },
-    0
-  )
-  .to(
-    '#sunburst', {
-    opacity: '0',
-    duration: duration * 2
-  },
-    0
-  )
+    function widgetResize() {
+        onResize();
+        for (let i = 0; i < clouds.length; i++) {
+            clouds[i].offset = Math.random() * sizes.card.width;
+            drawCloud(clouds[i], i);
+        }
+        changeWeather(currentWeather);
+    }
 
-const stars = Array.from(document.getElementsByClassName('star'))
-stars.map((star) =>
-  gsap.to(star, {
-    duration: 'random(0.4, 1.5)',
-    repeat: -1,
-    yoyo: true,
-    opacity: 'random(0.2, 0.5)'
-  })
-)
-gsap.to('.clouds-big', {
-  duration: 15,
-  repeat: -1,
-  x: -74,
-  ease: 'linear'
-})
-gsap.to('.clouds-medium', {
-  duration: 20,
-  repeat: -1,
-  x: -65,
-  ease: 'linear'
-})
-gsap.to('.clouds-small', {
-  duration: 25,
-  repeat: -1,
-  x: -71,
-  ease: 'linear'
-})
+    function checkTime(m) {
+        if (m < 10) {
+            m = "0" + m;
+        }
+        return m;
+    }
 
-const switchToggle = document.getElementById('input')
-switchToggle.addEventListener('change', () => toggle())
-const toggle = () => {
-  isDay = switchToggle.checked === true
-  if (isDay) {
-    document.getElementById('sunburst').style.display = 'block'
-    toNightAnimation.reverse()
-  } else {
-    toNightAnimation.play()
-  }
-}
+    function loadStyleString(cssText) {
+        const style = document.createElement("style");
+        try {
+            style.appendChild(document.createTextNode(cssText));
+        } catch (ex) {
+            style.styleSheet.cssText = cssText;
+        }
+        document.getElementsByTagName("head")[0].appendChild(style);
+    }
+
+    function setBackground(risemin, setmin) {
+        const int = (setmin - risemin) / 11;
+        const setint = (1440 - setmin) / 8;
+        const realmin = new Date().getHours() * 60 + new Date().getMinutes();
+        let i;
+        let color;
+        let hres = "0";
+        let anime = "0";
+        const urlParams = new URLSearchParams(window.location.search);
+        hres = urlParams.get("hres");
+        if (hres == 1) {
+            j = "-4x-AnimeSharp.webp";
+        } else {
+            j = ".webp";
+        }
+        anime = urlParams.get("anime");
+        if (anime == 1) {
+            j = ".jpg";
+            if (realmin <= risemin / 3) {
+                i = "n5";
+                color = "#3c3c48";
+            } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 3) {
+                i = "n6";
+                color = "#030713";
+            } else if (realmin > 2 * risemin / 3 && realmin <= risemin) {
+                i = "d0";
+                color = "#34a79f";
+            } else if (realmin > risemin && realmin <= risemin + int) {
+                i = "d1";
+                color = "#43558d";
+            } else if (realmin > risemin + int && realmin <= risemin + int * 2) {
+                i = "d1a";
+                color = "#274625";
+            } else if (realmin > risemin + int * 2 && realmin <= risemin + int * 3) {
+                i = "d2";
+                color = "#39a3e2";
+            } else if (realmin > risemin + int * 3 && realmin <= risemin + int * 4) {
+                i = "d3";
+                color = "#225fcb";
+            } else if (realmin > risemin + int * 4 && realmin <= risemin + int * 5) {
+                i = "d4";
+                color = "#537656";
+            } else if (realmin > risemin + int * 5 && realmin <= risemin + int * 6) {
+                i = "d5";
+                color = "#ffffff";
+            } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7) {
+                i = "d5a";
+                color = "#f0eff4";
+            } else if (realmin > risemin + int * 7 && realmin <= risemin + int * 8) {
+                i = "d5b";
+                color = "#ffffff";
+            } else if (realmin > risemin + int * 8 && realmin <= risemin + int * 9) {
+                i = "d5c";
+                color = "#f2eeeb";
+            } else if (realmin > risemin + int * 9 && realmin <= risemin + int * 10) {
+                i = "d6";
+                color = "#a8c5c1";
+            } else if (realmin > risemin + int * 10 && realmin <= setmin) {
+                i = "d7";
+                color = "#a79d9c";
+            } else if (realmin > setmin && realmin <= setmin + setint) {
+                i = "d8";
+                color = "#e9cdb8";
+            } else if (realmin > setmin + setint && realmin <= setmin + setint * 2) {
+                i = "n0";
+                color = "#dbc3b9";
+            } else if (realmin > setmin + setint * 2 && realmin <= setmin + setint * 3) {
+                i = "n1";
+                color = "#010101";
+            } else if (realmin > setmin + setint * 3 && realmin <= setmin + setint * 4) {
+                i = "n2";
+                color = "#0f2d41";
+            } else if (realmin > setmin + setint * 4 && realmin + setint * 5) {
+                i = "n3";
+                color = "#090818";
+            } else if (realmin > setmin + setint * 5 && realmin + setint * 6) {
+                i = "n3a";
+                color = "#090818";
+            } else if (realmin > setmin + setint * 6 && realmin + setint * 7) {
+                i = "n4";
+                color = "#1f1f27";
+            } else {
+                i = "n4a";
+                color = "#1f1f27";
+            }
+        } else {
+            if (realmin <= risemin / 3) {
+                i = "n5";
+                color = "#755be3";
+            } else if (realmin > risemin / 3 && realmin <= 2 * risemin / 2) {
+                i = "n6";
+                color = "#2a6a9e";
+            } else if (realmin > 2 * risemin / 2 && realmin <= risemin) {
+                i = "d0";
+                color = "#ed95d1";
+            } else if (realmin > risemin && realmin <= risemin + int / 2) {
+                i = "d1";
+                color = "#5e659b";
+            } else if (realmin > risemin + int * 1.5 && realmin <= risemin + int * 2.5) {
+                i = "d2";
+                color = "#3c82cc";
+            } else if (realmin > risemin + int * 2.5 && realmin <= risemin + int * 3.5) {
+                i = "d3";
+                color = "#95bdcc";
+            } else if (realmin > risemin + int * 3.5 && realmin <= risemin + int * 4.5) {
+                i = "d4";
+                color = "#364e3d";
+            } else if (realmin > risemin + int * 4.5 && realmin <= risemin + int * 5.5) {
+                i = "d5";
+                color = "#2fa0e6";
+            } else if (realmin > risemin + int * 5.5 && realmin <= risemin + int * 6.5) {
+                i = "d6";
+                color = "#6b8b4c";
+            } else if (realmin > risemin + int * 6.5 && realmin <= risemin + int * 7.5) {
+                i = "d7";
+                color = "#af5c18";
+            } else if (realmin > risemin + int * 7.5 && realmin <= setmin + setint / 2) {
+                i = "d8";
+                color = "#da644f";
+            } else if (realmin > setmin + setint / 2 && realmin <= setmin + setint * 1.5) {
+                i = "n0";
+                color = "#b6bbf5";
+            } else if (realmin > setmin + setint * 1.5 && realmin <= setmin + setint * 2.5) {
+                i = "n1";
+                color = "#897ddc";
+            } else if (realmin > setmin + setint * 2.5 && realmin <= setmin + setint * 3.5) {
+                i = "n2";
+                color = "#3e7ee3";
+            } else if (realmin > setmin + setint * 3.5 && realmin + setint * 5) {
+                i = "n3";
+                color = "#36315a";
+            } else {
+                i = "n4";
+                color = "#3d3d88";
+            }
+        }
+        document.querySelector("meta[name=theme-color]").setAttribute("content", color);
+        loadStyleString("#fill_screen{background:url('/background/" + i + j + "') no-repeat local center center/cover;}");
+    }
+
+    // Day & Night animations
+
+    const duration = 0.4;
+    let isDay = true;
+    const scale = 30;
+    const toNightAnimation = gsap.timeline();
+    if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        toNightAnimation.pause();
+    } else {
+        document.getElementById("sunburst").style.display = "none";
+    }
+
+    toNightAnimation
+        .to(
+            "#circle",
+            {
+                duration: duration,
+                ease: "power4.in",
+                scaleX: scale,
+                scaleY: scale,
+                x: 1,
+                transformOrigin: "100% 50%",
+            },
+            0
+        )
+        .set(
+            "#circle",
+            {
+                scaleX: -scale,
+            },
+            duration
+        )
+        .to(
+            "#circle",
+            {
+                duration: duration,
+                ease: "power4.out",
+                scaleX: -1,
+                scaleY: 1,
+                x: 2,
+            },
+            duration
+        )
+        .fromTo(
+            ".filter",
+            {
+                filter: "brightness(100%)",
+            },
+            {
+                filter: "brightness(50%)",
+                duration: duration,
+            },
+            0
+        )
+        .to(
+            ".nmtext,.nmbar",
+            {
+                color: "white",
+                duration: duration * 2,
+            },
+            0
+        )
+        .to(
+            ".nmbar",
+            {
+                background: "rgba(0,0,0,.3)",
+                duration: duration,
+            },
+            0
+        )
+        .fromTo(
+            ".nmbar",
+            {
+                boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
+            },
+            {
+                boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
+                duration: duration,
+            },
+            0
+        )
+        .to(
+            "#cloud1",
+            {
+                fill: "#101010",
+                duration: duration,
+            },
+            0
+        )
+        .to(
+            "#cloud2",
+            {
+                fill: "#191919",
+                duration: duration,
+            },
+            0
+        )
+        .to(
+            "#cloud3",
+            {
+                fill: "#2a2a2a",
+                duration: duration,
+            },
+            0
+        )
+        .to(
+            "#sun",
+            {
+                fill: "#3e3f57",
+                duration: duration * 2,
+            },
+            0
+        )
+        .to(
+            "#sunburst",
+            {
+                opacity: "0",
+                duration: duration * 2,
+            },
+            0
+        );
+
+    const stars = Array.from(document.getElementsByClassName("star"));
+    stars.map((star) =>
+        gsap.to(star, {
+            duration: "random(0.4, 1.5)",
+            repeat: -1,
+            yoyo: true,
+            opacity: "random(0.2, 0.5)",
+        })
+    );
+    gsap.to(".clouds-big", {
+        duration: 15,
+        repeat: -1,
+        x: -74,
+        ease: "linear",
+    });
+    gsap.to(".clouds-medium", {
+        duration: 20,
+        repeat: -1,
+        x: -65,
+        ease: "linear",
+    });
+    gsap.to(".clouds-small", {
+        duration: 25,
+        repeat: -1,
+        x: -71,
+        ease: "linear",
+    });
+
+    const switchToggle = document.getElementById("input");
+    switchToggle.addEventListener("change", () => toggle());
+    const toggle = () => {
+        isDay = switchToggle.checked === true;
+        if (isDay) {
+            document.getElementById("sunburst").style.display = "block";
+            toNightAnimation.reverse();
+        } else {
+            toNightAnimation.play();
+        }
+    };
