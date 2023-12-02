@@ -958,7 +958,7 @@ function loadStyleString(cssText) {
 }
 
 function setBackground(risemin, setmin) {
-  const int = (setmin - risemin) / 8
+  const int = (setmin - risemin) / 11
   const setint = (1440 - setmin) / 8
   const realmin = new Date().getHours() * 60 + new Date().getMinutes()
   let i
@@ -1003,9 +1003,18 @@ function setBackground(risemin, setmin) {
       i = 'd5'
       color = '#ffffff'
     } else if (realmin > risemin + int * 6 && realmin <= risemin + int * 7) {
+      i = 'd5a'
+      color = '#f0eff4'
+    } else if (realmin > risemin + int * 7 && realmin <= risemin + int * 8) {
+      i = 'd5b'
+      color = '#ffffff'
+    } else if (realmin > risemin + int * 8 && realmin <= risemin + int * 9) {
+      i = 'd5c'
+      color = '#f2eeeb'
+    } else if (realmin > risemin + int * 9 && realmin <= risemin + int * 10) {
       i = 'd6'
       color = '#a8c5c1'
-    } else if (realmin > risemin + int * 7 && realmin <= setmin) {
+    } else if (realmin > risemin + int * 10 && realmin <= setmin) {
       i = 'd7'
       color = '#a79d9c'
     } else if (realmin > setmin && realmin <= setmin  + setint) {
