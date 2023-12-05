@@ -186,6 +186,9 @@ function tobing() {
       return gidValue !== '' && ((window.location.href = 'https://www.protocols.io/search?q=' + gidValue), (gidValue = '')), false;
     case 'gi':
       return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), false;
+    case 'f':
+    case 'fp':
+      return gidValue !== '' && ((window.location.href = 'https://www.fpbase.org/search/?name__iexact=' + gidValue), (gidValue = '')), false; 
     case 'gt':
     case 't':
       return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), false;
@@ -292,7 +295,7 @@ const leafs = []
 const snow = []
 getWeather()
 
-function init(index) {
+function init(index, windSpeed) {
   onResize()
   for (let i = 0; i < clouds.length; i++) {
     clouds[i].offset = Math.random() * sizes.card.width
@@ -301,7 +304,7 @@ function init(index) {
   gsap.set(sunburst.node, {
     opacity: 0
   })
-  changeWeather(weather[index])
+  changeWeather(weather[index], windSpeed)
 }
 
 function onResize() {
@@ -691,7 +694,7 @@ function lightning() {
   })
 }
 
-function changeWeather(weather) {
+function changeWeather(weather, windSpeed) {
   if (weather.data) weather = weather.data
   reset()
 
@@ -705,14 +708,14 @@ function changeWeather(weather) {
     case 'cloud':
       gsap.to(settings, {
         duration: 3,
-        windSpeed: 1.5,
+        windSpeed: windSpeed,
         ease: 'power2.inOut'
       })
       break
     case 'wind':
       gsap.to(settings, {
         duration: 3,
-        windSpeed: 8,
+        windSpeed: windSpeed,
         ease: 'power2.inOut'
       })
       break
@@ -720,14 +723,14 @@ function changeWeather(weather) {
     case 'clearwind':
       gsap.to(settings, {
         duration: 3,
-        windSpeed: 20,
+        windSpeed: windSpeed,
         ease: 'power2.inOut'
       })
       break
     default:
       gsap.to(settings, {
         duration: 3,
-        windSpeed: 0.5,
+        windSpeed: windSpeed,
         ease: 'power2.out'
       })
       break
@@ -868,12 +871,10 @@ xhr.onreadystatechange = function() {
 }
 xhr.send()
 
-var retryCount = 0;
-
 function getWeather() {
   const xhr = new XMLHttpRequest();
   xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
-xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         handleJson(
@@ -885,9 +886,6 @@ xhr.onreadystatechange = function () {
             response.current.humidity,
             response.forecast.forecastday[0]
         );
-    } else if (retryCount < 3) {
-        retryCount++;
-        getWeather();
     } else {
         const astro = {
             sunrise: "07:00 AM",
@@ -901,9 +899,9 @@ xhr.onreadystatechange = function () {
             astro: astro,
             day: day,
         };
-        handleJson("London", "N/A", "Offline", 1000, 10, "N/A", arr);
+        handleJson("London", "N/A", "Offline", "N/A", 10, "N/A", arr);
     }
-};
+  };
 xhr.send();
 }
 
@@ -958,7 +956,7 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     const risemin = parseFloat(rise[0]) * 60 + rmin;
     const setmin = shr * 60 + smin;
     setBackground(risemin, setmin);
-    init(i);
+    init(i, wind/10);
     window.addEventListener("resize", widgetResize);
     requestAnimationFrame(tick);
     }
