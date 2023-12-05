@@ -852,20 +852,6 @@ function getWeather() {
         response.current.humidity,
         response.forecast.forecastday[0]
       );
-    } else {
-      const astro = {
-        sunrise: "07:00 AM",
-        sunset: "06:00 PM",
-      };
-      const day = {
-        maxtemp_c: "N/A",
-        mintemp_c: "N/A",
-      };
-      const arr = {
-        astro: astro,
-        day: day,
-      };
-      handleJson("London", "N/A", "Offline", "N/A", 10, "N/A", arr);
     }
   };
   xhr.send();
