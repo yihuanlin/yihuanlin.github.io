@@ -702,36 +702,6 @@ function changeWeather(weather) {
 
   container.classList.add(weather.type)
 
-  // windSpeed
-
-  switch (weather.type) {
-    case 'cloud':
-      gsap.to(settings, {
-        duration: 3,
-        ease: 'power2.inOut'
-      })
-      break
-    case 'wind':
-      gsap.to(settings, {
-        duration: 3,
-        ease: 'power2.inOut'
-      })
-      break
-    case 'sun':
-    case 'clearwind':
-      gsap.to(settings, {
-        duration: 3,
-        ease: 'power2.inOut'
-      })
-      break
-    default:
-      gsap.to(settings, {
-        duration: 3,
-        ease: 'power2.out'
-      })
-      break
-  }
-
   // rainCount
 
   switch (weather.type) {
@@ -981,6 +951,14 @@ function checkTime(m) {
   }
   return m;
 }
+
+setInterval(() => {
+  document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
+}, 60000);
+
+setInterval(() => {
+  getWeather();
+}, 900000);
 
 function loadStyleString(cssText) {
   const style = document.createElement("style");
