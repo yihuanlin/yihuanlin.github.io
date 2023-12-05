@@ -6,6 +6,14 @@ if ('serviceWorker' in navigator) {
 // Clickeffects
 
 function clickEffect(e) {
+  const target = e.target;
+  const boxid = document.getElementById('keywordg');
+  if ((target.id == 'bingbar') || (target.id == 'search_bing')) {
+    if (boxid.children.length > 0) {
+      boxid.style.transform = 'scaleY(1)';
+      boxid.style.display = 'block';
+    }
+  }
   if (!('ontouchstart' in window)) {
     document.getElementById('search_bing').focus();
   }
@@ -65,6 +73,23 @@ function bing(keys) {
       tobing();
     };
   }
+  let tabPressed = false;
+  document.body.addEventListener('keydown', function(evt) {
+      if (evt.key === 'Tab') {
+          tabPressed = true;
+      } else if (tabPressed && !isNaN(evt.key)) {
+          const index = parseInt(evt.key) - 1;
+          if (index >= 0 && index < boxid.children.length) {
+              const ele = boxid.children[index];
+              ele.click();
+          }
+      }
+  }, false);
+  document.body.addEventListener('keyup', function(evt) {
+      if (evt.key === 'Tab') {
+          tabPressed = false;
+      }
+  }, false);
   document.body.addEventListener('click', function(evt) {
     const target = evt.target;
     if ((target.id !== 'bingbar') && (target.id !== 'search_bing')) {
