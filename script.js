@@ -957,9 +957,9 @@ function loadStyleString(cssText) {
 }
 
 function setBackground(risemin, setmin) {
-  const int = (setmin - risemin) / 12;
-  const setint = (1440 - setmin) / 8;
   const realmin = new Date().getHours() * 60 + new Date().getMinutes();
+  let setint;
+  let int;
   let i;
   let color;
   let hres = "0";
@@ -973,16 +973,18 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
+    int = (setmin - risemin) / 14;
+    setint = (1440 - setmin) / 8;
     j = ".jpg";
     if (realmin <= risemin / 4) {
       i = "n4b";
       color = "#1e1518";
     } else if (realmin > risemin / 4 && realmin <=  risemin / 2) {
       i = "n5";
-      color = "#3c3c48";
+      color = "#0f2d41";
     } else if (realmin > risemin / 2 && realmin <= 3 * risemin / 4) {
       i = "n6";
-      color = "#030713";
+      color = "#090818";
     } else if (realmin > 3 * risemin / 4 && realmin <= risemin) {
       i = "d0";
       color = "#34a79f";
@@ -1009,17 +1011,23 @@ function setBackground(risemin, setmin) {
       color = "#ffffff";
     } else if (realmin > risemin + int * 7 && realmin <= risemin + int * 8) {
       i = "d5a";
-      color = "#f0eff4";
+      color = "#ffffff";
     } else if (realmin > risemin + int * 8 && realmin <= risemin + int * 9) {
       i = "d5b";
       color = "#ffffff";
     } else if (realmin > risemin + int * 9 && realmin <= risemin + int * 10) {
       i = "d5c";
-      color = "#f2eeeb";
+      color = "#f0eff4";
     } else if (realmin > risemin + int * 10 && realmin <= risemin + int * 11) {
+      i = "d5d";
+      color = "#f5eee6";
+    } else if (realmin > risemin + int * 11 && realmin <= risemin + int * 12) {
+      i = "d5e";
+      color = "#f2eeeb";
+    } else if (realmin > risemin + int * 12 && realmin <= risemin + int * 13) {
       i = "d6";
       color = "#a8c5c1";
-    } else if (realmin > risemin + int * 11 && realmin <= setmin) {
+    } else if (realmin > risemin + int * 13 && realmin <= setmin) {
       i = "d7";
       color = "#a79d9c";
     } else if (realmin > setmin && realmin <= setmin + setint) {
@@ -1033,10 +1041,10 @@ function setBackground(risemin, setmin) {
       color = "#010101";
     } else if (realmin > setmin + setint * 3 && realmin <= setmin + setint * 4) {
       i = "n2";
-      color = "#0f2d41";
+      color = "#3c3c48";
     } else if (realmin > setmin + setint * 4 && realmin + setint * 5) {
       i = "n3";
-      color = "#090818";
+      color = "#030713";
     } else if (realmin > setmin + setint * 5 && realmin + setint * 6) {
       i = "n3a";
       color = "#090818";
@@ -1048,6 +1056,8 @@ function setBackground(risemin, setmin) {
       color = "#1f1f27";
     }
   } else {
+    int = (setmin - risemin) / 8;
+    setint = (1440 - setmin) / 6;
     if (realmin <= risemin / 3) {
       i = "n5";
       color = "#755be3";
