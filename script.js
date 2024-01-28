@@ -842,69 +842,95 @@ function getWeather() {
   xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
-      const response = JSON.parse(xhr.responseText);
-      handleJson(
-        response.location.name,
-        response.current.temp_c,
-        response.current.condition.text,
-        response.current.condition.code,
-        response.current.wind_kph,
-        response.current.humidity,
-        response.forecast.forecastday[0]
-      );
+      if (xhr.status !== 200) {
+        const astro = {
+          sunrise: "07:05 AM",
+          sunset: "06:50 PM"
+        };
+        const day = {
+          maxtemp_c: "NA",
+          mintemp_c: "NA"
+        };
+        const arr = {
+          astro: astro,
+          day: day
+        };
+        handleJson(0, 0, 0, 0, 10, 0, arr);
+      } else {
+        const response = JSON.parse(xhr.responseText);
+        handleJson(
+          response.location.name,
+          response.current.temp_c,
+          response.current.condition.text,
+          response.current.condition.code,
+          response.current.wind_kph,
+          response.current.humidity,
+          response.forecast.forecastday[0]
+        );
+      }
     }
   };
   xhr.send();
 }
 
 function handleJson(city, temp, weather, code, wind, humidity, arr) {
-  document.getElementById("city").innerHTML = city + " &#xe901";
-  document.getElementById("detail").innerHTML = weather;
-  document.getElementById("temp").innerHTML = temp + "°C";
   const rise = arr.astro.sunrise.split(":");
-  const rmin = parseFloat(rise[1].split(" ")[0]);
+  let rmin = parseFloat(rise[1].split(" ")[0]);
+  let rminText = "";
+  if (rmin < 10) {
+    rminText = "0" + rmin.toString();
+  } else {
+    rminText = rmin.toString();
+  }
   const set = arr.astro.sunset.split(":");
   let shr = parseFloat(set[0]);
   if (set[1].indexOf("PM") === 3) {
     shr = shr + 12;
   }
   const smin = parseFloat(set[1].split(" ")[0]);
-  document.getElementById(
-    "temprange"
-  ).innerHTML = `<p>${arr.day.mintemp_c}°C to ${arr.day.maxtemp_c}°C</p><p> &#xe90b ${humidity}%</p><p>&#xe9d6 ${rise[0]}:${rmin} to ${shr}:${smin}</p>`;
   let i;
   let t;
-  if (code === 1066 || code === 1069 || code === 1114 || (code > 1203 && code < 1238)) {
-    i = 0;
-    t = "Snow";
-  } else if ((code > 1272 && code < 1283) || code === 1087) {
-    i = 3;
-    t = "Thunder";
-  } else if (code === 1000 && wind < 29) {
-    i = 4;
-    t = "Clear";
-  } else if (code === 1000) {
-    i = 8;
-    t = "Wind";
-  } else if (code > 1002 && code < 1010 && wind < 29) {
-    i = 5;
-    t = "Cloud";
-  } else if (code > 1002 && code < 1010) {
-    i = 1;
-    t = "Wind";
-  } else if (code === 1030 || code === 1135 || code === 1147) {
-    i = 6;
-    t = "Fog";
-  } else if (code === 1072 || (code > 1149 && code < 1172)) {
-    i = 7;
-    t = "Drizzle";
+  if (code !== 0) {
+    document.getElementById("city").innerHTML = city + " &#xe901";
+    document.getElementById("detail").innerHTML = weather;
+    document.getElementById("temp").innerHTML = temp + "°C";
+    document.getElementById(
+      "temprange"
+    ).innerHTML = `<p>${arr.day.mintemp_c}°C to ${arr.day.maxtemp_c}°C</p><p> &#xe90b ${humidity}%</p><p>&#xe9d6 ${rise[0]}:${rminText} to ${shr}:${smin}</p>`;
+    if (code === 1066 || code === 1069 || code === 1114 || (code > 1203 && code < 1238)) {
+      i = 0;
+      t = "Snow";
+    } else if ((code > 1272 && code < 1283) || code === 1087) {
+      i = 3;
+      t = "Thunder";
+    } else if (code === 1000 && wind < 29) {
+      i = 4;
+      t = "Clear";
+    } else if (code === 1000) {
+      i = 8;
+      t = "Wind";
+    } else if (code > 1002 && code < 1010 && wind < 29) {
+      i = 5;
+      t = "Cloud";
+    } else if (code > 1002 && code < 1010) {
+      i = 1;
+      t = "Wind";
+    } else if (code === 1030 || code === 1135 || code === 1147) {
+      i = 6;
+      t = "Fog";
+    } else if (code === 1072 || (code > 1149 && code < 1172)) {
+      i = 7;
+      t = "Drizzle";
+    } else {
+      i = 2;
+      t = "Rain";
+    }
+    document.getElementById("summary").innerHTML = t;
   } else {
-    i = 2;
-    t = "Rain";
+    i = 5;
+    document.getElementById("temp").innerHTML = "Offline";
   }
-  document.getElementById("summary").innerHTML = t;
   document.getElementById("time").innerHTML = new Date().getHours() + ":" + checkTime(new Date().getMinutes());
-
   const risemin = parseFloat(rise[0]) * 60 + rmin;
   const setmin = shr * 60 + smin;
   setBackground(risemin, setmin);
