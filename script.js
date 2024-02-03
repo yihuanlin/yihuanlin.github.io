@@ -890,6 +890,7 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
   const smin = parseFloat(set[1].split(" ")[0]);
   let i;
   let t;
+  settings.windSpeed = wind / 10;
   if (code !== 0) {
     document.getElementById("city").innerHTML = city + " &#xe901";
     document.getElementById("detail").innerHTML = weather;
@@ -906,6 +907,7 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
     } else if (code === 1000 && wind < 29) {
       i = 4;
       t = "Clear";
+      settings.windSpeed = 30;
     } else if (code === 1000) {
       i = 8;
       t = "Wind";
@@ -934,7 +936,6 @@ function handleJson(city, temp, weather, code, wind, humidity, arr) {
   const risemin = parseFloat(rise[0]) * 60 + rmin;
   const setmin = shr * 60 + smin;
   setBackground(risemin, setmin);
-  settings.windSpeed = wind / 10;
   init(i);
   window.addEventListener("resize", widgetResize);
   requestAnimationFrame(tick);
@@ -1240,7 +1241,7 @@ toNightAnimation
   )
   .to(
     "#sunburst", {
-      opacity: "0",
+      scale: "0",
       duration: duration * 2,
     },
     0
@@ -1278,8 +1279,10 @@ const switchToggle = document.getElementById("input");
 switchToggle.addEventListener("change", () => toggle());
 const toggle = () => {
   isDay = switchToggle.checked === true;
-  if (isDay) {
-    document.getElementById("sunburst").style.display = "block";
+  if (isDay) {  
+    if (currentWeather.type === "sun" || currentWeather.type === "clearwind") {
+      document.getElementById("sunburst").style.display = "block";
+    }
     toNightAnimation.reverse();
   } else {
     toNightAnimation.play();
