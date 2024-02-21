@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SciAdRemoval
+// @name         ReaderAdRemoval
 // @namespace    http://tampermonkey.net/
 // @version      1
 // @description  AdRemoval
