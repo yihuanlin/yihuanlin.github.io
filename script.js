@@ -1,4 +1,27 @@
-// register service worker
+// Redirect to reverse proxy
+function checkProtocol(url) {
+  if (!url.startsWith('https://') && !url.startsWith('http://')) {
+    return ('https://' + url);
+  } else {
+    return (url);
+  }
+}
+
+function redirectToReverseProxy(redirectURL) {
+  redirectURL = checkProtocol(redirectURL).replace(/(https?:\/\/)([^\/]+)/g, (match, p1, p2) => {
+    const newUrl = p2.replace(/\./g, '-') + '.yhl.ac.cn';
+    return `${p1}${newUrl}`;
+  });
+  window.location = redirectURL;
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+url = urlParams.get("url");
+if (url) {
+  redirectToReverseProxy(url);
+}
+
+// Register service worker
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
@@ -22,7 +45,7 @@ function clickEffect(e) {
   i.style.top = e.clientY + 'px';
   i.style.left = e.clientX + 'px';
   document.body.appendChild(i);
-  i.addEventListener('animationend', function() {
+  i.addEventListener('animationend', function () {
     i.parentElement.removeChild(i);
   });
 }
@@ -32,7 +55,7 @@ document.addEventListener('click', clickEffect);
 
 const gid = document.getElementById('search_bing');
 const regex = /!(.*?)(?:\s|$)/;
-gid.addEventListener('input', function() {
+gid.addEventListener('input', function () {
   if (!gid.value) {
     document.getElementById('keywordg').style.display = 'none';
     return;
@@ -67,14 +90,14 @@ function bing(keys) {
   boxid.innerHTML = spans;
   for (let i = 0; i < boxid.children.length; i++) {
     const ele = boxid.children[i];
-    ele.onclick = function() {
+    ele.onclick = function () {
       gidValue = this.innerHTML;
       gid.focus();
       tobing();
     };
   }
   let tabPressed = false;
-  document.body.addEventListener('keydown', function(evt) {
+  document.body.addEventListener('keydown', function (evt) {
     if (evt.key === 'Tab') {
       tabPressed = true;
     } else if (tabPressed && !isNaN(evt.key)) {
@@ -83,14 +106,19 @@ function bing(keys) {
         const ele = boxid.children[index];
         ele.click();
       }
+    } else if (tabPressed && evt.key === '§') {
+      return gidValue !== '' && ((redirectToReverseProxy(gidValue)), (gidValue = '')), false;
+    } else if (evt.key === 'Escape' || evt.key === "Esc") {
+      return gidValue !== '' && ((window.location.href = checkProtocol(gidValue)), (gidValue = '')), false;
     }
   }, false);
-  document.body.addEventListener('keyup', function(evt) {
+
+  document.body.addEventListener('keyup', function (evt) {
     if (evt.key === 'Tab') {
       tabPressed = false;
     }
   }, false);
-  document.body.addEventListener('click', function(evt) {
+  document.body.addEventListener('click', function (evt) {
     const target = evt.target;
     if ((target.id !== 'bingbar') && (target.id !== 'search_bing')) {
       boxid.style.transform = 'scaleY(0)';
@@ -241,42 +269,42 @@ const sizes = {
   }
 }
 const clouds = [{
-    group: Snap.select('#cloud1')
-  },
-  {
-    group: Snap.select('#cloud2')
-  },
-  {
-    group: Snap.select('#cloud3')
-  }
+  group: Snap.select('#cloud1')
+},
+{
+  group: Snap.select('#cloud2')
+},
+{
+  group: Snap.select('#cloud3')
+}
 ]
 const weather = [{
-    type: 'snow'
-  },
-  {
-    type: 'wind'
-  },
-  {
-    type: 'rain'
-  },
-  {
-    type: 'thunder'
-  },
-  {
-    type: 'sun'
-  },
-  {
-    type: 'cloud'
-  },
-  {
-    type: 'haze'
-  },
-  {
-    type: 'drizzle'
-  },
-  {
-    type: 'clearwind'
-  }
+  type: 'snow'
+},
+{
+  type: 'wind'
+},
+{
+  type: 'rain'
+},
+{
+  type: 'thunder'
+},
+{
+  type: 'sun'
+},
+{
+  type: 'cloud'
+},
+{
+  type: 'haze'
+},
+{
+  type: 'drizzle'
+},
+{
+  type: 'clearwind'
+}
 ]
 const settings = {
   windSpeed: 2,
@@ -332,12 +360,12 @@ function onResize() {
   gsap.fromTo(
     sunburst.node,
     20, {
-      rotation: 0
-    }, {
-      rotation: 360,
-      repeat: -1,
-      ease: 'power0.inOut'
-    }
+    rotation: 0
+  }, {
+    rotation: 360,
+    repeat: -1,
+    ease: 'power0.inOut'
+  }
   )
   leafMask.attr({
     x: 0,
@@ -367,8 +395,8 @@ function drawCloud(cloud, i) {
   const path = points.join(' ')
   if (!cloud.path) cloud.path = cloud.group.path()
   cloud.path.animate({
-      d: path
-    },
+    d: path
+  },
     0
   )
 }
@@ -385,16 +413,16 @@ function makeRain() {
   rain.push(line)
   gsap.fromTo(
     line.node, {
-      x: x,
-      y: 0 - lineLength
-    }, {
-      duration: 1,
-      delay: Math.random(),
-      y: sizes.card.height,
-      ease: 'power2.in',
-      onComplete: onRainEnd,
-      onCompleteParams: [line, lineWidth, x, currentWeather.type]
-    }
+    x: x,
+    y: 0 - lineLength
+  }, {
+    duration: 1,
+    delay: Math.random(),
+    y: sizes.card.height,
+    ease: 'power2.in',
+    onComplete: onRainEnd,
+    onCompleteParams: [line, lineWidth, x, currentWeather.type]
+  }
   )
 }
 
@@ -432,20 +460,20 @@ function makeSplash(x, type) {
   splash.node.style.strokeDasharray = splashLength + ' ' + pathLength
   gsap.fromTo(
     splash.node, {
-      strokeWidth: 2,
-      y: yOffset,
-      x: xOffset + 20 + x,
-      opacity: 1,
-      strokeDashoffset: splashLength
-    }, {
-      duration: speed,
-      strokeWidth: 0,
-      strokeDashoffset: -pathLength,
-      opacity: 1,
-      onComplete: onSplashComplete,
-      onCompleteParams: [splash],
-      ease: 'slow(0.4, 0.1, false)'
-    }
+    strokeWidth: 2,
+    y: yOffset,
+    x: xOffset + 20 + x,
+    opacity: 1,
+    strokeDashoffset: splashLength
+  }, {
+    duration: speed,
+    strokeWidth: 0,
+    strokeDashoffset: -pathLength,
+    opacity: 1,
+    onComplete: onSplashComplete,
+    onCompleteParams: [splash],
+    ease: 'slow(0.4, 0.1, false)'
+  }
   )
 }
 
@@ -476,32 +504,32 @@ function makeLeaf() {
     xBezier = (sizes.container.width + x) / 2
     leafs.push(outerLeaf)
     const motionPath = [{
-        x: x,
-        y: y
-      },
-      {
-        x: xBezier,
-        y: Math.random() * endY + endY / 3
-      },
-      {
-        x: sizes.container.width + 50,
-        y: endY
-      }
+      x: x,
+      y: y
+    },
+    {
+      x: xBezier,
+      y: Math.random() * endY + endY / 3
+    },
+    {
+      x: sizes.container.width + 50,
+      y: endY
+    }
     ]
     gsap.fromTo(
       outerLeaf.node, {
-        rotation: Math.random() * 180,
-        x: x,
-        y: areaY + Math.random() * areaY + 10,
-        scale: scale
-      }, {
-        duration: 2,
-        rotation: Math.random() * 360,
-        motionPath: motionPath,
-        onComplete: onLeafEnd,
-        onCompleteParams: [outerLeaf],
-        ease: 'power0.in'
-      }
+      rotation: Math.random() * 180,
+      x: x,
+      y: areaY + Math.random() * areaY + 10,
+      scale: scale
+    }, {
+      duration: 2,
+      rotation: Math.random() * 360,
+      motionPath: motionPath,
+      onComplete: onLeafEnd,
+      onCompleteParams: [outerLeaf],
+      ease: 'power0.in'
+    }
     )
   } else {
     newLeaf = leaf.clone().appendTo(innerLeafHolder).attr({
@@ -511,32 +539,32 @@ function makeLeaf() {
     xBezier = sizes.card.width / 2
     leafs.push(newLeaf)
     const motionPath = [{
-        x: x,
-        y: y
-      },
-      {
-        x: xBezier,
-        y: Math.random() * endY + endY / 3
-      },
-      {
-        x: sizes.card.width + 50,
-        y: endY
-      }
+      x: x,
+      y: y
+    },
+    {
+      x: xBezier,
+      y: Math.random() * endY + endY / 3
+    },
+    {
+      x: sizes.card.width + 50,
+      y: endY
+    }
     ]
     gsap.fromTo(
       newLeaf.node, {
-        rotation: Math.random() * 180,
-        x: x,
-        y: areaY + Math.random() * areaY,
-        scale: scale
-      }, {
-        duration: 2,
-        rotation: Math.random() * 360,
-        motionPath: motionPath,
-        onComplete: onLeafEnd,
-        onCompleteParams: [newLeaf],
-        ease: 'power0.in'
-      }
+      rotation: Math.random() * 180,
+      x: x,
+      y: areaY + Math.random() * areaY,
+      scale: scale
+    }, {
+      duration: 2,
+      rotation: Math.random() * 360,
+      motionPath: motionPath,
+      onComplete: onLeafEnd,
+      onCompleteParams: [newLeaf],
+      ease: 'power0.in'
+    }
     )
   }
 }
@@ -576,24 +604,24 @@ function makeSnow() {
 
   gsap.fromTo(
     newSnow.node, {
-      x: x,
-      y: y
-    }, {
-      duration: 3 + Math.random() * 5,
-      y: endY,
-      onComplete: onSnowEnd,
-      onCompleteParams: [newSnow],
-      ease: 'power0.in'
-    }
+    x: x,
+    y: y
+  }, {
+    duration: 3 + Math.random() * 5,
+    y: endY,
+    onComplete: onSnowEnd,
+    onCompleteParams: [newSnow],
+    ease: 'power0.in'
+  }
   )
   gsap.fromTo(
     newSnow.node, {
-      scale: 0
-    }, {
-      duration: 1,
-      scale: scale,
-      ease: 'power1.inOut'
-    }
+    scale: 0
+  }, {
+    duration: 1,
+    scale: scale,
+    ease: 'power1.inOut'
+  }
   )
   gsap.to(newSnow.node, {
     duration: 2,
@@ -659,12 +687,12 @@ function lightning() {
   startLightningTimer()
   gsap.fromTo(
     card, {
-      y: -30
-    }, {
-      duration: 0.75,
-      y: 0,
-      ease: 'elastic'
-    }
+    y: -30
+  }, {
+    duration: 0.75,
+    y: 0,
+    ease: 'elastic'
+  }
   )
 
   const pathX = 30 + Math.random() * (sizes.card.width - 60)
@@ -687,7 +715,7 @@ function lightning() {
     duration: 1,
     opacity: 0,
     ease: 'power4.out',
-    onComplete: function() {
+    onComplete: function () {
       strike.remove()
       strike = null
     }
@@ -829,7 +857,7 @@ function changeWeather(weather) {
 
 const xhr = new XMLHttpRequest()
 xhr.open('get', 'https://international.v1.hitokoto.cn/?c=i')
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
     const response = JSON.parse(xhr.responseText)
     printH(response.hitokoto, response.from_who, response.from)
@@ -840,7 +868,7 @@ xhr.send()
 function getWeather() {
   const xhr = new XMLHttpRequest();
   xhr.open('get', 'https://api.weatherapi.com/v1/forecast.json?key=483957d90eb54b5d88552513210506&q=auto:ip&days=1');
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status !== 200) {
         const astro = {
@@ -991,7 +1019,6 @@ function setBackground(risemin, setmin) {
   let color;
   let hres = "0";
   let anime = "0";
-  const urlParams = new URLSearchParams(window.location.search);
   hres = urlParams.get("hres");
   if (hres == 1) {
     j = "-4x-AnimeSharp.webp";
@@ -1006,7 +1033,7 @@ function setBackground(risemin, setmin) {
     if (realmin <= risemin / 4) {
       i = "n4b";
       color = "#1e1518";
-    } else if (realmin > risemin / 4 && realmin <=  risemin / 2) {
+    } else if (realmin > risemin / 4 && realmin <= risemin / 2) {
       i = "n5";
       color = "#0f2d41";
     } else if (realmin > risemin / 2 && realmin <= 3 * risemin / 4) {
@@ -1154,96 +1181,96 @@ if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").mat
 toNightAnimation
   .to(
     "#circle", {
-      duration: duration,
-      ease: "power4.in",
-      scaleX: scale,
-      scaleY: scale,
-      x: 1,
-      transformOrigin: "100% 50%",
-    },
+    duration: duration,
+    ease: "power4.in",
+    scaleX: scale,
+    scaleY: scale,
+    x: 1,
+    transformOrigin: "100% 50%",
+  },
     0
   )
   .set(
     "#circle", {
-      scaleX: -scale,
-    },
+    scaleX: -scale,
+  },
     duration
   )
   .to(
     "#circle", {
-      duration: duration,
-      ease: "power4.out",
-      scaleX: -1,
-      scaleY: 1,
-      x: 2,
-    },
+    duration: duration,
+    ease: "power4.out",
+    scaleX: -1,
+    scaleY: 1,
+    x: 2,
+  },
     duration
   )
   .fromTo(
     ".filter", {
-      filter: "brightness(100%)",
-    }, {
-      filter: "brightness(50%)",
-      duration: duration,
-    },
+    filter: "brightness(100%)",
+  }, {
+    filter: "brightness(50%)",
+    duration: duration,
+  },
     0
   )
   .to(
     ".nmtext,.nmbar", {
-      color: "white",
-      duration: duration * 2,
-    },
+    color: "white",
+    duration: duration * 2,
+  },
     0
   )
   .to(
     ".nmbar", {
-      background: "rgba(0,0,0,.3)",
-      duration: duration,
-    },
+    background: "rgba(0,0,0,.3)",
+    duration: duration,
+  },
     0
   )
   .fromTo(
     ".nmbar", {
-      boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
-    }, {
-      boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
-      duration: duration,
-    },
+    boxShadow: "0 0 18px rgba(70, 70, 40, .255)",
+  }, {
+    boxShadow: "0 0 18px rgba(0, 0, 0, .255)",
+    duration: duration,
+  },
     0
   )
   .to(
     "#cloud1", {
-      fill: "#101010",
-      duration: duration,
-    },
+    fill: "#101010",
+    duration: duration,
+  },
     0
   )
   .to(
     "#cloud2", {
-      fill: "#191919",
-      duration: duration,
-    },
+    fill: "#191919",
+    duration: duration,
+  },
     0
   )
   .to(
     "#cloud3", {
-      fill: "#2a2a2a",
-      duration: duration,
-    },
+    fill: "#2a2a2a",
+    duration: duration,
+  },
     0
   )
   .to(
     "#sun", {
-      fill: "#3e3f57",
-      duration: duration * 2,
-    },
+    fill: "#3e3f57",
+    duration: duration * 2,
+  },
     0
   )
   .to(
     "#sunburst", {
-      scale: "0",
-      duration: duration * 2,
-    },
+    scale: "0",
+    duration: duration * 2,
+  },
     0
   );
 
@@ -1279,7 +1306,7 @@ const switchToggle = document.getElementById("input");
 switchToggle.addEventListener("change", () => toggle());
 const toggle = () => {
   isDay = switchToggle.checked === true;
-  if (isDay) {  
+  if (isDay) {
     if (currentWeather.type === "sun" || currentWeather.type === "clearwind") {
       document.getElementById("sunburst").style.display = "block";
     }
