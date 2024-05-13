@@ -146,18 +146,40 @@ function tobing() {
     case 'z':
       return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), false;
     case 'w':
+    case 'wiki':
+    case 'wikipedia':
       return gidValue !== '' && ((window.location.href = 'https://en.wikipedia.org/wiki/Special:Search?search=' + gidValue), (gidValue = '')), false;
     case 'wt':
+    case 'wiktionary':
+    case 'dict':
       return gidValue !== '' && ((window.location.href = 'https://en.wiktionary.org/wiki/Special:Search?go=Define&search=' + gidValue), (gidValue = '')), false;
     case 'gh':
       return gidValue !== '' && ((window.location.href = 'https://github.com/search?utf8=%E2%9C%93&q=' + gidValue), (gidValue = '')), false;
+    case 'cs':
+    case 'cons':
+      return gidValue !== '' && ((window.location.href = 'https://consensus.app/results/?q=' + gidValue), (gidValue = '')), false;
+    case 'csyn':
+      return gidValue !== '' && ((window.location.href = 'https://consensus.app/results/?q=' + gidValue + "&synthesize=on"), (gidValue = '')), false;
+    case 'cc':
+    case 'ca':
+    case 'consensus':
+      return gidValue !== '' && ((window.location.href = 'https://consensus.app/results/?q=' + gidValue + "&synthesize=on&copilot=on"), (gidValue = '')), false;
+    case 'bing':
+    case 'copilot':
+    case 'cp':
+      return gidValue !== '' && ((window.location.href = 'https://www.bing.com/chat?iscopilotedu=1&sendquery=1&q=' + gidValue), (gidValue = '')), false;
     case 'c':
+      return gidValue !== '' && ((window.location.href = 'https://chatgpt.com/?temporary-chat=true&q=' + gidValue), (gidValue = '')), false;
+    case 'gpt':
+    case 'chat':
+      return gidValue !== '' && ((window.location.href = 'https://chatgpt.com/?model=gpt-4o&q=' + gidValue), (gidValue = '')), false;
     case 'pc':
     case 'chem':
     case 'pubchem':
       return gidValue !== '' && ((window.location.href = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + gidValue), (gidValue = '')), false;
     case 'g':
-      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?q=' + gidValue), (gidValue = '')), false;
+    case 'google':
+      return gidValue !== '' && ((window.location.href = 'https://www.google.com/search?q=' + gidValue), (gidValue = '')), false;
     case 'lf':
     case 'lofter':
       return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), false;
@@ -165,16 +187,17 @@ function tobing() {
     case 'bili':
       return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), false;
     case 'b':
-    case 'd':
+    case 'bd':
       return gidValue !== '' && ((window.location.href = 'https://www.baidu.com/s?wd=' + gidValue), (gidValue = '')), false;
     case 's':
     case 'gs':
-      return gidValue !== '' && ((window.location.href = 'https://scholar.google.co.uk/scholar?q=' + gidValue), (gidValue = '')), false;
+      return gidValue !== '' && ((window.location.href = 'https://scholar.google.com/scholar?q=' + gidValue), (gidValue = '')), false;
     case 'sougou':
       return gidValue !== '' && ((window.location.href = 'https://www.sogou.com/web?query=' + gidValue), (gidValue = '')), false;
     case '360':
       return gidValue !== '' && ((window.location.href = 'https://www.so.com/s?q=' + gidValue), (gidValue = '')), false;
     case 'l':
+    case 'lofter':
       return gidValue !== '' && ((window.location.href = 'https://www.lofter.com/tag/' + gidValue), (gidValue = '')), false;
     case 'hoyo':
     case 'hoyolab':
@@ -197,10 +220,13 @@ function tobing() {
       return gidValue !== '' && ((window.location.href = 'https://www.qkan8.com/index.php/vod/search.html?wd=' + gidValue), (gidValue = '')), false;
     case 'y':
     case 'yt':
+    case 'youtube':
       return gidValue !== '' && ((window.location.href = 'https://www.youtube.com/results?search_query=' + gidValue), (gidValue = '')), false;
     case 'd':
+    case 'ddg':
       return gidValue !== '' && ((window.location.href = 'https://duckduckgo.com/?q=' + gidValue), (gidValue = '')), false;
     case 'a':
+    case 'amz':
       return gidValue !== '' && ((window.location.href = 'https://www.amazon.co.uk/s/?field-keywords=' + gidValue), (gidValue = '')), false;
     case 'ebay':
       return gidValue !== '' && ((window.location.href = 'https://www.ebay.co.uk/sch/i.html?_nkw=' + gidValue), (gidValue = '')), false;
@@ -210,16 +236,19 @@ function tobing() {
     case 'ensembl':
       return gidValue !== '' && ((window.location.href = 'https://www.ensembl.org/Zebrafish/Search/Results?q=' + gidValue + ';facet_feature_type=;site=ensembl;facet_species=Zebrafish'), (gidValue = '')), false;
     case 'protocols':
+    case 'pt':
     case 'p':
       return gidValue !== '' && ((window.location.href = 'https://www.protocols.io/search?q=' + gidValue), (gidValue = '')), false;
     case 'gi':
-      return gidValue !== '' && ((window.location.href = 'https://www.google.co.uk/search?tbm=isch&q=' + gidValue), (gidValue = '')), false;
+    case 'image':
+      return gidValue !== '' && ((window.location.href = 'https://www.google.com/search?tbm=isch&q=' + gidValue), (gidValue = '')), false;
     case 'f':
     case 'fp':
       return gidValue !== '' && ((window.location.href = 'https://www.fpbase.org/search/?name__iexact=' + gidValue), (gidValue = '')), false;
     case 'gt':
     case 't':
-      return gidValue !== '' && ((window.location.href = 'https://translate.google.co.uk/#auto/en/' + gidValue), (gidValue = '')), false;
+    case 'translate':
+      return gidValue !== '' && ((window.location.href = 'https://translate.google.com/#auto/en/' + gidValue), (gidValue = '')), false;
     case undefined:
     default:
       return gidValue !== '' && ((window.location.href = 'https://www.bing.com/search?q=' + gidValue), (gidValue = '')), false;
