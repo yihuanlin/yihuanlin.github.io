@@ -9,7 +9,7 @@ function checkProtocol(url) {
 
 function redirectToReverseProxy(redirectURL) {
   redirectURL = checkProtocol(redirectURL).replace(/(https?:\/\/)([^\/]+)/g, (match, p1, p2) => {
-    const newUrl = p2.replace(/\./g, '-') + '.yhl.ac.cn';
+    const newUrl = p2.replace(/\./g, '-') + '.rp.hlyi.eu.org';
     return `${p1}${newUrl}`;
   });
   window.location = redirectURL;
@@ -142,6 +142,9 @@ function tobing() {
     return gidValue !== '' && ((window.location.href = "https://" + gidValue), (gidValue = '')), false;
   }
   switch (match) {
+    case 'rp':
+    case 'proxy':
+      return gidValue !== '' && ((redirectToReverseProxy(gidValue)), (gidValue = '')), false;
     case 'zfin':
     case 'z':
       return gidValue !== '' && ((window.location.href = 'https://zfin.org/search?category=&q=' + gidValue), (gidValue = '')), false;
