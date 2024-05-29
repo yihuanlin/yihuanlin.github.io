@@ -9,7 +9,7 @@ function checkProtocol(url) {
 
 function redirectToReverseProxy(redirectURL) {
   redirectURL = checkProtocol(redirectURL).replace(/(https?:\/\/)([^\/]+)/g, (match, p1, p2) => {
-    const newUrl = p2.replace(/\./g, '-') + '.rp.hlyi.eu.org';
+    const newUrl = p2.replace(/\./g, '-') + '.hlyi.eu.org';
     return `${p1}${newUrl}`;
   });
   window.location = redirectURL;
