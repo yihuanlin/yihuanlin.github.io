@@ -1070,7 +1070,7 @@ function setBackground(risemin, setmin) {
       color = "#0f2d41";
     } else if (realmin > risemin / 2 && realmin <= 3 * risemin / 4) {
       i = "n6";
-      color = "#090818";
+      color = "#37241d";
     } else if (realmin > 3 * risemin / 4 && realmin <= risemin) {
       i = "d0";
       color = "#101f48";
