@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         UCL Libproxy Redirect
+// @name         University of Cambridge Library Redirect
 // @namespace    http://tampermonkey.net/
 // @version      1
-// @description  Automatically redirect available databases to UCL Library Services LibProxy, save your time for institutional access
+// @description  Automatically redirect available databases to the University of Cambridge Library Services
 // @author       yihuanlin
 // @match        https://*.sciencedirect.com/*
 // @match        https://elsevierelibrary.co.uk/*
@@ -54,9 +54,8 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
-    //var x = window.location.protocol + "//" + window.location.hostname.replace(/\./g,'-') + ".libproxy.ucl.ac.uk" + window.location.pathname;
-    var x = "https://libproxy.ucl.ac.uk/login?url=" + window.location.href;
+    var x = "https://ezproxy.lib.cam.ac.uk:2048/login?url=" + window.location.href;
     window.location.replace(x);
 })();

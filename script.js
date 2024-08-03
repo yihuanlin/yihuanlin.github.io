@@ -183,9 +183,6 @@ function tobing() {
     case 'g':
     case 'google':
       return gidValue !== '' && ((window.location.href = 'https://www.google.com/search?q=' + gidValue), (gidValue = '')), false;
-    case 'lf':
-    case 'lofter':
-      return gidValue !== '' && ((window.location.href = 'Misc/lofter.html?url=' + gidValue), (gidValue = '')), false;
     case 'bi':
     case 'bili':
       return gidValue !== '' && ((window.location.href = 'https://www.bilibili.com/search?keyword=' + gidValue), (gidValue = '')), false;
