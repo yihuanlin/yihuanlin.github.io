@@ -1063,13 +1063,13 @@ function setBackground(risemin, setmin) {
   if (anime == 1) {
     document.body.style.cursor = "none";
     document.getElementById("cursor-waiting").style.display = "block";
+    const r = Math.floor(Math.random() * 3);
     document.addEventListener("mousemove", function (e) {
       if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
         var cursor = document.getElementById("cursor");
       } else if (e.target.id === "nmcontainer" || e.target.closest("#nmcontainer")) {
         var cursor = document.getElementById("cursor");
       } else {
-        var r = Math.floor(Math.random() * 3);
         var cursor = document.getElementById("cursor-alt" + r);
       }
       Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
