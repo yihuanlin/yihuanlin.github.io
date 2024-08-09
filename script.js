@@ -1061,21 +1061,18 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    var cursor = document.getElementById("cursor");
     document.body.style.cursor = "none";
-    cursor.style.display = "block";
-
-
-
+    document.getElementById("cursor-waiting").style.display = "block";
     document.addEventListener("mousemove", function (e) {
-      if (e.target.id === "bingbar") {
-        cursor.style.background = "transparent url(icon/cursor/cursor-snooze.gif) 0 0/cover no-repeat";
-      } else if (e.target.id === "nmcontainer") {
-        cursor.style.background = "transparent url(icon/cursor/cursor-stop.gif) 0 0/cover no-repeat";
+      if (e.target.id === "bingbar" || e.target.closest("#bingbar") {
+        var cursor = document.getElementById("cursor");
+      } else if (e.target.id === "nmcontainer" || e.target.closest("#nmcontainer")) {
+        var cursor = document.getElementById("cursor");
       } else {
-        const r = Math.floor(Math.random() * 3);
-        cursor.style.background = "transparent url(icon/cursor/cursor-alt" + r + ".gif) 0 0/cover no-repeat";
+        var r = Math.floor(Math.random() * 3);
+        var cursor = document.getElementById("cursor-alt" + r);
       }
+      cursor.style.display = "block";
       cursor.style.left = (e.pageX) + 'px';
       cursor.style.top = (e.pageY) + 'px';
     }, false);
