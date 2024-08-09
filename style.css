@@ -552,6 +552,45 @@ div.clickEffect {
 
 
 /* Keyframes */
+* {
+    cursor: url(icon/cursor/cursor0.png), auto;
+    -webkit-animation: cursor 400ms infinite;
+    animation: cursor 400ms infinite;
+}
+
+@keyframes cursor {
+    12.5% {
+        cursor: url(icon/cursor/cursor0.png), auto;
+    }
+
+    25% {
+        cursor: url(icon/cursor/cursor1.png), auto;
+    }
+
+    37.5% {
+        cursor: url(icon/cursor/cursor2.png), auto;
+    }
+
+    50% {
+        cursor: url(icon/cursor/cursor3.png), auto;
+    }
+
+    62.5% {
+        cursor: url(icon/cursor/cursor4.png), auto;
+    }
+
+    75% {
+        cursor: url(icon/cursor/cursor5.png), auto;
+    }
+
+    87.5% {
+        cursor: url(icon/cursor/cursor6.png), auto;
+    }
+
+    100% {
+        cursor: url(icon/cursor/cursor7.png), auto;
+    }
+}
 
 @keyframes flipInX {
     0% {
