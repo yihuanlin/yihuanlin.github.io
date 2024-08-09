@@ -142,6 +142,10 @@ function tobing() {
     return gidValue !== '' && ((window.location.href = "https://" + gidValue), (gidValue = '')), false;
   }
   switch (match) {
+    case 'code':
+    case 'codepen':
+    case 'cp':
+      return gidValue !== '' && ((window.location.href = 'https://codepen.io/search/pens?q=' + gidValue), (gidValue = '')), false;
     case 'rp':
     case 'proxy':
       return gidValue !== '' && ((redirectToReverseProxy(gidValue)), (gidValue = '')), false;
