@@ -29,8 +29,9 @@ if ('serviceWorker' in navigator) {
 // Clickeffects
 document.addEventListener("mousemove", function (e) {
   var cursor = document.getElementById('cursor')
-  cursor.style.left = (e.pageX - cursorOffset.left) + 'px';
-  cursor.style.top = (e.pageY - cursorOffset.top) + 'px';
+  cursor.style.left = (e.pageX - 30) + 'px';
+  cursor.style.top = (e.pageY - 20) + 'px';
+
 }, false);
 
 function clickEffect(e) {
