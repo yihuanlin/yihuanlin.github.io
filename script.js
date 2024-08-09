@@ -1072,7 +1072,9 @@ function setBackground(risemin, setmin) {
         var r = Math.floor(Math.random() * 3);
         var cursor = document.getElementById("cursor-alt" + r);
       }
-      document.getElementsByClassName("cursor").style.display = "none";
+      Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
+        cursors.style.display = "none";
+      });
       cursor.style.display = "block";
       cursor.style.left = (e.pageX) + 'px';
       cursor.style.top = (e.pageY) + 'px';
