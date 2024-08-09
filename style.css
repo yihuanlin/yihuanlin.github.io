@@ -31,57 +31,37 @@ body {
     margin-top: 0;
 }
 
-#cursor-waiting {
+.cursir {
     display: none;
     position: absolute;
     z-index: 10000;
     width: 64px;
     height: 64px;
+}
+
+#cursor-waiting {
+    left: 50vw;
+    top: 50vh;
     background: transparent url(icon/cursor/cursor-waiting.gif) 0 0/cover no-repeat;
 }
 
 #cursor-alt0 {
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    width: 64px;
-    height: 64px;
     background: transparent url(icon/cursor/cursor-alt0.gif) 0 0/cover no-repeat;
 }
 
 #cursor-alt1 {
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    width: 64px;
-    height: 64px;
     background: transparent url(icon/cursor/cursor-alt1.gif) 0 0/cover no-repeat;
 }
 
 #cursor-alt2 {
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    width: 64px;
-    height: 64px;
     background: transparent url(icon/cursor/cursor-alt2.gif) 0 0/cover no-repeat;
 }
 
 #cursor-snooze {
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    width: 64px;
-    height: 64px;
     background: transparent url(icon/cursor/cursor-snooze.gif) 0 0/cover no-repeat;
 }
 
 #cursor-stop {
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    width: 64px;
-    height: 64px;
     background: transparent url(icon/cursor/cursor-stop.gif) 0 0/cover no-repeat;
 }
 
