@@ -1061,9 +1061,7 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    document.querySelectorAll("*").forEach(element => {
-      element.style.cursor = "none";
-    });
+    document.documentElement.style.cursor = 'none';
     document.getElementById("cursor-waiting").style.display = "block";
     var timeout;
     document.addEventListener("mousemove", function (e) {
