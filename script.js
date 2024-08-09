@@ -27,6 +27,11 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
 // Clickeffects
+document.addEventListener("mousemove", function (e) {
+  var cursor = document.getElementById('cursor')
+  cursor.style.left = (e.pageX - cursorOffset.left) + 'px';
+  cursor.style.top = (e.pageY - cursorOffset.top) + 'px';
+}, false);
 
 function clickEffect(e) {
   const target = e.target;
