@@ -37,7 +37,7 @@ body {
     z-index: 10000;
     width: 64px;
     height: 64px;
-    background: transparent url(icon/cursor/cursor.gif) 0 0/cover no-repeat;
+    background: transparent url(icon/cursor/cursor-waiting.gif) 0 0/cover no-repeat;
 }
 
 #fill_screen {
