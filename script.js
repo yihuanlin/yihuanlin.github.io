@@ -1064,7 +1064,7 @@ function setBackground(risemin, setmin) {
     document.body.style.cursor = "none";
     document.getElementById("cursor-waiting").style.display = "block";
     document.addEventListener("mousemove", function (e) {
-      if (e.target.id === "bingbar" || e.target.closest("#bingbar") {
+      if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
         var cursor = document.getElementById("cursor");
       } else if (e.target.id === "nmcontainer" || e.target.closest("#nmcontainer")) {
         var cursor = document.getElementById("cursor");
