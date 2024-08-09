@@ -1060,7 +1060,7 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    document.body.style.cursor = "url(icon/cursor.gif), auto";
+    //document.body.style.cursor = "url(icon/cursor.gif), auto";
     int = (setmin - risemin) / 14;
     setint = (1440 - setmin) / 8;
     j = ".jpg";
