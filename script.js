@@ -1061,24 +1061,31 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    document.body.style.cursor = "none";
+    document.querySelectorAll("*").forEach(element => {
+      element.style.cursor = "none";
+    });
     document.getElementById("cursor-waiting").style.display = "block";
-    const r = Math.floor(Math.random() * 3);
+    var r = Math.floor(Math.random() * 3);
+    var timeout;
     document.addEventListener("mousemove", function (e) {
+      clearTimeout(timeout);
       if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
-        var cursor = document.getElementById("cursor");
+        var cursor = document.getElementById("cursor-snooze");
       } else if (e.target.id === "nmcontainer" || e.target.closest("#nmcontainer")) {
-        var cursor = document.getElementById("cursor");
+        var cursor = document.getElementById("cursor-stop");
       } else {
         var cursor = document.getElementById("cursor-alt" + r);
       }
       Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
         cursors.style.display = "none";
       });
+      timeout = setTimeout(function () {
+        var cursor = document.getElementById("cursor-waiting");
+      }, 60000);
       cursor.style.display = "block";
       cursor.style.left = (e.pageX) + 'px';
       cursor.style.top = (e.pageY) + 'px';
-    }, false);
+    });
     int = (setmin - risemin) / 14;
     setint = (1440 - setmin) / 8;
     j = ".jpg";

@@ -33,6 +33,7 @@ body {
 
 .cursor {
     display: none;
+    pointer-events: none;
     position: absolute;
     z-index: 10000;
     width: 64px;
