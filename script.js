@@ -26,12 +26,8 @@ if (url) {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
+
 // Clickeffects
-document.addEventListener("mousemove", function (e) {
-  var cursor = document.getElementById('cursor')
-  cursor.style.left = (e.pageX) + 'px';
-  cursor.style.top = (e.pageY) + 'px';
-}, false);
 
 function clickEffect(e) {
   const target = e.target;
@@ -1065,7 +1061,15 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    //document.body.style.cursor = "url(icon/cursor.gif), auto";
+    var cursor = document.getElementById('cursor');
+    cursor.style.display = 'block';
+    document.querySelectorAll("*").forEach(element => {
+      element.style.cursor = "none";
+    });
+    document.addEventListener("mousemove", function (e) {
+      cursor.style.left = (e.pageX) + 'px';
+      cursor.style.top = (e.pageY) + 'px';
+    }, false);
     int = (setmin - risemin) / 14;
     setint = (1440 - setmin) / 8;
     j = ".jpg";
