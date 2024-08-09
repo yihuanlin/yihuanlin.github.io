@@ -29,16 +29,16 @@ body {
     font-family: "Comfortaa", sans-serif;
     margin-left: 0;
     margin-top: 0;
-    cursor: url(icon/cursor/c1.png), auto;
+    cursor: none;
     animation: cursor 300ms infinite;
 }
 
 #cursor {
     position: absolute;
     z-index: 10000;
-    width: 40px;
-    height: 40px;
-    background: transparent url(icon/cursor/cursor.gif) 0 0 no-repeat;
+    width: 50px;
+    height: 50px;
+    background: transparent url(icon/cursor/cursor.gif) 0 0/cover no-repeat;
 }
 
 #fill_screen {
