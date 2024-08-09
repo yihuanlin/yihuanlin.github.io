@@ -1065,16 +1065,19 @@ function setBackground(risemin, setmin) {
       element.style.cursor = "none";
     });
     document.getElementById("cursor-waiting").style.display = "block";
-    var r = Math.floor(Math.random() * 3);
     var timeout;
     document.addEventListener("mousemove", function (e) {
       clearTimeout(timeout);
       if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
         var cursor = document.getElementById("cursor-snooze");
-      } else if (e.target.id === "nmcontainer" || e.target.closest("#nmcontainer")) {
+      } else if (e.target.id === "toogle" || e.target.closest("#toogle")) {
+        var cursor = document.getElementById("cursor-alt1");
+      } else if (e.target.id === "weathercontainer" || e.target.closest("#weathercontainer")) {
         var cursor = document.getElementById("cursor-stop");
+      } else if (e.target.class === "box" || e.target.closest(".box")) {
+        var cursor = document.getElementById("cursor-alt2");
       } else {
-        var cursor = document.getElementById("cursor-alt" + r);
+        var cursor = document.getElementById("cursor-alt0");
       }
       Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
         cursors.style.display = "none";
