@@ -1070,7 +1070,7 @@ function setBackground(risemin, setmin) {
       clearTimeout(timeout);
       if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
         var cursor = document.getElementById("cursor-snooze");
-      } else if (e.target.id === "toogle" || e.target.closest("#toogle")) {
+      } else if (e.target.class === "night-mode" || e.target.closest(".night-mode")) {
         var cursor = document.getElementById("cursor-alt1");
       } else if (e.target.id === "weathercontainer" || e.target.closest("#weathercontainer")) {
         var cursor = document.getElementById("cursor-stop");

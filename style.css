@@ -59,10 +59,14 @@ body {
 }
 
 #cursor-snooze {
+    width: 74px;
+    height: 74px;
     background: transparent url(icon/cursor/cursor-snooze.gif) 0 0/cover no-repeat;
 }
 
 #cursor-stop {
+    width: 74px;
+    height: 74px;
     background: transparent url(icon/cursor/cursor-stop.gif) 0 0/cover no-repeat;
 }
 
