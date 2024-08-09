@@ -29,6 +29,8 @@ body {
     font-family: "Comfortaa", sans-serif;
     margin-left: 0;
     margin-top: 0;
+    cursor: url(icon/cursor/c1.png), auto;
+    animation: cursor 300ms infinite;
 }
 
 #fill_screen {
@@ -553,12 +555,11 @@ div.clickEffect {
 /* Keyframes */
 * {
     cursor: url(icon/cursor/c1.png), auto;
-    -webkit-animation: cursor 400ms infinite;
-    animation: cursor 400ms infinite;
+    animation: cursor 300ms infinite;
 }
 
 @keyframes cursor {
-    12.5% {
+    12% {
         cursor: url(icon/cursor/c1.png), auto;
     }
 
@@ -566,7 +567,7 @@ div.clickEffect {
         cursor: url(icon/cursor/c2.png), auto;
     }
 
-    37.5% {
+    37% {
         cursor: url(icon/cursor/c3.png), auto;
     }
 
@@ -574,7 +575,7 @@ div.clickEffect {
         cursor: url(icon/cursor/c4.png), auto;
     }
 
-    62.5% {
+    62% {
         cursor: url(icon/cursor/c5.png), auto;
     }
 
@@ -582,7 +583,7 @@ div.clickEffect {
         cursor: url(icon/cursor/c6.png), auto;
     }
 
-    87.5% {
+    87% {
         cursor: url(icon/cursor/c7.png), auto;
     }
 
