@@ -1062,13 +1062,19 @@ function setBackground(risemin, setmin) {
   anime = urlParams.get("anime");
   if (anime == 1) {
     document.documentElement.style.cursor = 'none';
+    Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
+      cursors.style.display = "block";
+    });
+    Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
+      cursors.style.display = "none";
+    });
     document.getElementById("cursor-waiting").style.display = "block";
     var timeout;
     document.addEventListener("mousemove", function (e) {
       clearTimeout(timeout);
-      if (e.target.id === "bingbar" || e.target.closest("#bingbar")) {
+      if (e.target.id === "bingbar" || e.target.closest("#bingbar") || e.target.id === "keywordg" || e.target.closest("#keywordg")) {
         var cursor = document.getElementById("cursor-snooze");
-      } else if (e.target.class === "night-mode" || e.target.closest(".night-mode")) {
+      } else if (e.target.class === "night-mode" || e.target.closest(".night-mode") || e.target.class === "title" || e.target.closest(".title")) {
         var cursor = document.getElementById("cursor-alt1");
       } else if (e.target.id === "weathercontainer" || e.target.closest("#weathercontainer")) {
         var cursor = document.getElementById("cursor-stop");
