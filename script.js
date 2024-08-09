@@ -1061,12 +1061,15 @@ function setBackground(risemin, setmin) {
   }
   anime = urlParams.get("anime");
   if (anime == 1) {
-    document.documentElement.style.cursor = 'none';
-    Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
-      cursors.style.display = "block";
+    document.querySelectorAll("*").forEach(element => {
+      element.style.cursor = "none";
     });
-    Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
-      cursors.style.display = "none";
+    const cursors = document.getElementsByClassName("cursor");
+    Array.from(cursors).forEach(cursors => {
+      const backgroundImage = window.getComputedStyle(cursors).backgroundImage;
+      const imageUrl = backgroundImage.slice(4, -1).replace(/"/g, "");
+      const img = new Image();
+      img.src = imageUrl;
     });
     document.getElementById("cursor-waiting").style.display = "block";
     var timeout;
@@ -1083,7 +1086,7 @@ function setBackground(risemin, setmin) {
       } else {
         var cursor = document.getElementById("cursor-alt0");
       }
-      Array.from(document.getElementsByClassName("cursor")).forEach(cursors => {
+      Array.from(cursors).forEach(cursors => {
         cursors.style.display = "none";
       });
       timeout = setTimeout(function () {
